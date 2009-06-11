@@ -1,0 +1,217 @@
+body {
+
+}
+
+/*Keep this in here..for some reason if you take this out, you can't click on anything below the first product in IE6...*/
+.productsContent {
+}
+
+.productsContent .productImg {
+    position: relative;
+}
+
+.priceAndMerchantCtn {
+    position: relative;
+}
+
+#sa_products .productsContainer .subInfo {
+    position: relative;
+}
+
+div#pgSiteContainer { 
+	/*width:expression(document.body.clientWidth < 965? "960px" :  "auto");*/
+}
+
+div#sa_filters_nav{ /*gradient background for the filters on the left*/
+	margin-top:1px;
+}
+
+#featuredStores{
+	margin-bottom:6px;
+}
+
+#sa_products{
+	padding:3px 10px 10px 10px;
+}
+
+#featuresStoresContainer .logosBrand2{
+	margin-left:4px;
+}
+
+
+#singleMerchantBox{
+	width:120px;
+}
+
+#singleMerchantBoxWrap{
+
+}
+
+.priceAndMerchantCtn{
+	width:30%;
+}
+
+.productsContent .pricingInfo{
+	text-align:right;
+}
+
+.priceAndMerchantCtn ul{
+	float:right;
+}
+
+.priceAndMerchantCtn ul li{
+	/*display:inline;*/
+	float:right;
+	margin-left:5px;
+}
+
+div#sa_wrapper #extraLinks ul li a {
+    position: relative;
+}
+
+div#sa_wrapper div#sa_products ul#gridView li a {
+    position: relative;
+}
+
+div.detailsPopupTopLeft .popupTop{
+	background: transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_top_ie6.gif) top left no-repeat;
+}
+div.detailsPopupTopLeft  .popupBottom{
+	background: transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_bottom_ie6.gif) bottom left no-repeat;
+}
+
+ul#gridView li{
+	display:inline;
+}
+
+/** html .gridView dd.prodDescription{
+	height:32px;
+}
+ */
+* html .gridView dd.merchant{
+	height:30px;
+}
+ 
+* html .gridView dd.noLinks{
+	/*height:15px;*/
+	/*line-height:1px;*/
+	/*display:none;	 */
+	font-size:6px;
+
+}  
+
+div#sa_listTop #viewOptions ul li a{
+    position: relative;
+	display:block;
+	padding:5px 0 5px 6px;
+	line-height:23px;
+}
+
+div#sa_listTop #sortBy ul li a{
+    position: relative;
+}
+
+.compareDiv {
+    position: relative;
+}
+
+#pagination ul li a{
+    position: relative;
+}
+
+div.line0{
+	line-height:1px;
+}
+
+.gridView dd.nobackground{
+	padding-bottom:3px;
+    margin-top: -2px;
+}
+
+* html .gridView dd.hackSafe_button{ 
+    min-height: 15px;
+}
+
+ul#sa_filters_main ul.sa_filters_sub {
+	padding-left: 0px;
+	margin-left: 10px;
+}
+
+ul#sa_filters_main ul.sa_filters_sub li {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+
+* html .gridView dd.price, .gridView dd.exp-price{ 
+	height:37px; 
+}
+
+dd.bestSellers{
+	margin:0px;
+	padding:0px;
+}
+
+* html ul#gridView li.gridViewTestIEAB{
+	height:415px;
+}
+
+* html ul#gridView li.gridViewTestIE{
+	height:370px;
+}
+
+div.greenpop3{ 
+	background:#FFF url(http://ai.pricegrabber.com/images/greenpop_197.gif) top left no-repeat;
+}
+
+div.greenpop3 div.greenpop3Bottom{
+	background:#FFF url(http://ai.pricegrabber.com/images/greenpop_197.gif) bottom left no-repeat;
+}
+
+div.popMerchant2{ 
+	background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/minibubble_2.gif) top left no-repeat;
+}
+
+div.popMerchant2Bottom{
+	background:#FFF url(http://ai.pricegrabber.com/images/searchAtt2/minibubble_2.gif) bottom left no-repeat;
+}
+
+div.info{
+	background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/minibubble_right.gif) top right no-repeat;
+}
+    
+div.info a{
+	background: transparent url(http://ai.pricegrabber.com/images/searchAtt2/minibubble_left.gif) top left no-repeat;
+}			
+
+div.detailsPopupTopLeft .popupTop{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_top_left.gif) top left no-repeat;  
+}
+
+div.detailsPopupTopLeft  .popupBottom{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_bottom_left.gif) bottom left no-repeat;
+}
+/*---*/
+div.detailsPopupTopRight .popupTop{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_top_right.gif) top left no-repeat;	
+}
+
+div.detailsPopupTopRight  .popupBottom{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_bottom_right.gif) bottom left no-repeat;
+}
+/*---*/
+div.detailsPopupBottomLeft .popupTop{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_top_topLeft.gif) top left no-repeat;  
+}
+
+div.detailsPopupBottomLeft  .popupBottom{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_top_bottomLeft.gif) bottom left no-repeat;
+}
+/*---*/
+div.detailsPopupBottomRight .popupTop{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_top_topRight.gif) top left no-repeat;
+}
+
+div.detailsPopupBottomRight  .popupBottom{
+  background:transparent url(http://ai.pricegrabber.com/images/searchAtt2/popup_top_bottomRight.gif) bottom left no-repeat;
+}	

@@ -1,0 +1,68 @@
+@charset "utf-8";
+/* CSS Document */
+
+#horario_container h3,#horario_container h2 {
+	text-align:center;
+	color:#70552E;
+	font-size:14px;
+	font-weight:bold;
+}
+
+#horario_container h2 {
+		font-size:18px;
+}
+
+#horario
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;	
+	text-align: left;
+	border-collapse: collapse;
+	border: 1px solid #707711;
+}
+#horario th
+{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 12px 15px;
+	border-right: 1px solid #707711;
+	border-left: 1px solid #707711;
+	color: #039;
+}
+#horario td
+{
+	padding: 8px 15px;
+	border-right: 1px solid #707711;
+	border-left: 1px solid #707711;
+	color: #669;
+}
+
+
+#horario tr:hover
+{
+	
+		background: #D9F28A;
+	
+}
+
+
+.vzebra-odd
+{
+	background: #F0F9D5;
+}
+.vzebra-even
+{
+	background: #EAF4CA;
+}
+#horario #vzebra-adventure, #horario #vzebra-children
+{
+	background: #DDF1A0;
+	border-bottom: 1px solid #707711;
+}
+#horario #vzebra-comedy, #horario #vzebra-action
+{
+	background: #F0FCE0;
+	border-bottom: 1px solid #707711;
+
+}

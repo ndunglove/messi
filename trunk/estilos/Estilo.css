@@ -1,0 +1,211 @@
+html {
+	background-color:#EEE;
+	}
+
+body {
+	background-color:#EEE;
+	margin-top:0px;
+	color:#252802;
+	}
+#banner{
+	margin-left:auto;
+	margin-right:auto;
+	background-image:url(../images/banner_futbol.jpg);
+	background-repeat:no-repeat;
+	height:400px;	
+	width:1000px;
+	
+	}
+
+#login, #registrar {
+		
+	}
+#pgSiteContainer { 
+	min-width: 1009px; 
+	background-color:#aab712;
+}
+	
+#pgPageContent{
+	width:1007px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#pgPageContent .top{
+		background-image:url(../images/pg_container_top.jpg);
+		background-repeat:no-repeat;
+		height:9px;
+		display:block;
+	}
+#pgPageContent .cuerpo{
+		background-image:url(../images/pg_container_body.jpg);
+		background-repeat:repeat-y;
+		
+	}
+#pgPageContent .bottom{
+		background-image:url(../images/pg_contaiiner_bottom.jpg);
+		background-repeat:no-repeat;
+		height:9px;
+		display:block;
+	}
+
+.bordes {
+		background-color:#FFF;
+        font-family: Arial, Helvetica, sans-serif;
+		font-size:12px;
+        border: 1px;
+        border-color: #DDD;
+        border-style: solid;
+		padding-right:0px;
+		text-align:left;
+		padding:5px;
+}
+.bordes thead {
+		height:15px;
+	}
+
+.bordes thead th{
+ 		text-align:center;
+        border:1px;
+        border-color:#DDD;
+        border-style: solid;
+        font-weight: normal;
+		
+}
+
+
+.bordes tr:hover {
+        background-color: #FAFAFA;
+}
+
+.edit {
+	
+	width: 220px;
+	}
+
+.boton {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #EAEAEA;
+		height:24px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #CCC;
+        color: #252802;
+        font-weight: bold;
+        cursor: hand;
+        font-size: 12px;
+}
+.boton:hover {
+        background-color: #FBFBFB;
+        font-size: 12px;
+        color: #FF8000;
+}
+
+#topmenu {
+	float: right;
+	height:12px;
+	margin: 12px 20px;
+
+}
+
+#topmenu ul {
+	
+	
+	list-style: none;
+	line-height: normal;
+}
+
+#topmenu li {
+	display: inline;
+}
+
+#topmenu a {
+	display: block;
+	float: left;
+	margin: 0 0 0 25px;
+	padding: 0 0 0 20px;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-size: x-small;
+	font-weight: bold;
+	color: #565913;
+	border: 0px;
+	
+}
+
+#topmenu a:hover {
+	color:#FFFFFF;
+	
+}
+
+#topmenu1 {
+	background: url(images/img07.gif) no-repeat left center;
+}
+
+#topmenu2 {
+	background: url(images/img08.gif) no-repeat left center;
+}
+
+#topmenu3 {
+	background: url(images/img09.gif) no-repeat left center;
+}
+
+
+#deporte{
+	width:1010px;
+	margin-left:auto;
+	margin-right:auto;
+	
+	}
+#todo{width:100%;}
+	
+#todoIndex{
+	
+	margin-left:auto;
+	margin-right:auto;
+	background-image:url(../images/banner_lsogin.jpg);
+	background-repeat:no-repeat;
+	width:1010px;
+	
+	}
+
+.clearing{
+	clear: both;
+	line-height: 1px;
+}
+
+#todoIndex table{
+	background-color:transparent;
+	color:#252802;
+	font-size:13px;
+	font-weight:bold;
+	font-family:Arial, Helvetica, sans-serif;
+	}
+	
+#todoIndex .login {
+	width:300px;
+	float:left;
+	margin-top:400px;
+	margin-left:80px;
+	
+	}
+
+#todoIndex .registrar {
+	width:509px;
+	float:left;
+	margin-top:410px;
+	margin-left:40px;
+	height:250px;
+	}
+	
+#sa_content_wrapper3{
+	width:100%;
+    float:right;
+    margin-left:-197px; 
+    margin-top:-8px;
+	
+}
+#sa_content_wrapper3 #sa_content3{
+	margin-left:210px;
+}
+
