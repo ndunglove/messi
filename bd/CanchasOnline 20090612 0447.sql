@@ -102,9 +102,9 @@ CREATE TABLE `canchaxclub` (
 /*!40000 ALTER TABLE `canchaxclub` DISABLE KEYS */;
 INSERT INTO `canchaxclub` (`ID_Cancha`,`ID_Club`) VALUES 
  (1,1),
- (1,2),
+ (1,3),
  (2,1),
- (2,2),
+ (2,3),
  (3,1),
  (4,1);
 /*!40000 ALTER TABLE `canchaxclub` ENABLE KEYS */;
@@ -316,13 +316,65 @@ CREATE TABLE `hora` (
   `D_HoraInicio` int(10) unsigned NOT NULL,
   `D_HoraFin` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ID_Hora`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `hora`
 --
 
 /*!40000 ALTER TABLE `hora` DISABLE KEYS */;
+INSERT INTO `hora` (`ID_Hora`,`D_HoraInicio`,`D_HoraFin`) VALUES 
+ (1,14,14),
+ (2,15,15),
+ (3,14,14),
+ (4,15,15),
+ (5,14,14),
+ (6,15,15),
+ (7,14,14),
+ (8,15,15),
+ (9,14,14),
+ (10,15,15),
+ (11,14,14),
+ (12,15,15),
+ (13,14,14),
+ (14,15,15),
+ (15,18,18),
+ (16,19,19),
+ (17,16,16),
+ (18,17,17),
+ (19,17,17),
+ (20,18,18),
+ (21,19,19),
+ (22,17,17),
+ (23,18,18),
+ (24,14,14),
+ (25,15,15),
+ (26,13,13),
+ (27,14,14),
+ (28,15,15),
+ (29,22,22),
+ (30,23,23),
+ (31,21,21),
+ (32,21,21),
+ (33,21,21),
+ (34,21,21),
+ (35,15,15),
+ (36,16,16),
+ (37,17,17),
+ (38,15,15),
+ (39,16,16),
+ (40,17,17),
+ (41,15,15),
+ (42,16,16),
+ (43,17,17),
+ (44,15,15),
+ (45,16,16),
+ (46,17,17),
+ (47,15,15),
+ (48,16,16),
+ (49,17,17),
+ (50,23,23),
+ (51,23,23);
 /*!40000 ALTER TABLE `hora` ENABLE KEYS */;
 
 
@@ -344,13 +396,49 @@ CREATE TABLE `horario` (
   CONSTRAINT `FK_horario_1` FOREIGN KEY (`ID_Hora`) REFERENCES `hora` (`ID_Hora`),
   CONSTRAINT `FK_horario_2` FOREIGN KEY (`ID_Cancha`) REFERENCES `cancha` (`ID_Cancha`),
   CONSTRAINT `FK_horario_3` FOREIGN KEY (`ID_Reserva`) REFERENCES `reserva` (`ID_Reserva`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `horario`
 --
 
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
+INSERT INTO `horario` (`ID_Hora`,`ID_Cancha`,`ID_Reserva`,`D_Fecha`,`C_Dia`) VALUES 
+ (5,1,2,'2009-06-13 00:00:00',5),
+ (6,1,2,'2009-06-13 00:00:00',5),
+ (7,1,3,'2009-06-13 00:00:00',5),
+ (8,1,3,'2009-06-13 00:00:00',5),
+ (9,1,4,'2009-06-13 00:00:00',5),
+ (10,1,4,'2009-06-13 00:00:00',5),
+ (11,1,5,'2009-06-13 00:00:00',5),
+ (12,1,5,'2009-06-13 00:00:00',5),
+ (13,1,6,'2009-06-13 00:00:00',5),
+ (14,1,6,'2009-06-13 00:00:00',5),
+ (15,1,7,'2009-06-13 00:00:00',5),
+ (16,1,7,'2009-06-13 00:00:00',5),
+ (17,1,8,'2009-06-13 00:00:00',5),
+ (18,1,8,'2009-06-13 00:00:00',5),
+ (19,1,9,'2009-06-13 00:00:00',5),
+ (20,1,9,'2009-06-13 00:00:00',5),
+ (21,1,9,'2009-06-13 00:00:00',5),
+ (22,1,10,'2009-06-13 00:00:00',7),
+ (23,1,10,'2009-06-13 00:00:00',7),
+ (35,2,11,'2009-06-15 00:00:00',2),
+ (36,2,11,'2009-06-15 00:00:00',2),
+ (37,2,11,'2009-06-15 00:00:00',2),
+ (38,2,12,'2009-06-15 00:00:00',2),
+ (39,2,12,'2009-06-15 00:00:00',2),
+ (40,2,12,'2009-06-15 00:00:00',2),
+ (41,2,13,'2009-06-15 00:00:00',1),
+ (42,2,13,'2009-06-15 00:00:00',1),
+ (43,2,13,'2009-06-15 00:00:00',1),
+ (44,2,14,'2009-06-15 00:00:00',1),
+ (45,2,14,'2009-06-15 00:00:00',1),
+ (46,2,14,'2009-06-15 00:00:00',1),
+ (47,2,15,'2009-06-15 00:00:00',1),
+ (48,2,15,'2009-06-15 00:00:00',1),
+ (49,2,15,'2009-06-15 00:00:00',1),
+ (50,2,16,'2009-06-15 00:00:00',3);
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 
 
@@ -455,13 +543,30 @@ CREATE TABLE `reserva` (
   KEY `FK_reserva_2` (`ID_Usuario`),
   CONSTRAINT `FK_reserva_1` FOREIGN KEY (`ID_Pago`) REFERENCES `pago` (`ID_Pago`),
   CONSTRAINT `FK_reserva_2` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuario` (`ID_Usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `reserva`
 --
 
 /*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
+INSERT INTO `reserva` (`ID_Reserva`,`ID_Usuario`,`D_FechaReserva`,`ID_Pago`,`T_DetallesAdicionales`,`T_Estado`,`T_Ranking`) VALUES 
+ (1,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (2,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (3,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (4,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (5,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (6,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (7,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (8,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (9,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (10,2,'2009-06-05 00:00:00',NULL,NULL,0,0),
+ (11,2,'2009-06-12 00:00:00',NULL,NULL,0,0),
+ (12,2,'2009-06-12 00:00:00',NULL,NULL,0,0),
+ (13,2,'2009-06-12 00:00:00',NULL,NULL,0,0),
+ (14,2,'2009-06-12 00:00:00',NULL,NULL,0,0),
+ (15,2,'2009-06-12 00:00:00',NULL,NULL,0,0),
+ (16,2,'2009-06-12 00:00:00',NULL,NULL,0,0);
 /*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
 
 
@@ -579,19 +684,19 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `ID_Usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `N_Nombre` varchar(100) CHARACTER SET latin1 NOT NULL,
-  `C_Telefono` varchar(12) CHARACTER SET latin1 NOT NULL,
-  `D_FechaNacimiento` datetime NOT NULL,
+  `C_Telefono` varchar(12) CHARACTER SET latin1 DEFAULT NULL,
+  `D_FechaNacimiento` datetime DEFAULT NULL,
   `T_Imagen` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
-  `ID_Distrito` int(10) unsigned NOT NULL,
-  `T_Direccion` varchar(100) CHARACTER SET latin1 NOT NULL,
-  `C_Puntos` int(10) unsigned NOT NULL,
+  `ID_Distrito` int(10) unsigned DEFAULT NULL,
+  `T_Direccion` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `C_Puntos` int(10) unsigned DEFAULT '0',
   `T_Email` varchar(100) CHARACTER SET latin1 NOT NULL,
   `T_Pass` varchar(16) CHARACTER SET latin1 NOT NULL,
   `F_Estado` smallint(5) unsigned DEFAULT '0',
   PRIMARY KEY (`ID_Usuario`),
   KEY `FK_usuario_1` (`ID_Distrito`),
   CONSTRAINT `FK_usuario_1` FOREIGN KEY (`ID_Distrito`) REFERENCES `distrito` (`ID_Distrito`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `usuario`
@@ -599,7 +704,8 @@ CREATE TABLE `usuario` (
 
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`ID_Usuario`,`N_Nombre`,`C_Telefono`,`D_FechaNacimiento`,`T_Imagen`,`ID_Distrito`,`T_Direccion`,`C_Puntos`,`T_Email`,`T_Pass`,`F_Estado`) VALUES 
- (1,'Peluca','923456789','1986-06-16 00:00:00',NULL,41,'JR. Las Avellanas',0,'a@a.com','a',1);
+ (1,'admin','923456789','1986-06-16 00:00:00',NULL,41,'JR. Las Avellanas',0,'a@a.com','a',1),
+ (2,'Peluca','235235435','1986-05-28 00:00:00',NULL,34,'Calle siempre viva 123',0,'b@b.com','b',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 
