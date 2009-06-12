@@ -1,16 +1,30 @@
 <!-- OTROS -->
+
+#todoIndex {
+	background-image:url(../images/login2.jpg);
+	background-repeat:none;
+	
+	}
+#todoIndex .logo {
+	background-image:none;
+}
 #todoIndex .login {
 
-	margin-left:40px;
+	margin-left:-110px;
+	margin-top:-30px;
 	
 	}
 
 #todoIndex .registrar {
 
-	margin-left:40px;
+	margin-left:130px;
 	
 	}
+#nubes {
 
+	background-image:none;
+	padding-top:0px;
+	}
 
 
 <!-- ORIGINAL -->

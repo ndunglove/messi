@@ -110,6 +110,9 @@
 <!--[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie6.css" />
 <![endif]-->
+<!--[if gte IE 7]>
+	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
+<![endif]-->
 <title>DBusiness | Bienvenido</title>
 <script src="SpryAssets/SpryValidationTextField.js"       type="text/javascript"      xml:space="preserve"></script>
 <script src="SpryAssets/SpryValidationSelect.js"      type="text/javascript"      xml:space="preserve"></script>
@@ -118,7 +121,11 @@
 </head>
 <body>
 <div id="todo">
+<div id="nubes">
 <div id="todoIndex">
+<div class="logo">
+</div>
+
   <div class="login">
     <form id="Formulario"
               name="Formulario"
@@ -393,6 +400,12 @@ return false;
 
   <div class="clearing">&nbsp;</div>
 </div>
+
+ 
+ <div id="footer">
+ 	
+ </div>
+</div> <!-- fin nubes -->
 </div>
 <script type="text/javascript"
       xml:space="preserve">
