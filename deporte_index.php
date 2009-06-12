@@ -10,7 +10,8 @@
 	{
 			$_GET["deporte"]=1;
 	}
-		
+	
+	$_SESSION["cancha"]=0;
 	$dep=$_GET["deporte"];
 	$_SESSION["deporte"]=$dep;
 ?>
@@ -18,17 +19,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Bienvenidos</title>
+<title>CanchasOnline.com | B&uacute;squeda avanzada</title>
 <!-- meta, js and css for PG only -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- icono barra explo
-<slink rel="shortcut icon" href="icono">-->
+<?php 
+	if ($dep==1)
+		print('<link rel="shortcut icon" href="images/pelota_futbol.ico">');
+	else if ($dep==2)
+			print('<link rel="shortcut icon" href="images/pelota_tenis.ico">');
+?>
+
 <link rel="stylesheet" type="text/css" href="estilos/Estilo2.css" >
 <link rel="stylesheet" type="text/css" href="estilos/Estilo.css" >
 
 
 <!--[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie6.css" />
+  
 <![endif]-->
 <!--[if gte IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
@@ -39,23 +46,36 @@
 
 <body>
 
-
+<div id="todo">
+<div id="nubes">
 <div id="pgSiteContainer" >
 <div id="banner">
+<div class="logo">
+</div>
 
 <div id="topmenu">
 		<ul>
-			<li><a href="perfil.php" id="topmenu1" accesskey="1" title="">Perfil</a></li>
-			<li><a href="reservas.php" id="topmenu3" accesskey="2" title="">Reservas Realizadas</a></li>
-			<li><a href="logout.php" id="topmenu2" accesskey="3" title="">Logout</a></li>
+			<li><a href="perfil.php" id="topmenu1" accesskey="1" ><img src="images/perfil.gif" /></a></li>
+			<li><a href="reservas.php" id="topmenu3" accesskey="2" ><img src="images/reservas.gif" /></a></li>
+			<li><a href="logout.php" id="topmenu2" accesskey="3" ><img src="images/logout.gif" /></a></li>
 		</ul>
+
 	</div>
+
+<?php 
+	if ($dep==1)
+		print('<div class="top_futbol"> </div>');
+	else if ($dep==2)
+			print('<div class="top_tenis"> </div>');
+?>
 
 <div class="clearing">&nbsp;</div>
 </div>
 
 <div id="pgPageContent">
-
+<div class="top">
+</div>
+<div class="cuerpo">
 <div id="sa_wrapper">
   <!-- DIV open "sa_wrapper" -->
   <div class="clearing">&nbsp;</div>
@@ -267,16 +287,29 @@
      
     </div>
     <!-- DIV close sa_content -->
+
   </div>
       <!-- DIV close sa_content_wrapper -->
       <div class="clearing">&nbsp;</div>
       <div style="clear:both"></div>
     </div>
     <!-- DIV close sa_wrapper -->
+    </div>
+    <!-- DIV close pgContent Body -->
+    <div class="bottom"></div>
   </div>
   <!-- End pgPageContent -->
   <br>
 </div>
 <!-- End pgSiteContainer -->
+<div id="footer">
+ </div>	
+
+</div>
+<!-- End Nubes -->
+
+
+</div>
+<!-- End Todo -->
 </body>
 </html>

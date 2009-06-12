@@ -86,8 +86,9 @@ img.vMiddle{
 
 
 .cuerpo #sa_wrapper,.cuerpo #sa_wrapper2{
-	width: 95.5%;
+	width: 96%;
 	margin:20px;
+	padding-top:6px;
 	position:relative;
 }
 
@@ -112,7 +113,7 @@ img.vMiddle{
 	width:100%;
     float:right;
     margin-left:-197px; 
-    margin-top:-8px;
+    margin-top:0px;
 	
 }
 

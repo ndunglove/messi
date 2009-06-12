@@ -36,8 +36,8 @@
 	
 	//variable de deporte
 	
-	//$dep=$_SESSION["deporte"];
-	$dep=1;
+	$dep=$_SESSION["deporte"];
+	
 	//query de prueba
 	
 	/*$query="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha 
@@ -77,23 +77,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php 
+	if ($dep==1)
+		print('<link rel="shortcut icon" href="images/pelota_futbol.ico">');
+	else if ($dep==2)
+			print('<link rel="shortcut icon" href="images/pelota_tenis.ico">');
+?>
 <link rel="stylesheet" type="text/css" href="estilos/horario.css" >
 <link rel="stylesheet" type="text/css" href="estilos/Estilo.css" >
 <link rel="stylesheet" type="text/css" href="estilos/Estilo3.css" >
-<title>Untitled Document</title>
+
+<!--[if lt IE 7]>
+	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie6.css" />
+  
+<![endif]-->
+<!--[if gte IE 7]>
+	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
+<![endif]-->
+<title>CanchasOnline.com | Reserva de horarios</title>
 </head>
 
 <body>
+<?php
+	if ($cancha==0)
+	print('<div id="todo2">');
+	else print('<div id="todo">');
+?>
+
+<div id="nubes">
 <div id="pgSiteContainer" >
 <div id="banner">
+<div class="logo">
+</div>
 
 <div id="topmenu">
 		<ul>
-			<li><a href="perfil.php" id="topmenu1" accesskey="1" title="">Perfil</a></li>
-			<li><a href="reservas.php" id="topmenu3" accesskey="2" title="">Reservas Realizadas</a></li>
-			<li><a href="logout.php" id="topmenu2" accesskey="3" title="">Logout</a></li>
+			<li><a href="perfil.php" id="topmenu1" accesskey="1" ><img src="images/perfil.gif" /></a></li>
+			<li><a href="reservas.php" id="topmenu3" accesskey="2" ><img src="images/reservas.gif" /></a></li>
+			<li><a href="logout.php" id="topmenu2" accesskey="3" ><img src="images/logout.gif" /></a></li>
 		</ul>
+
 	</div>
+
+<?php 
+	if ($dep==1)
+		print('<div class="top_futbol"> </div>');
+	else if ($dep==2)
+			print('<div class="top_tenis"> </div>');
+?>
 
 <div class="clearing">&nbsp;</div>
 </div>
@@ -101,7 +132,7 @@
 <div id="pgPageContent">
 <div class="top">
 </div>
-<div class="cuerpo">
+<div class="cuerpo2">
 <div class="clearing">&nbsp;</div>
 
 <!--canchas -->
@@ -152,7 +183,6 @@
       <div style="clear:both"></div>
 </div>
 <!-- DIV close sa_wrapper -->
-
 <?php
 	if ($cancha!=0)
 	{
@@ -306,5 +336,23 @@
   <!-- End pgPageContent -->
   <br>
   </div><!-- End pgSiteContainer -->
+
+
+<?php
+	if ($cancha==0)
+	print('</div> <!-- End Nubes -->
+			<div id="nofooter"></div>
+		</div> <!-- End Todo -->
+		<div id="footer2">
+		</div>');
+	else print('<div id="footer">
+		</div>
+			   
+			   </div> <!-- End Nubes -->
+			
+		</div> <!-- End Todo -->
+		');
+?>
+
 </body>
 </html>
