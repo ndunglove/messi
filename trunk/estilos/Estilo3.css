@@ -105,13 +105,14 @@ img.vMiddle{
 } */
 
 #sa_wrapper{
-
+	
 }
 
 #sa_content_wrapper{
-	width:100%;
+	width:97%;
     float:right;
-   
+   margin-right: 15px;
+   margin-top: 10px;
     
 	
 }

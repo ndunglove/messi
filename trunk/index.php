@@ -113,7 +113,7 @@
 <!--[if gte IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
 <![endif]-->
-<title>DBusiness | Bienvenido</title>
+<title>CanchasOnline.com | Bienvenido</title>
 <script src="SpryAssets/SpryValidationTextField.js"       type="text/javascript"      xml:space="preserve"></script>
 <script src="SpryAssets/SpryValidationSelect.js"      type="text/javascript"      xml:space="preserve"></script>
 <link href="SpryAssets/SpryValidationTextField.css"          rel="stylesheet"          type="text/css" />
@@ -122,10 +122,10 @@
 <body>
 <div id="todo">
 <div id="nubes">
+
 <div id="todoIndex">
 <div class="logo">
 </div>
-
   <div class="login">
     <form id="Formulario"
               name="Formulario"
@@ -209,7 +209,7 @@
                                                                     
                                                                     $salida='<tr><td colspan="3" align="right"><span style="color:red; font-size=11px;">'.$msg.'</span></td></tr>';
                                                                     
-                                                                    printf($salida);
+                                                                    print($salida);
                                                                 ?>
           </tbody>
         </table>
@@ -401,11 +401,9 @@ return false;
   <div class="clearing">&nbsp;</div>
 </div>
 
- 
- <div id="footer">
- 	
- </div>
-</div> <!-- fin nubes -->
+</div>
+<div id="footer">
+</div>
 </div>
 <script type="text/javascript"
       xml:space="preserve">
