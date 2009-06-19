@@ -14,6 +14,7 @@
 	$cancha=$_SESSION["cancha"];
 	$club=$_SESSION["club"];
 	$usuario=$_SESSION["ID"];
+	$dep=$_SESSION["deporte"];
 	
 	if ($_POST['action']=="reservar")
 	{
@@ -23,6 +24,7 @@
 		
 		$query_2="INSERT INTO reserva (ID_Usuario,D_FechaReserva) VALUES(".$usuario.",'".$fecha2."')";
 		mysql_query($query_2);
+		
 		$_SESSION["reserva"]=mysql_insert_id();
 		
 		$reserva=$_POST["reserva"];
@@ -31,42 +33,42 @@
 			$r = split(';',$r);
 			$fecha3=$r[2];
 			$fecha3=split("/",$fecha3);
-			$fecha3=$fecha[2].'-'.$fecha3[1].'-'.$fecha3[0];
+			$fecha3=$fecha3[0].'-'.$fecha3[1].'-'.$fecha3[2];
 			$query_1="INSERT INTO hora (D_HoraInicio,D_HoraFin) VALUES (".$r[0].",".$r[0].")";
 			mysql_query($query_1);
 			$hora_id=mysql_insert_id();
 			
-			$query="INSERT INTO horario (ID_Hora, ID_Cancha,D_Fecha, C_Dia, ID_Reserva) VALUES (".$hora_id.", ".$cancha.", '".$fecha."', ".$r[1].", ".$_SESSION["reserva"].")";
+			$query="INSERT INTO horario (ID_Hora, ID_Cancha, ID_Club,D_Fecha, C_Dia, ID_Reserva) VALUES (".$hora_id.", ".$cancha.", ".$club.", '".cambiaf_a_mysql($fecha3)."', ".$r[1].", ".$_SESSION["reserva"].")";
 			mysql_query($query);		
 		}
-	}
-	
-	if(!isset($_SESSION["back"]))	
-	{
-		$_SESSION["back"]=0;
-	}
-	
-	$vuelve=$_SESSION["back"];
-	$dep=$_SESSION["deporte"];
+	}		
 	
 	if ($_POST['action']=="adicional")
 	{
 		//funcion para agregar los detalles adicionales a la reserva
 		
-		$adicional=$_POST["adicionales"];
-		foreach ($adicional as $r)
-		{
-			$adicional=$r.';'.$adicional;
+		$adi="";
+		if (isset($_POST["adicionales"]))
+			$adi=$_POST["adicionales"];
+		$adi_aux="";
+		
+		if($adi!=""){
+		foreach ($adi as $r)
+		{			
+			$adi_aux=$r.';'.$adi_aux;
 		}
 		
-		$query_4="UPDATE reserva SET T_DetallesAdicionales='".$adicional."' WHERE ID_Reserva=".$_SESSION["reserva"].")";
-		$result=mysql_query($query_4);
-		
-		if ($result==false)
-			$_SESSION["back"]=0;
+			$query_4="UPDATE reserva SET T_DetallesAdicionales='".$adi_aux."' WHERE ID_Reserva=".$_SESSION["reserva"];
+			$result=mysql_query($query_4);
+			
+			if ($result==false)
+				$_SESSION["back"]=0;
+			else $_SESSION["back"]=1;
+		}		
 		else $_SESSION["back"]=1;
 	
 	}
+	$vuelve=$_SESSION["back"];
 	
 ?>
 
@@ -102,14 +104,7 @@
 <div class="logo">
 </div>
 
-<div id="topmenu">
-		<ul>
-			<li><a href="perfil.php" id="topmenu1" accesskey="1" ><img src="images/perfil.gif" /></a></li>
-			<li><a href="reservas.php" id="topmenu3" accesskey="2" ><img src="images/reservas.gif" /></a></li>
-			<li><a href="logout.php" id="topmenu2" accesskey="3" ><img src="images/logout.gif" /></a></li>
-		</ul>
-
-	</div>
+<?php include('topmenu.php') ?>
 
 <?php 
 	if ($dep==1)
@@ -149,12 +144,17 @@
 				printf('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].'" /> '.$row[0].'</span> <br/><br/>');	
 			}
 		?>
-			<input type="submit" name="reservar" id="reservar" value="Agregar" />
+			<input type="submit" name="reservar" id="reservar" value="Agregar" class="boton"/>
         	<input type="hidden" name="action" value="adicional" />          
 		</form>
         
         <?php }
-		else printf("Muchas gracias, su reserva se ha realizado satisfactoriamente");
+		else 
+			{
+				printf("Muchas gracias, su reserva se ha realizado satisfactoriamente.");
+				
+			}
+		
 		?>
 		</div>
           <!-- DIV close sa_products -->
