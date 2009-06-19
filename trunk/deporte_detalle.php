@@ -193,6 +193,8 @@
  </div>
 </div>
 <!-- End Todo -->
+<div id="anuncios">
+ </div>	
 <div id="footer2">
  </div>
 </body>

@@ -271,8 +271,9 @@
   <!-- End pgPageContent -->
   <br>
   </div><!-- End pgSiteContainer -->
-
-<div id="footer">
+<div id="anuncios2">
+ </div>	
+<div id="footer2">
 </div>
 			   
  </div> <!-- End Nubes -->

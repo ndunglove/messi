@@ -299,20 +299,38 @@ body {
 	margin-left:210px;
 }
 
+#anuncios {
+	height:100px;
+	background-image:url(../images/def.gif);
+	background-repeat:repeat-x;
+	margin-top:-30px;
+	position:bottom;
+	
+	}
+
+#anuncios2 {
+	height:100px;
+	background-image:url(../images/def.gif);
+	background-repeat:repeat-x;
+	position:relative;
+	z-index:1;
+	}
+
+
 #footer {
 	height:121px;
 	background-image:url(../images/pasto.gif);
 	background-repeat:repeat-x;
 	margin-top:-30px;
 	position:bottom;
-	
+	z-index:20;
 	}
 #footer2 {
 	height:121px;
 	background-image:url(../images/pasto.gif);
 	background-repeat:repeat-x;
 	position:relative;
-	
+	z-index:20;
 	}
 #nofooter {
 	height:121px;
