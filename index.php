@@ -8,20 +8,20 @@
     
     if (!isset($_SESSION['op'])) 
     {
-        $_SESSION['op'] = "1"; 
+        $_SESSION['op']=1; 
     }
 	
 	if (!isset($_SESSION['op2'])) 
     {
-        $_SESSION['op2'] = "1"; 
+        $_SESSION['op2']=1; 
     }
     
-    $ver=$_SESSION['op'];
+    
     
     $usuario="";
     $clave="";
 	
-	$chekreg=$_SESSION['op2'];
+	
     
     if (!isset($_POST['action'])) 
     {
@@ -45,9 +45,8 @@
                 }
             else $_SESSION['op']=3; 
         }
-        else {
-                $_SESSION['op']=2;
-             }
+        else $_SESSION['op']=2;
+           
     }
 	
 	if ($_POST['action'] == "registrar")
@@ -56,8 +55,9 @@
 			$nombre=$_POST["nombre"];
 			$pass=$_POST["pass"];
 			$pass2=$_POST["pass2"];
-			//$distrito=$_POST["email"];
-			//$fecha=$_POST["email"];
+			$distrito=$_POST["distrito"];
+			$fechas=$_POST["dia"]."-".$_POST["mes"]."-".$_POST["anio"];
+			
 			if ($pass==$pass2)
 				{
 					$result = mysql_query("SELECT ID_Usuario FROM usuario WHERE T_Email='".$email."'");
@@ -65,7 +65,7 @@
 					
 					if ($row==false)
 					{
-						$result = mysql_query("INSERT INTO usuario(N_Nombre, T_Email, T_Pass) VALUES ('".$nombre."','".$email."','".$pass."') " );						
+						$result = mysql_query("INSERT INTO usuario(N_Nombre, T_Email, T_Pass, D_FechaNacimiento, ID_Distrito,F_Estado) VALUES ('".$nombre."','".$email."','".$pass."','".cambiaf_a_mysql($fechas)."',".$distrito.",1) " );						
 						if ($result!=false)
 							$_SESSION['op2']=4; 
 					}
@@ -75,7 +75,8 @@
 			
 		}
 		
-    
+    $ver=$_SESSION['op'];
+	$chekreg=$_SESSION['op2'];
 ?>
 <?php
     if (isset($_SESSION['ID'])) {
@@ -106,6 +107,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 <link href="estilos/Estilo.css"      rel="stylesheet"        type="text/css" />
 <!--[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie6.css" />
@@ -116,10 +118,14 @@
 <title>CanchasOnline.com | Bienvenido</title>
 <script src="SpryAssets/SpryValidationTextField.js"       type="text/javascript"      xml:space="preserve"></script>
 <script src="SpryAssets/SpryValidationSelect.js"      type="text/javascript"      xml:space="preserve"></script>
+<script src="SpryAssets/SpryValidationCheckbox.js" type="text/javascript"></script>
 <link href="SpryAssets/SpryValidationTextField.css"          rel="stylesheet"          type="text/css" />
 <link href="SpryAssets/SpryValidationSelect.css"           rel="stylesheet"          type="text/css" />
+<link href="SpryAssets/SpryValidationCheckbox.css" rel="stylesheet" type="text/css" />
+
 </head>
-<body>
+<body >
+
 <div id="todo">
 <div id="nubes">
 
@@ -194,23 +200,24 @@
                   <br />
                 </div></td>
             </tr>
-            <?php 
-                                                                
+            <tr><td colspan="3" align="right"><span style="color:red; font-size=11px;">
+            <?php                                                                
                                                                     $msg="";
                                                                     
-                                                                    if ($ver=="2")
+                                                                    if ($ver==2)
                                                                     {
-                                                                        $msg="usuario incorrecto\n o no existe.";
+                                                                        $msg="usuario incorrecto o no existe.";
                                                                     }
-                                                                    else if ($ver=="3")
+                                                                    else if ($ver==3)
                                                                     {
                                                                         $msg="clave incorrecta.";
                                                                     }
                                                                     
-                                                                    $salida='<tr><td colspan="3" align="right"><span style="color:red; font-size=11px;">'.$msg.'</span></td></tr>';
+                                                                    $salida=$msg;
                                                                     
                                                                     print($salida);
                                                                 ?>
+            </span></td></tr>
           </tbody>
         </table>
       </div>
@@ -255,7 +262,7 @@ return false;
               <input type="text"
                                name="nombre"
                                id="nombre"
-                               class="edit" />
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $nombre; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
               requerido.</span></span></td>
@@ -268,7 +275,7 @@ return false;
                         "text"
                                name="email"
                                id="email"
-                               class="edit" />
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $email; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
               requerido.</span></span></td>
@@ -280,7 +287,7 @@ return false;
               <input type="password"
                                name="pass"
                                id="pass"
-                               class="edit" />
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $pass; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
               requerido.</span></span></td>
@@ -288,21 +295,17 @@ return false;
           <tr>
             <td>Confirmar Password</td>
             <td>:</td>
-            <td><span id="sprytextfield5">
-              <input type="password"
-                               name="pass2"
-                               id="pass2"
-                               class="edit" />
-              <span class=
-                               "textfieldRequiredMsg">Valor
-              requerido.</span></span></td>
+            <td>
+              <span id="sprytextfield6">
+              <input type="password" name="pass2" id="pass2"
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $pass2; ?>"/>
+              <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
           </tr>
           <tr>
             <td>Fecha de Nacimiento</td>
             <td>:</td>
             <td><span id="spryselect1">
-              <select name="dia"
-                                id="dia">
+              <select name="dia" >
                 <option> D&#237;a: </option>
                 <?php 
                                                                         for ($i=1;$i<=31; $i++){
@@ -311,20 +314,16 @@ return false;
                                                                       ?>
               </select>
               </span> <span id="spryselect2">
-              <select name=
-                        "mes"
-                                id="mes">
+              <select name="mes" >
                 <option> Mes: </option>
                 <?php 
-                                                                        for ($i=1;$i<=31; $i++){
+                                                                        for ($i=1;$i<=12; $i++){
                                                                             printf("<option value='".$i."'>".$i."</option>");               
                                                                             }
                                                                       ?>
               </select>
               </span> <span id="spryselect3">
-              <select name=
-                        "anio"
-                                id="anio">
+              <select name="anio" >
                 <option> A&#241;o: </option>
                 <?php 
                                                                         for ($i=2009;$i>=2009-100; $i--){
@@ -338,8 +337,7 @@ return false;
             <td>Distrito</td>
             <td>:</td>
             <td><span id="spryselect4">
-              <select name="distrito"
-                                id="distrito">
+              <select name="distrito">
                 <option> Distrito: </option>
                 <?php 
                                                                     
@@ -357,12 +355,20 @@ return false;
           <tr>
             <td></td>
             <td></td>
+            <td><span id="sprycheckbox1" style="font-weight:normal; color:#2B2700">
+      <input type="checkbox" name="checkbox1" id="checkbox1" /> Acepto los términos y condiciones de uso.
+      <br/><span class="checkboxRequiredMsg">Por favor, acepte los términos y condiciones.</span></span>
+              </td>
+          </tr>
+        
+          <tr>
+            <td></td>
+            <td></td>
             <td><input name="registrar"
                                type="submit"
                                value="registrar"
                                class="boton"
-                               onclick=
-                               "return isEmailAddress(email,'email')" />
+                               onclick="return isEmailAddress(email,'email')" />
               <input type="reset"
                                class="boton"
                                name="BtnCancelar2"
@@ -370,8 +376,12 @@ return false;
                                value="Cancelar" />
               <input name="action"
                                type="hidden"
-                               value="regitrar" /></td>
+                               value="registrar" /></td>
           </tr>
+          <tr>
+          <td></td>
+            <td></td>
+            <td  align="left"><span style="color:red; font-size=11px;">
           <?php 
                                                                 
                                                                     $msg="";
@@ -380,19 +390,20 @@ return false;
                                                                     {
                                                                         $msg="Por favor, asegurese de que sus claves coincidan";
                                                                     }
-                                                                    else if ($chekreg==3)
+                                                                    elseif ($chekreg==3)
                                                                     {
-                                                                        $msg="Existe un usuario con el mismo email,<br/> por favor, intente con un email distinto";
+                                                                        $msg="El email ingresado ya existe. Por favor ingrese otro.";
                                                                     }
-																	else if ($chekreg==4)
+																	elseif ($chekreg==4)
                                                                     {
                                                                         $msg="Se ha registrado satisfactoriamente";
                                                                     }
                                                                     
-                                                                    $salida='<tr><td colspan="3" align="right"><span style="color:red; font-size=11px;">'.$msg.'</span></td></tr>';
+                                                                    $salida=$msg;
                                                                     
                                                                     printf($salida);
                                                                 ?>
+          </span></td></tr>
         </tbody>
       </table>
     </form>
@@ -420,7 +431,10 @@ var spryselect3 = new Spry.Widget.ValidationSelect("spryselect3");
 var spryselect4 = new Spry.Widget.ValidationSelect("spryselect4");
 //-->
 //]]>
+var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
+var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
 </script>
 <?php } ?>
+
 </body>
 </html>

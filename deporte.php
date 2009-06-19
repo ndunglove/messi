@@ -17,6 +17,7 @@
 <!-- icono barra explo
 <slink rel="shortcut icon" href="icono">-->
 <link rel="stylesheet" type="text/css" href="estilos/Estilo.css" >
+<link rel="stylesheet" type="text/css" href="estilos/Estilo3.css" >
 <!--[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie6.css" />
 <![endif]-->
@@ -34,7 +35,7 @@
 <div class="logo">
 </div>
 
-
+<?php include('topmenu.php') ?>
   <div class="clearing">&nbsp;</div>
   <div class="tenis">
    		<a href="deporte_index.php?deporte=2"><img src="images/tenis.gif" /></a>

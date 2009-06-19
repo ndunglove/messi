@@ -125,6 +125,7 @@ img.vMiddle{
 
 #sa_content_wrapper #sa_content{
 	margin-left:210px;
+	min-height:400px;
 }
 
 /* FILTERS ON TOP*/
@@ -246,6 +247,7 @@ p.pg_disclaimer {
 	background-color:#eee;
 	clear:right;
 	padding:10px 10px 10px 10px;
+	min-height:200px;
 }
 
 #sa_products .productsContainer{

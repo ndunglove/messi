@@ -68,9 +68,10 @@
 		}
 	}
 
-	if (!isset($_SESSION["cancha"]))
-		$cancha=0;
-	else $cancha=$_SESSION["cancha"];
+	if (isset($_GET["cancha"]))
+		$_SESSION["cancha"]=$_GET["cancha"];
+	$cancha=$_SESSION["cancha"];
+	$_SESSION["back"]=0;
 	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -98,27 +99,14 @@
 </head>
 
 <body>
-<?php
-	if ($cancha==0)
-	print('<div id="todo2">');
-	else print('<div id="todo">');
-?>
-
+<div id="todo">
 <div id="nubes">
 <div id="pgSiteContainer" >
 <div id="banner">
 <div class="logo">
 </div>
 
-<div id="topmenu">
-		<ul>
-			<li><a href="perfil.php" id="topmenu1" accesskey="1" ><img src="images/perfil.gif" /></a></li>
-			<li><a href="reservas.php" id="topmenu3" accesskey="2" ><img src="images/reservas.gif" /></a></li>
-			<li><a href="logout.php" id="topmenu2" accesskey="3" ><img src="images/logout.gif" /></a></li>
-		</ul>
-
-	</div>
-
+<?php include('topmenu.php') ?>
 <?php 
 	if ($dep==1)
 		print('<div class="top_futbol"> </div>');
@@ -135,58 +123,7 @@
 <div class="cuerpo2">
 <div class="clearing">&nbsp;</div>
 
-<!--canchas -->
-<div id="sa_wrapper">
- <div id="sa_content_wrapper">
-    <div id="sa_content">
-<div id="sa_listTop">
-		<div id="sortBy">
-            <ul>            
-                <li ><em>Canchas</em></li>    
-            </ul>
-        </div>        
-        <div id="sa_products">
-		<form action="deporte_horario.php" method="post">
-		<?php 
-			//lista las canchas resultantes del query.
-			$result = mysql_query($query,$link);
-			while ($row = mysql_fetch_array($result))
-			{
-				$fila=dame_Cancha($row["ID_Cancha"],$link,$dep);
-				$techado="No";
-				if ($fila[2]==1)
-					$techado="Si";
-				if ($cancha!=0 && $fila[0]==$cancha)
-					$temp='checked="checked"';
-				else $temp="";
-				
-				printf('<span><input type="radio" name="canchas" value="'.$fila[0].'" '.$temp.' />'.$fila[1].' (Tama&ntilde;o: '.$fila[3].', Tipo: '.$fila[4].', Techado: '.$techado.')</span> <br/>');	
-			}
-		?>
-			<input type="submit" name="reservar" id="reservar" value="Reservar" />
-        	<input type="hidden" name="action" value="sel_cancha" />          
-		</form>
-		</div>
-          <!-- DIV close sa_products -->
-         <div id="pg_pagination">
-				
-				<div class="clearing">&nbsp;</div>
-				<div id="pg_paginationRight"></div>
-			</div>
-        </div>
-        <!-- DIV close listTop -->
- </div>
-    <!-- DIV close sa_content -->
-  </div>
-      <!-- DIV close sa_content_wrapper -->
-      <div class="clearing">&nbsp;</div>
-      <div style="clear:both"></div>
-</div>
-<!-- DIV close sa_wrapper -->
-<?php
-	if ($cancha!=0)
-	{
-?>
+
 <!--horarios -->
 <div id="sa_wrapper">
  <div id="sa_content_wrapper">
@@ -298,8 +235,8 @@
     </tbody>
 </table>
 <div align="right" style="padding-right:130px;">
-<input type="submit" name="reservar" id="reservar" value="Reservar" />
-<input type="reset" name="reset" id="reset" value="Cancelar" />
+<input type="submit" name="reservar" id="reservar" value="Reservar" class="boton" />
+<input type="reset" name="reset" id="reset" value="Cancelar" class="boton" />
 <input type="hidden" name="action" value="reservar" />
 </div>
 </form>
@@ -324,9 +261,7 @@
       <div style="clear:both"></div>
     </div>
     <!-- DIV close sa_wrapper -->
-<?php
-}
-?>
+
     <div class="clearing">&nbsp;</div>
       <div style="clear:both"></div>
     </div>
@@ -337,22 +272,12 @@
   <br>
   </div><!-- End pgSiteContainer -->
 
-
-<?php
-	if ($cancha==0)
-	print('</div> <!-- End Nubes -->
-			<div id="nofooter"></div>
-		</div> <!-- End Todo -->
-		<div id="footer2">
-		</div>');
-	else print('<div id="footer">
-		</div>
+<div id="footer">
+</div>
 			   
-			   </div> <!-- End Nubes -->
+ </div> <!-- End Nubes -->
 			
-		</div> <!-- End Todo -->
-		');
-?>
+</div> <!-- End Todo -->
 
 </body>
 </html>

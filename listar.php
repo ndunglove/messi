@@ -35,7 +35,7 @@ function quitaORinicial($cadena){
 }
 
 function quitaANDinicial($cadena){	
-	$orr=substr($cadena,0,4);//extrae los tres primeros carcteres de cadena tratando de buscar OR
+	$orr=substr($cadena,0,4);//extrae los tres primeros caracteres de cadena tratando de buscar OR
 	$or= trim($orr);//se quita los espacios en blanco tanto a la derecha como a la izquierda	
 	
 	if($or=="and" || $or=="AND")//si encuentra OR entonces devuelve el resto de la cadena, excluyendo el OR q se euncuentra al inicio
@@ -207,7 +207,7 @@ for($i=1;$i<=2;$i++){
 	
 	
 /*	
-echo $distrito;
+	echo $distrito;
 	echo "<br>***********************<br>";	
 	echo $tipo;
 	echo "<br>***********************<br>";
@@ -230,14 +230,14 @@ echo $distrito;
 	echo "<b>WHERE: </b>".$where;
 */	
 
-$aux3=" GROUP BY cancha.ID_Cancha ";
-$_SESSION["query"]=$select.$from.$where.$aux3;
+//$aux3=" GROUP BY cancha.ID_Cancha ";
+$_SESSION["query"]=$select.$from.$where;
 
-$where.=" GROUP BY club.ID_Club ";
+//$where.=" GROUP BY cancha.ID_Cancha ";
 $sql=$select.$from.$where;
 
 
-//echo "<br/><b>CONSULTA: </b><br>".$sql;	
+//echo "<br/><b>CONSULTA: </b><br/>".$sql;	
 
 $result = mysql_query($sql);
 $cantClubEncontrados=mysql_num_rows($result);
@@ -257,7 +257,7 @@ if($cantClubEncontrados > 0)
                 <!-- productImage DIV *** END -->
                 <div class="prodTitle"> <a href="#"  class="prod_title"  ><b> <?php echo $row["NombreClub"]; ?></b> </a> </div>
              
-                <div class="shopBtn"> <a href="deporte_horario.php?club=<?php echo $row['ID_Club'];?>" class="comparePricesBtn"><span>Reservar</span> </a> </div>
+                <div class="shopBtn"> <a href="deporte_horario.php?club=<?php echo $row['ID_Club'];?>&cancha=<?php echo $row['ID_Cancha'];?>" class="comparePricesBtn"><span>Reservar</span> </a> </div>
                 <div class="moreInfo"><a>&nbsp;</a></div>
                 <div class="search_gridView_containerBottom">
                   &nbsp;
