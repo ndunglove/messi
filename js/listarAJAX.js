@@ -18,7 +18,7 @@ function getXMLHTTPRequest() {
 var http = getXMLHTTPRequest();
 //fin cargado de ajax
 function consulta(nombreForm){
-		var mensaje=document.getElementById("mensaje");
+		var mensaje=document.getElementById("searchContainerBox_background");
 		
 		texto="<img src='loading.gif'/><br/><br/><b>Procesando. Por favor espere.</b><br/>";
     mensaje.innerHTML=texto;  
@@ -26,14 +26,19 @@ function consulta(nombreForm){
     http.open("POST", "listar.php", true);
     http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     
-    if (nombreForm=="1"){         
-    http.send(""); 
-    }//if (nombreForm=="1")
+    var deport=document.getElementById("deporte").value;
+    
+    if (nombreForm=="0"){     
+    	cadena="";    
+    	cadena="iddeporte="+deport;
+    http.send(cadena); 
+    }//if (nombreForm=="0")
     
     else{ 
     cadena="";
     var d=document;
 		var formt=d.forms[nombreForm].length;
+		
 		var j=0;
 		while(j<formt){
 		    if(d.forms[nombreForm].elements[j].type=='checkbox' 
@@ -41,24 +46,24 @@ function consulta(nombreForm){
 		       nombreCk=d.forms[nombreForm].elements[j].name;
 		       valueCk=d.forms[nombreForm].elements[j].value;
 		       cadena=cadena+nombreCk+"="+valueCk+"&";
-		       //cadena=cadena+nombreCk+j+"="+nombreCk+"&";
+		       
 		    }
 		    j++;
 		}//while
+		/*
+		if(cadena=="")
+			
+		else
+			cadena=cadena+iddeporte+"="+"Avacio";
+    */
     
-    precioMin=document.getElementById("precioMinimo").value;
-    precioMax=document.getElementById("precioMaximo").value;
+    precioMin=document.getElementById("lo_p").value;
+    precioMax=document.getElementById("hi_p").value;
     
     cadena=cadena+"precioMinimo="+precioMin+"&precioMaximo="+precioMax;
-   /*
-   precioMin=d.forms[nombreForm].elements[precioMinimo].value;
-    ee=formr-1;
-    precioMax=d.forms[nombreForm].elements[ee].value;
-    cadena=cadena+"precioMin="+precioMin+"&precioMax="+precioMax;
-   */
-    http.send(cadena);
-    //http.send("dato="+nombreForm+"&dato2=qqqq");
-            
+    cadena=cadena+"&iddeporte="+deport;
+      
+    http.send(cadena);   
  
 	}//else mayor
 	
@@ -69,27 +74,8 @@ function consulta(nombreForm){
     	} 
 }
 
-function validaVoucher(nroVoucher){
-		var mensaje=document.getElementById("mensajeVoucher");
-		
-		texto="<img src='loading.gif'/><br/><br/><b>Procesando. Por favor espere.</b><br/>";
-    mensaje.innerHTML=texto;  
-    
-    http.open("POST", "validarVoucher.php", true);
-    http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    voucher=nroVoucher
-    http.send(voucher);
-	
-	http.onreadystatechange=function(){ 			
-        if (http.readyState==4){
-            mensaje.innerHTML=http.responseText;
-				}//if (http.readyState==4)
-    	} 
-}
-
-
-
-
+/*
 onload=function(){
-    consulta('1');
+    consulta('0');
 }
+*/

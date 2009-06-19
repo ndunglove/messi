@@ -413,6 +413,8 @@ return false;
 </div>
 
 </div>
+<div id="anuncios">
+ </div>	
 <div id="footer">
 </div>
 </div>

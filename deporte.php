@@ -36,6 +36,7 @@
 </div>
 
 <?php include('topmenu.php') ?>
+
   <div class="clearing">&nbsp;</div>
   <div class="tenis">
    		<a href="deporte_index.php?deporte=2"><img src="images/tenis.gif" /></a>
@@ -47,6 +48,8 @@
 
 
 </div> <!-- fin todo deporte --> 
+<div id="anuncios">
+ </div>	
 <div id="footer">
  </div>	
 
