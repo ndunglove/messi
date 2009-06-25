@@ -182,7 +182,7 @@
 <!-- End pgSiteContainer -->
 <div id="anuncios2">
  </div>	
-<div id="footer2">
+<div id="footer">
  </div>	
 
 </div>

@@ -268,7 +268,7 @@
           </div>
           <!-- DIV close sa_products -->
          <div id="pg_pagination">
-				
+			
 				<div class="clearing">&nbsp;</div>
 				<div id="pg_paginationRight"></div>
 			</div>

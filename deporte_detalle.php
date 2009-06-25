@@ -193,9 +193,9 @@
  </div>
 </div>
 <!-- End Todo -->
-<div id="anuncios">
+<div id="anuncios2">
  </div>	
-<div id="footer2">
+<div id="footer">
  </div>
 </body>
 </html>

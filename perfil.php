@@ -12,9 +12,66 @@
 			$_GET["deporte"]=1;
 	}
 	
+	if (!isset($_POST['action'])) {
+		$_POST['action'] = "undefine";
+	}
+	
 	$_SESSION["cancha"]=0;
 	$dep=$_GET["deporte"];
 	$_SESSION["deporte"]=$dep;
+	$estado = 0;
+	$estado2=0;
+	$status='';
+	
+	if ($_POST["action"] == "upload") 
+	{
+	
+		$prefijo = substr(md5(uniqid(rand())),0,6);
+
+    	// obtenemos los datos del archivo pdf
+		$archivo = $_FILES["archivo"]['name'];
+	
+		if ($archivo != "") 
+		{
+			// guardamos el archivo a la carpeta files
+			$destino =  "Files/fotos/".$prefijo."_".$archivo;
+			$img_mime=array("image/jpeg","image/jpg","image/png","image/gif","image/pjpeg"); 
+			if ( (in_array($_FILES['archivo']['type'],$img_mime)) )
+			{		
+				if (copy($_FILES['archivo']['tmp_name'],$destino))
+				{
+					$status = $destino;
+					$query="UPDATE usuario SET T_Imagen='".$destino."' WHERE ID_Usuario=".$_SESSION['ID'];
+					$chek = mysql_query($query);
+					if ($chek!=false)
+						$estado2=1;				
+					else  $estado2=0; 
+				} else {
+					$status = "Error al subir el archivo";
+				}
+			} else {
+				$status = "Error: Tipo de archivo no permitido";
+			}
+		} else {
+			$status = "Error al subir archivo";
+		}
+	}
+	elseif ($_POST["action"] == "eliminar") {
+		
+		$query="SELECT T_Imagen FROM usuario WHERE ID_Usuario=".$_SESSION['ID'];					 
+		$res = mysql_query($query);
+		if (is_file('"'.$res[0].'"'))
+			unlink('"'.$res[0].'"');
+		
+		$query="UPDATE usuario SET T_Usuario='' WHERE ID_Usuario=".$_SESSION['ID'];
+		$chek = mysql_query($query);
+		if ($chek!=false)
+			$estado=0;				
+		else  $estado=1;
+	}
+	
+	//-------------------------------------------------------
+	
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,6 +98,8 @@
 <!--[if gte IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
 <![endif]-->
+<script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+<link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -79,8 +138,7 @@
       </div>
     </div>
     <!-- End featuredStores -->
-  
-     <?php include('menu_izq.php'); ?>
+    <?php include('menu_izq.php'); ?>
     <div height="10">&nbsp;</div>
   
   </div>
@@ -89,20 +147,132 @@
   <div id="sa_content_wrapper">
     <div id="sa_content">
       <p class="spacer">&nbsp;</p>
-      <form  id="productCompareForm" method="get" action="/laptop/p/13/compare/"  name="compare">
+      
         <div id="sa_listTop">
         <div id="sortBy">
             <ul>
                 
-                <li ><em>Perfíl</em></li>
+                <li ><em>Perf&iacute;l</em></li>
+	<?php	
+		$result = mysql_query("SELECT usuario.T_Imagen, usuario.N_Nombre, usuario.T_Email, usuario.C_Puntos, distrito.N_Nombre, usuario.C_Telefono, usuario.T_Direccion FROM usuario, distrito WHERE usuario.ID_Distrito=distrito.ID_Distrito AND usuario.ID_Usuario=".$_SESSION['ID']);
+		$row = mysql_fetch_row($result);
+		if ($_POST['action'] == "undefine")
+			$status=$row[0];
 
+		if ($row[0]!=NULL || $row[0]!='')
+			$estado = 1;
+		
+	?>
     
             </ul>
         </div>
           <div id="sa_products">     	
           	<div id="searchContainerBox_background">
             
-          		
+          		<table align="center" id="horario">
+                	<tr>
+                	  <td width="140" rowspan="5" ><span class="foto"><?php if ($estado==1) print('<img src="'.$row[0].'" width="140" height="185" />'); ?></span></td>
+                	  <td width="10">&nbsp;</td>
+                	  <td width="320"><h4><?php echo $row[1];?></h4></td>
+              	  </tr>
+                	<tr>
+                	  <td>&nbsp;</td>
+                	  <td><?php echo $row[2];?></td>
+              	  </tr>
+                	<tr>
+                	  <td>&nbsp;</td>
+                	  <td>Puntos acumulados: <?php echo $row[3];?></td>
+              	  </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td><?php echo $row[4];?></td>
+
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+               </table>
+               <form action="perfil.php" method="post">
+               <table align="center" id="horario">
+                    <tr>
+                      <td width="140">Teléfono</td>
+                      <td width="10">:</td>
+                      <td width="320"><span id="sprytextfield1"><input type="text" name="telefono" class="edit" value="<?php echo $row['5']; ?>"/>
+                          <span class="textfieldRequiredMsg">valor requerido.</span></span></td>
+                    </tr>
+                    <tr>
+                      <td>Dirección</td>
+                      <td>:</td>
+                      <td><span id="sprytextfield2"><input type="text" name="direccion" class="edit" value="<?php echo $row['6']; ?>"/>
+                          <span class="textfieldRequiredMsg">valor requerido.</span></span></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><input type="submit" name="guardar" value="Guardar cambios" class="boton"/></td>
+                    </tr>
+       
+                </table>
+               
+               </form>
+                
+                
+                <table  border="0" align="center" id="horario">
+                 <thead>
+                   <tr>
+                     <th colspan="4" >Subir  Foto</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+				<form action="perfil.php" method="post" enctype="multipart/form-data">
+                 
+                 <tr>
+
+                   <td width="140">Especificar fotograf&iacute;a </td>
+                   <td width="10">:</td>
+                   <td width="320"><span id="sprytextfield3">
+                     <label> <input type="file" name="archivo" id="archivo" size="30" <?php if ($estado==1) print ('disabled="disabled"');  ?> style="background-color:white;" />
+                     </label>
+                     <span class="textfieldRequiredMsg">ruta requerida</span></span></td>
+                  
+                 </tr>
+				<tr>
+
+                   <td>&nbsp;</td>
+                   <td>&nbsp;</td>
+                   <td><input name="enviar" type="submit" id="enviar" value="Subir" <?php if ($estado==1) print ('disabled="disabled"'); ?> class="boton"/>
+                     <input name="action" type="hidden" value="upload" />
+                     <label class="info">(jpg, gif, png -&gt; max 1 MB)</label></td>
+                   
+                 </tr>
+                 </form>    
+                 <tr>
+
+                   <td>URL foto</td>
+                   <td>:</td>
+                   <td><?php if ($status!='') print($status); ?></td>
+                  
+                 </tr>
+                 <form action="perfil.php" method="post">            
+                 <tr>
+
+                   <td></td>
+                   <td></td>
+                   <td><input name="enviar" type="submit" id="enviar" value="eliminar" <?php if ($estado==0) print ('disabled="disabled"'); ?> class="boton"/>
+                     <input name="action" type="hidden" value="eliminar" /></td>
+                 
+                 </tr>
+                 </form>
+            
+                 </tbody>
+               </table>
+                
     		
     		</div>
             <!-- searchContainerBox_background DIV *** END -->
@@ -118,7 +288,7 @@
  
         </div>
         <!-- DIV close listTop -->
-      </form>
+      
      
     </div>
     <!-- DIV close sa_content -->
@@ -140,7 +310,7 @@
 
 <div id="anuncios2">
  </div>	
-<div id="footer2">
+<div id="footer">
  </div>	
 
 </div>
@@ -149,5 +319,11 @@
 
 </div>
 <!-- End Todo -->
+<script type="text/javascript">
+<!--
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
+//-->
+</script>
 </body>
 </html>
