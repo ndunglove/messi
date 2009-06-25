@@ -74,8 +74,6 @@ function consulta(nombreForm){
     	} 
 }
 
-/*
 onload=function(){
     consulta('0');
 }
-*/

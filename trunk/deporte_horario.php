@@ -7,10 +7,10 @@
     mysql_select_db($MySQL_BaseDatos, $link);
 	
 	//verifica si en la fecha y hora dada 
-	function es_reservado($fecha,$hora_inicio,$id_cancha,$link){
+	function es_reservado($fecha,$hora_inicio,$id_cancha,$link,$id_club){
 				$fecha=split("/",$fecha);
 				$fecha=$fecha[2]."-".$fecha[1]."-".$fecha[0];
-				$result = mysql_query("SELECT * FROM horario h1, hora h2 WHERE h1.ID_Hora=h2.ID_Hora AND ID_Cancha=".$id_cancha." AND h1.D_Fecha='".$fecha."' AND h2.D_HoraInicio<=".$hora_inicio." AND h2.D_HoraFin>=".$hora_inicio,$link);
+				$result = mysql_query("SELECT * FROM horario h1, hora h2 WHERE h1.ID_Hora=h2.ID_Hora AND ID_Club=".$id_club." AND ID_Cancha=".$id_cancha." AND h1.D_Fecha='".$fecha."' AND h2.D_HoraInicio<=".$hora_inicio." AND h2.D_HoraFin>=".$hora_inicio,$link);
 		 		$row = mysql_fetch_row($result);
 				if ($row==false)
 					return false;
@@ -214,7 +214,7 @@
 										 
 										 if (($fecha_fin==$fecha && $hora[0]<$i) || ($fecha_fin!=$fecha)) 
 										 {
-											 if (es_reservado($fecha_fin,$i,$cancha,$link)==true)
+											 if (es_reservado($fecha_fin,$i,$cancha,$link,$club)==true)
 												  printf('<span>reservado</span>');
 											 else printf('<input name="reserva[]" type="checkbox" value="'.$i.';'.$nroDia.';'.$fecha_fin.'" />'); 
 										 }
@@ -273,7 +273,7 @@
   </div><!-- End pgSiteContainer -->
 <div id="anuncios2">
  </div>	
-<div id="footer2">
+<div id="footer">
 </div>
 			   
  </div> <!-- End Nubes -->

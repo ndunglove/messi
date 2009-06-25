@@ -1,6 +1,3 @@
-<form id="sa_filters_form" name="filters" method="GET" action="deporte_index.php"> 
-    <!-- <form name="form2" action="" method="post" onsubmit="return false;" > -->
-    	<input type="hidden" name="deporte" id="deporte" value="<?php echo $dep; ?>"/>
     	
       <div id="sa_filters_nav">
         <ul id="sa_filters_main">
@@ -21,9 +18,6 @@
           
         </ul>
         <div id="updateFilterLink">
-        	<input type="hidden" name="buscar2" value="si">
-            <input type="submit" value="" />
         </div>
       </div>
       <!--END FILTER NAV CONTAINER-->
-    </form>

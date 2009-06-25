@@ -2,7 +2,7 @@
 session_start();
 require('conexion.php');
 require('config.php');
-
+require_once 'PHPPaging.lib.php'; 
 
 /* function getPageParameter($nombre, $defaultvalue, $debug=false):
  * Función que busca y devuelve un parametro '$nombre' de Pagina 
@@ -49,7 +49,13 @@ $dep=getPageParameter("iddeporte","");
 	
 $link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
 mysql_select_db($MySQL_BaseDatos, $link);
-    
+ 
+$paging = new PHPPaging($link);
+$paging->porPagina(8);
+$paging->mostrarActual("<span class=\"navthis\">{n}</span>"); 
+//$paging->nombreVariable("pag"); 
+//$paging->linkEstructura('deporte_index.php?pag={n}');
+ 
 $sql="";
 $select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha ";
 $from="FROM club, canchaxclub, cancha  ";
@@ -238,14 +244,19 @@ $sql=$select.$from.$where;
 
 
 //echo "<br/><b>CONSULTA: </b><br/>".$sql;	
-
-$result = mysql_query($sql);
-$cantClubEncontrados=mysql_num_rows($result);
+$paging->agregarConsulta($sql); 
+$paging->ejecutar();
+//$result = mysql_query($sql);
+$cantClubEncontrados=$paging->numTotalRegistros();
 $i=0;
 
 if($cantClubEncontrados > 0)
 	{ 
-		while ($row = mysql_fetch_array($result)){	
+	$links = $paging->fetchNavegacion();
+	if ($paging->numTotalPaginas()>1)
+		print('<div class="navi">'.$links.'</div><br/>');
+	
+		while ($row = $paging->fetchResultado()){	
 		?>
 		 
 							
@@ -270,6 +281,8 @@ if($cantClubEncontrados > 0)
 		
 	<?php		
 	}//while
+	
+			
 }//if
 
 else printf("<center><br/><br/><b>NO SE ENCONTRO CLUB SEGUN LOS CRITERIOS DE BUSQUEDA</b></center><br/><br/>");
