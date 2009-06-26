@@ -82,9 +82,10 @@
 	else if ($dep==2)
 			print('<link rel="shortcut icon" href="images/pelota_tenis.ico">');
 ?>
-<link rel="stylesheet" type="text/css" href="estilos/horario.css" >
+
 <link rel="stylesheet" type="text/css" href="estilos/Estilo.css" >
 <link rel="stylesheet" type="text/css" href="estilos/Estilo3.css" >
+<link rel="stylesheet" type="text/css" href="estilos/horario.css" >
 <!--[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie6.css" />
   
@@ -144,16 +145,45 @@
 				printf('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].'" /> '.$row[0].'</span> <br/><br/>');	
 			}
 		?>
-			<input type="submit" name="reservar" id="reservar" value="Agregar" class="boton"/>
-        	<input type="hidden" name="action" value="adicional" />          
+			<input type="submit" name="reservar" id="reservar" value="Continuar" class="boton"/>
+			<input type="hidden" name="action" value="adicional" />          
 		</form>
         
         <?php }
 		else 
 			{
-				printf("Muchas gracias, su reserva se ha realizado satisfactoriamente.");
+				print("Muchas gracias, su reserva se ha realizado satisfactoriamente.<br/>");
 				
-			}
+				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio FROM reserva, horario, canchaxclub, club, cancha, distrito, hora WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"];
+				$result=mysql_query($query);
+				
+				$row=mysql_fetch_array($result);
+				$cant=mysql_num_rows($result); 
+				$tot=$cant*$row['nprecio'];
+				?>
+               
+               	<table id="horario2">
+                	<thead>
+                    	<tr>
+                        	<th>DETALLE DE LA RESERVA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<tr><td><span style="font-weight:bold;">Club:</span> <?php print($row['nclub']); ?></td></tr>
+                    	<tr><td><span style="font-weight:bold;">Cancha:</span> <?php print($row['ncancha']); ?></td></tr>
+                        <tr><td><span style="font-weight:bold;">Fecha:</span> <?php print(cambiaf_a_normal($row['nfecha'])); ?></td></tr>
+                        <tr><td><span style="font-weight:bold;">Hora(s):</span> <?php print($row['nhora'].':00; ');
+							while ($row2 = mysql_fetch_array($result)){
+									print($row2['nhora'].':00; ');} ?></td></tr>
+                        <tr><td><span style="font-weight:bold;">Distrito:</span> <?php print($row['ndistrito']); ?></td></tr>
+                        <tr><td><span style="font-weight:bold;">Detalles Reserva:</span> <?php print($row['nadicionales']); ?></td></tr>                        
+                        <tr><td><span style="font-weight:bold;">Monto a pagar </span> <?php print('S/.'.$row['nprecio'].' x '.$cant.' = S/.'.$tot); ?> (No incluye cargos por servicios adicionales)</td></tr>
+                        <tr><td><span style="font-weight:bold;">Banco a Depositar:</span></td></tr>
+                        <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td></tr>                        
+                    </tbody>
+                </table>
+
+			<?php }
 		
 		?>
 		</div>
@@ -186,16 +216,17 @@
   </div><!-- End pgSiteContainer -->
  	
 
-</div>
-<!-- End Nubes -->
 
-<div id="nofooter">
- </div>
-</div>
-<!-- End Todo -->
 <div id="anuncios2">
  </div>	
 <div id="footer">
  </div>
+ 
+ </div>
+<!-- End Nubes -->
+
+
+</div>
+<!-- End Todo -->
 </body>
 </html>

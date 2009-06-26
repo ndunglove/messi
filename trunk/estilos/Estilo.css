@@ -159,7 +159,7 @@ body {
 	float: left;
 	margin: 0 0 0 15px;
 	padding: 0 0 0 10px;
-	padding-top:14px;
+	padding-top:13px;
 	
 	text-transform: uppercase;
 	text-decoration: none;
@@ -405,4 +405,21 @@ background-color:transparent;
 	height:185px;
 	width:140px;
 	display:block;
+	}
+
+#bienvenido {
+	background-image:url(../images/welcome.gif);
+	background-repeat:no-repeat;
+	height:76px;
+	width:257px;
+	position:absolute;
+	top:160px;
+	right:118px;	
+	}
+	
+#bienvenido .texto {
+	position:relative;
+	top:10px;
+	left:10px;
+	font-weight:bold;
 	}

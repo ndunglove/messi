@@ -7,9 +7,9 @@
 	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
 	
-	if (!isset($_GET["deporte"]))
+	if (!isset($_SESSION["deporte"]))
 	{
-			$_GET["deporte"]=1;
+			$_SESSION["deporte"]=1;
 	}
 	
 	if (!isset($_POST['action'])) {
@@ -17,8 +17,8 @@
 	}
 	
 	$_SESSION["cancha"]=0;
-	$dep=$_GET["deporte"];
-	$_SESSION["deporte"]=$dep;
+	
+	$dep=$_SESSION["deporte"];
 	$estado = 0;
 	$estado2=0;
 	$status='';
@@ -63,13 +63,17 @@
 		if (is_file('"'.$res[0].'"'))
 			unlink('"'.$res[0].'"');
 		
-		$query="UPDATE usuario SET T_Usuario='' WHERE ID_Usuario=".$_SESSION['ID'];
+		$query="UPDATE usuario SET T_Imagen='' WHERE ID_Usuario=".$_SESSION['ID'];
 		$chek = mysql_query($query);
 		if ($chek!=false)
 			$estado=0;				
 		else  $estado=1;
 	}
-	
+	elseif ($_POST["action"] == "cambios") {
+		
+		$query="UPDATE usuario SET C_Telefono='".$_POST['telefono']."', T_Direccion='".$_POST['direccion']."' WHERE ID_Usuario=".$_SESSION['ID'];
+		mysql_query($query);
+	}
 	//-------------------------------------------------------
 	
 ?>
@@ -159,7 +163,7 @@
 		if ($_POST['action'] == "undefine")
 			$status=$row[0];
 
-		if ($row[0]!=NULL || $row[0]!='')
+		if ($row[0]!=NULL && $row[0]!='')
 			$estado = 1;
 		
 	?>
@@ -169,7 +173,7 @@
           <div id="sa_products">     	
           	<div id="searchContainerBox_background">
             
-          		<table align="center" id="horario">
+          		<table align="center" id="horario2">
                 	<tr>
                 	  <td width="140" rowspan="5" ><span class="foto"><?php if ($estado==1) print('<img src="'.$row[0].'" width="140" height="185" />'); ?></span></td>
                 	  <td width="10">&nbsp;</td>
@@ -190,16 +194,12 @@
                     </tr>
                     <tr>
                       <td></td>
-                      <td></td>
+                      <td>&nbsp;</td>
                     </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
+     
                </table>
                <form action="perfil.php" method="post">
-               <table align="center" id="horario">
+               <table align="center" id="horario2">
                     <tr>
                       <td width="140">Teléfono</td>
                       <td width="10">:</td>
@@ -215,7 +215,9 @@
                     <tr>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td><input type="submit" name="guardar" value="Guardar cambios" class="boton"/></td>
+                      <td><input type="submit" name="guardar" value="Guardar cambios" class="boton"/>
+                       <input name="action" type="hidden" value="cambios" />
+                      </td>
                     </tr>
        
                 </table>
@@ -223,10 +225,10 @@
                </form>
                 
                 
-                <table  border="0" align="center" id="horario">
+                <table  border="0" align="center" id="horario2">
                  <thead>
                    <tr>
-                     <th colspan="4" >Subir  Foto</th>
+                     <th colspan="3" >Subir  Foto</th>
                    </tr>
                  </thead>
                  <tbody>

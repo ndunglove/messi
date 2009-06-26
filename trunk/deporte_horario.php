@@ -84,10 +84,10 @@
 	else if ($dep==2)
 			print('<link rel="shortcut icon" href="images/pelota_tenis.ico">');
 ?>
-<link rel="stylesheet" type="text/css" href="estilos/horario.css" >
+
 <link rel="stylesheet" type="text/css" href="estilos/Estilo.css" >
 <link rel="stylesheet" type="text/css" href="estilos/Estilo3.css" >
-
+<link rel="stylesheet" type="text/css" href="estilos/horario.css" >
 <!--[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie6.css" />
   
@@ -96,6 +96,24 @@
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
 <![endif]-->
 <title>CanchasOnline.com | Reserva de horarios</title>
+
+</style>
+<script language="JavaScript"> 
+function todos(num) {
+	var varCheck = document.getElementById(num);
+	var varCheck2 = document.getElementsByTagName("span");
+	if (varCheck.checked==true)
+	{
+		varCheck.checked=false;
+		//varCheck2[num-1].style.display = "none" ;
+		
+	}
+	else {varCheck.checked=true;
+		varCheck2[num-1].style.display = "block" ;
+	}
+}
+</script>
+
 </head>
 
 <body>
@@ -148,18 +166,18 @@
 	?>
 </h3>
 <br/>
-<h4 align="right" style="padding-right:130px;">
+<h4 align="right" style="padding-right:134px;">
 	<?php
 		//imprime la navegación
 		if ($pg>1)
 			{	$ante=$pg-1;
-				printf('<a href="deporte_horario.php?pg='.$ante.'">semana anterior</a>');
+				printf('<a href="deporte_horario.php?pg='.$ante.'" style="font-weight:bold; font-size:11px; color:green;">semana anterior</a>');
 			}
 		if ($pg<5)
 			{
 				printf(' | ');
 				$desp=$pg+1;
-				printf(' <a href="deporte_horario.php?pg='.$desp.'">semana siguiente</a>');
+				printf(' <a href="deporte_horario.php?pg='.$desp.'" style="font-weight:bold; font-size:11px; color:green;">semana siguiente</a>');
 			}
 	?>
 </h4>
@@ -168,11 +186,11 @@
 	<colgroup>
     	<col class="vzebra-odd" />
     	<col class="vzebra-even" />
-    	<col class="vzebra-odd" />
+    	<col class="vzebra-even" />
         <col class="vzebra-even" />
-        <col class="vzebra-odd" />
         <col class="vzebra-even" />
-        <col class="vzebra-odd" />
+        <col class="vzebra-even" />
+        <col class="vzebra-even" />
         <col class="vzebra-even" />
     </colgroup>
 	<thead>
@@ -195,7 +213,7 @@
     </thead>
 	<tbody>
 	<?php 
-
+		$k=0;
 		for($i=7;$i<24;$i++)
 		{			
 			$aux=$i+1;
@@ -204,10 +222,12 @@
             	<td align="right"><?php /*imprime las horas por dia */ $nroDia=$CDia; printf($i.":00 - ".$aux.":00");?></td>
             			
 			<?php
+			
 			for($j=0;$j<7;$j++)
 			{ 
 			?>
 				<td align="center"><?php //lena la tabla de horario
+										
 										 $hora=date("H:i:s"); 
 										 $hora=split(":",$hora);
 						        		 $fecha_fin=aumenta_fecha($fecha_inicio,$j); 
@@ -215,8 +235,9 @@
 										 if (($fecha_fin==$fecha && $hora[0]<$i) || ($fecha_fin!=$fecha)) 
 										 {
 											 if (es_reservado($fecha_fin,$i,$cancha,$link,$club)==true)
-												  printf('<span>reservado</span>');
-											 else printf('<input name="reserva[]" type="checkbox" value="'.$i.';'.$nroDia.';'.$fecha_fin.'" />'); 
+												  printf('<label>reservado</label>');
+											 else { $k++;
+												 printf('<a href="#"  onClick="todos('.$k.');" ><span id="'.$k.'"><input name="reserva[]" type="checkbox" value="'.$i.';'.$nroDia.';'.$fecha_fin.'" id="'.$k.'"/></span></a>'); }
 										 }
 
 										 if ($nroDia+1>7)
@@ -234,7 +255,7 @@
 	?>	
     </tbody>
 </table>
-<div align="right" style="padding-right:130px;">
+<div align="right" style="padding-right:134px;">
 <input type="submit" name="reservar" id="reservar" value="Reservar" class="boton" />
 <input type="reset" name="reset" id="reset" value="Cancelar" class="boton" />
 <input type="hidden" name="action" value="reservar" />

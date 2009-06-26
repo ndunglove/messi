@@ -66,3 +66,72 @@
 	border-bottom: 1px solid #707711;
 
 }
+
+#horario a {
+	margin:0px;
+	height:16px;
+	width:40px;
+	display:block;
+	background-color:#EAF4CA;
+	}
+
+#horario a span{	
+	display:none;
+	}
+#horario a:hover span{
+	display:block;
+	}
+	
+	
+	
+	
+#horario2
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;	
+	text-align: left;
+	border-collapse: collapse;
+	border: 1px solid #707711;
+	background-color:#FFF;
+}
+#horario2 th
+{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 12px 15px;
+
+	color: #039;
+}
+#horario2 td
+{
+	padding: 8px 15px;
+	
+	color: #669;
+}
+
+
+#horario2 tr:hover
+{
+	
+		background: #D9F28A;
+	
+}
+
+#horario2 #vzebra-adventure, #horario2 #vzebra-children
+{
+	background: #DDF1A0;
+	border-bottom: 1px solid #707711;
+}
+#horario2 #vzebra-comedy, #horario2 #vzebra-action
+{
+	background: #F0FCE0;
+	border-bottom: 1px solid #707711;
+
+}
+
+#horario2 h4 {
+	font-weight:bold;
+	font-size:14px;
+	
+	}

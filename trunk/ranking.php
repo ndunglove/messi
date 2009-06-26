@@ -108,20 +108,23 @@
 				
 	 ?>
                   
-        <table id="horario" align="center">
-				<tr>
-					<td colspan='3'>RANKING
-					</td>
+        <table id="horario2" align="center">
+				<thead>
+                <tr>
+					<th colspan='3'>RANKING
+					</th>
 				</tr>
+                
 				<tr>
-					<td>Puesto
-					</td>
-					<td>Jugador
-					</td>
-					<td>Puntos
-					</td>
+					<th>Puesto
+					</th>
+					<th>Jugador
+					</th>
+					<th>Puntos
+					</th>
 				</tr>
-				
+                	</thead>
+				<tbody>
 				<?php 
 				$puesto=0;
 				while($row = mysql_fetch_array($result)) { ?>
@@ -137,6 +140,7 @@
 				<?php	
 				}	//while	
 				?>	
+                </tbody>
 				</table>
               
               

@@ -143,7 +143,7 @@
 		
 				?>
 				
-<table id="horario">
+<table id="horario2">
 				<tr>
 					<th colspan='6'> Reserva <?php echo $idReserva; ?>
 					</th>
