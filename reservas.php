@@ -7,14 +7,14 @@
 	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
 	
-	if (!isset($_GET["deporte"]))
+	if (!isset($_SESSION["deporte"]))
 	{
-			$_GET["deporte"]=1;
+			$_SESSION["deporte"]=1;
 	}
 	
 	$_SESSION["cancha"]=0;
-	$dep=$_GET["deporte"];
-	$_SESSION["deporte"]=$dep;
+	$dep=$_SESSION["deporte"];
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -122,7 +122,7 @@
 			}		
 	?>		
 				
-<table id="horario">
+<table id="horario2">
 				<thead>
 				<tr>
 					<th colspan='2'>Fecha de Reserva

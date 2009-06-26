@@ -57,7 +57,7 @@ $paging->mostrarActual("<span class=\"navthis\">{n}</span>");
 //$paging->linkEstructura('deporte_index.php?pag={n}');
  
 $sql="";
-$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha ";
+$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen Img ";
 $from="FROM club, canchaxclub, cancha  ";
 $where=" WHERE club.ID_Club=canchaxclub.ID_Club 
 AND canchaxclub.ID_cancha=cancha.ID_Cancha AND cancha.ID_Deporte=".$_SESSION["deporte"]." ";
@@ -239,7 +239,7 @@ for($i=1;$i<=2;$i++){
 //$aux3=" GROUP BY cancha.ID_Cancha ";
 $_SESSION["query"]=$select.$from.$where;
 
-//$where.=" GROUP BY cancha.ID_Cancha ";
+$where.=" GROUP BY club.ID_Club, cancha.ID_cancha";
 $sql=$select.$from.$where;
 
 
@@ -264,10 +264,12 @@ if($cantClubEncontrados > 0)
                 <div class="featuredProduct">&nbsp;</div>
                 <div class="productImage">             
                   
-                  <a href="#"  ><img src="<?php printf($ruta_img.$row["ID_Club"].".jpg"); ?>"  width="160" height="160"  border="0"> </a> </div>
+                  <a href="#"  ><img src="<?php print($ruta_img.$row["ID_Club"].".jpg"); ?>"  width="100" height="100"  border="0"> </a> </div>
                 <!-- productImage DIV *** END -->
                 <div class="prodTitle"> <a href="#"  class="prod_title"  ><b> <?php echo $row["NombreClub"]; ?><br/><?php echo $row["NombreCancha"]; ?></b> </a> </div>
-             
+             	<div class="productImage2"> 
+                  <a href="#"  ><img src="<?php print($row['Img']); ?>"  width="150" height="150"  border="0"> </a> </div>
+                <!-- productImage DIV *** END -->
                 <div class="shopBtn"> <a href="deporte_horario.php?club=<?php echo $row['ID_Club'];?>&cancha=<?php echo $row['ID_Cancha'];?>" class="comparePricesBtn"><span>Reservar</span> </a> </div>
                 <div class="moreInfo"><a>&nbsp;</a></div>
                 <div class="search_gridView_containerBottom">

@@ -734,9 +734,18 @@ div.search_gridView_container_box div.productImage{
     text-align:center;
 }
 
+div.search_gridView_container_box div.productImage2{
+    position:absolute;
+    width:160px;
+    height:160px;
+    top:180px;
+    left:9px;
+    text-align:center;
+}
+
 div.search_gridView_container_box div.prodTitle{
     position:absolute;
-    top:193px;
+    top:143px;
     text-align:center;
     left:8px;
     width:162px;/*178-8-8*/
