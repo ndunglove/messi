@@ -4,6 +4,14 @@ body {
 	background-repeat:repeat-x;	
 	}
 
+.edit {
+	 width:300px;	
+	 border-color:#039;
+	 border-width:1px;
+	 border-style:solid;
+	 padding:4px;
+	}
+
 #wrapper1{
 	width:800px;
 	

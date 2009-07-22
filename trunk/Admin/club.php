@@ -6,7 +6,7 @@
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="ie6.css" media="screen"/>
 	<![endif]-->
-    		<title>CanchasOnline::Manejador de contenido v1.0</title>
+    		<title>Distancias::Manejador de contenido v1.0</title>
         </head>
         <body>
           <div id="wrapper1">
@@ -24,7 +24,7 @@
 							<span class="menu-right"></span>
 						</a>
 				  </li>
-					<li  class="active">
+					<li  class="#">
 						<a href="administradores.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Administradores</span>
@@ -47,7 +47,7 @@
 							<span class="menu-right"></span>
 						</a>
 					</li>
-					<li class="#">
+					<li class="active">
 						<a href="club.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Clubs</span>
@@ -63,19 +63,19 @@
 					</li>
 			   	</ul>
 			</div>
-		<div class="nav-right"></div> 
+		<div class="nav-right"></div>
         
 		<div id="tabla">
 		<table width="700" border="0" class="cuerpo" >
         <thead>              
 		  <tr>
-		    <th colspan="5" >Administradores</th>
+		    <th colspan="5" >Clubs</th>
           </tr>
 		  <tr>
           	<th width="50">ID</th>
 		    <th width="230">Nombre</th>
-            <th width="200">Nick</th>
-		    <th width="100">Privilegio</th>
+            <th width="200">Administrador</th>
+		    <th width="100">Distrito</th>
 		  
 		    <th width="120">Opciones</th>
 	      </tr>
@@ -89,7 +89,8 @@
         mysql_select_db($MySQL_BaseDatos, $link);
 
 		
-         	$result = mysql_query("SELECT a.ID_Administrador, a.N_Nombre,a.N_Usuario, p.N_Nombre FROM administrador a JOIN privilegio p on a.ID_privilegio = p.ID_privilegio ORDER BY p.ID_privilegio ASC");
+         	$result = mysql_query("SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito");
+			
 		 	while ($row = mysql_fetch_array($result)){
 				
 				$salida = '<tr>
@@ -97,7 +98,7 @@
 		    				<td >'.$row[1].'</td>
 		    				<td >'.$row[2].'</td>
 							<td >'.$row[3].'</td>
-		    				<td align="center"><a href="administradores_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="administradores_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td align="center"><a href="club_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
 				printf ($salida);}

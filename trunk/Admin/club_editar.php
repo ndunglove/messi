@@ -41,7 +41,7 @@
 				 <li class="active">
 						<a>
 							<span class="menu-left"></span>
-							<span class="menu-mid">Ver Cancha</span>
+							<span class="menu-mid">Editar Club</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
@@ -54,22 +54,22 @@
 		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Ver Cancha</th>
+		    <th colspan="3" >Editar Club </th>
           </tr>
          </thead>
-
+		<form action="acciones.php" method="post">
          <tbody>
 		  <tr>
 		    <td>Nombre</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit" disabled="disabled" value="<?php print($row[1]); ?>"/>
+		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value="<?php print($row[1]); ?>"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
           	<td width="200">Privilegios</td>
 		    <td width="10">:</td>
 		    <td width="490"><span id="spryselect1">
-		      <select name="select1" id="select1" class="edit" disabled="disabled">
+		      <select name="select1" id="select1" class="edit" >
               <option>Seleccione un privilegio</option>
 	          <?php 
 										
@@ -90,61 +90,27 @@
 		  <tr>
 		    <td>Nombre de Usuario</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" disabled="disabled" value="<?php print($row[3]); ?>" />
+		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" value="<?php print($row[3]); ?>" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
 		    <td>Password</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" disabled="disabled" value="<?php print($row[4]); ?>" />
+		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" value="<?php print($row[4]); ?>" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
+           <tr>
+        <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td><input type="submit" name="button" id="button" value="Guardar Cambios" /></td>
+           </tr>
 	      <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 	      </tr>
           </tbody>
-
-	    </table>
-       
-        </div>
-        <div id="tabla">
-        <table width="700" border="0" class="cuerpo" >
-        <thead>              
-		  <tr>
-		    <th colspan="3" >Reservas</th>
-          </tr>
-		  <tr>
-          	<th width="80">Fecha</th>
-		    <th width="500">Detalle</th>	  
-		    <th width="120">Opciones</th>
-	      </tr>
-         </thead>
-         <tbody>
-         <?php
-		
-			
-         	$result = mysql_query("SELECT n.D_Fecha, n.T_Detalle FROM notificacion n ORDER BY n.D_Fecha DESC");
-			
-		 	while ($row = mysql_fetch_array($result)){	
-				$salida = '<tr>
-		    				<td align="center">'.$row[0].'</td>
-		    				<td >'.$row[1].'</td>
-		    				<td align="center"><a href="notificaciones_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="notificaciones_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
-	      			   	   </tr>';
-					   
-				printf ($salida);}
-				
-		 ?>
-
-		  <tr>
-		    <td>&nbsp;</td>
-		    <td>&nbsp;</td>
-		   
-		    <td>&nbsp;</td>
-	      </tr>
-          </tbody>
+		</form>
 	    </table>
         </div>
 	  </div>

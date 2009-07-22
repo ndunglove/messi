@@ -6,7 +6,11 @@
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="ie6.css" media="screen"/>
 	<![endif]-->
-    		<title>Distancias::Manejador de contenido v1.0</title>
+    		<title>CanchasOnline::Manejador de contenido v1.0</title>
+        <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+        <script src="../SpryAssets/SpryValidationSelect.js" type="text/javascript"></script>
+        <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
+        <link href="../SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css" />
         </head>
         <body>
           <div id="wrapper1">
@@ -17,127 +21,93 @@
 			<div class="nav-left"></div>
 			<div class="nav">
 				<ul id="navigation" >
-				 <li class="#">
-						<a href="administrar.php" target="_self">
+				 <li class="active">
+						<a>
 							<span class="menu-left"></span>
-							<span class="menu-mid">Configuraci&oacute;n</span>
+							<span class="menu-mid">Nuevo Administrador</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
-					<li  class="active">
-						<a href="club.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Clubs</span>
-							<span class="menu-right"></span>
-						</a>
-				  </li>
- 					<li class="#">
-						<a href="usuarios.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Usuarios</span>
-							<span class="menu-right"></span>
-						</a>
-            	   	    <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="articulo_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="articulo.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-					</li>
-					<li class="#">
-						<a href="administradores.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Administradores</span>
-							<span class="menu-right"></span>
-						</a>
-            	   	    <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="desayuno_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="desayuno.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-					</li>
- 
 					
- 
-					<li class="#">
-						<a href="notificaciones.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Notificaciones</span>
-							<span class="menu-right"></span>
-						</a>
-            	   	    <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="evento_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="evento.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-					</li>
- 
-					
-
-			   	</ul>
+		   	  </ul>
 			</div>
 		<div class="nav-right"></div> 
         
 		<div id="tabla">
-		<table width="700" border="0" class="cuerpo" >
+		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="4" >Clubs registrados</th>
+		    <th colspan="3" >Nuevo Administrador</th>
           </tr>
-		  <tr>
-          	<th width="11%">ID</th>
-		    <th width="35%">Nombre</th>
-		    <th width="15%">Direccion</th>
-		  
-		    <th width="17%">Opciones</th>
-	      </tr>
          </thead>
+         <form action="acciones.php" method="post">
          <tbody>
-         <?php
-		
-		require('Conexion.php');
-		require('funciones.php');
-		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
-        mysql_select_db($MySQL_BaseDatos, $link);
-
-		
-         	$result = mysql_query("SELECT * FROM club ORDER BY N_Nombre ASC");
-		 	while ($row = mysql_fetch_array($result)){
-				
-				$salida = '<tr>
-		    				<td align="center">'.$row[0].'</td>
-		    				<td >'.$row["N_Nombre"].'</td>
-		    				<td >'.$row["T_Direccion"].'</td>		
-		    				<td align="center"><a href="club_ver.php?id='.$row["ID_Club"].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row["ID_Club"].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
-	      			   </tr>';
-					   
-				printf ($salida);}
-				
-		 ?>
-
+		  <tr>
+		    <td>Nombre</td>
+		    <td>:</td>
+		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"/>
+	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    </tr>
+		  <tr>
+          	<td width="200">Privilegios</td>
+		    <td width="10">:</td>
+		    <td width="490"><span id="spryselect1">
+		      <select name="select1" id="select1" class="edit">
+              <option>Seleccione un privilegio</option>
+	            <?php 
+					require('Conexion.php');
+					require('funciones.php');
+					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
+	    		    mysql_select_db($MySQL_BaseDatos, $link);
+					
+					$query="SELECT ID_Privilegio, N_Nombre FROM privilegio";
+					$result = mysql_query($query);
+						while ($row = mysql_fetch_array($result)){
+						$salida = '<option value="'.$row[0].'">'.$row[1].'</option>';						
+						print ($salida);
+						}
+				?>           
+		        </select>
+		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
+	      </tr>
+		  <tr>
+		    <td>Nombre de Usuario</td>
+		    <td>:</td>
+		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit"/>
+	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    </tr>
+		  <tr>
+		    <td>Password</td>
+		    <td>:</td>
+		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" />
+	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    </tr>
 		  <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
+		    <td><input type="submit" name="button" id="button" value="Registrar" /></td>
+		    </tr>
+         
+         
+         <tr>
 		    <td>&nbsp;</td>
-		  
+		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 	      </tr>
           </tbody>
+          </form>
 	    </table>
         </div>
 	  </div>
 	</div>
 </div>
-</body>
+        <script type="text/javascript">
+<!--
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
+var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
+var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4");
+var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
+//-->
+        </script>
+        </body>
 </html>
