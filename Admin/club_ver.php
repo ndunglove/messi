@@ -41,7 +41,7 @@
 				 <li class="active">
 						<a>
 							<span class="menu-left"></span>
-							<span class="menu-mid">Ver Cancha</span>
+							<span class="menu-mid">Ver Club</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
@@ -54,7 +54,7 @@
 		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Ver Cancha</th>
+		    <th colspan="3" >Ver Club</th>
           </tr>
          </thead>
 
@@ -107,41 +107,47 @@
           </tbody>
 
 	    </table>
-       
+        
+        
         </div>
+        
         <div id="tabla">
-        <table width="700" border="0" class="cuerpo" >
+		<table width="700" border="0" class="cuerpo" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Reservas</th>
+		    <th colspan="5" >Ver canchas del Club</th>
           </tr>
 		  <tr>
-          	<th width="80">Fecha</th>
-		    <th width="500">Detalle</th>	  
+          	<th width="50">ID</th>
+		    <th width="230">Nombre</th>
+            <th width="200">Tipo</th>
+		    <th width="100">Deporte</th>
+		  
 		    <th width="120">Opciones</th>
 	      </tr>
          </thead>
          <tbody>
          <?php
-		
+         	$result = mysql_query("SELECT c.ID_Cancha, c.N_Nombre, t.N_Tipo, d.N_Nombre FROM cancha c JOIN tipocancha t ON c.ID_TipoCancha = t.ID_TipoCancha JOIN deporte d ON c.ID_Deporte=d.ID_Deporte JOIN canchaxclub cc ON c.ID_Cancha=cc.ID_Cancha WHERE cc.ID_Club =".$valor);
 			
-         	$result = mysql_query("SELECT n.D_Fecha, n.T_Detalle FROM notificacion n ORDER BY n.D_Fecha DESC");
-			
-		 	while ($row = mysql_fetch_array($result)){	
+		 	while ($row = mysql_fetch_array($result)){
+				
 				$salida = '<tr>
 		    				<td align="center">'.$row[0].'</td>
 		    				<td >'.$row[1].'</td>
-		    				<td align="center"><a href="notificaciones_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="notificaciones_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td >'.$row[2].'</td>
+							<td >'.$row[3].'</td>
+		    				<td align="center"><a href="cancha_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="cancha_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
 				printf ($salida);}
 				
 		 ?>
-
 		  <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		   
+		    <td>&nbsp;</td>
+		     <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 	      </tr>
           </tbody>
