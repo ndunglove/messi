@@ -111,7 +111,15 @@
               
               <li onclick="exposeAllVendors(this);" style="cursor:pointer;"><img src="images/sa_filters_seemoreArrow.gif" class="vMiddle"> <a style="text-decoration:none;color:#999999">Ver más...</a></li>
             </ul>
-          </li>         
+          </li>  
+          <li class="on">
+            <h3 onclick="toggleFilter(this);" style="cursor:pointer">Canchas Recomendadas</h3>
+            <ul class="sa_filters_sub">
+              <li>
+                <input disabled="disabled" type="checkbox" name="rank" value="0" onclick="consulta(this.form.name);">
+               + Recomendados</li>
+            </ul>
+          </li>       
           <li class="on">
             <h3 onclick="toggleFilter(this);" style="cursor:pointer;">Tipo de cancha</h3>
             <ul class="sa_filters_sub">
@@ -215,6 +223,7 @@
               Variado con Chelas</li>
             </ul>
           </li>
+          
           <li class="on">
             <h3 onclick="toggleFilter(this);" style="cursor:pointer">Buscar</h3>
             <ul class="sa_filters_sub">
@@ -247,7 +256,7 @@
         <div id="sortBy">
             <ul>
                 
-                <li ><em>Clubs</em></li>
+                <li ><em>Paso 1 de 4</em></li>
 
     
             </ul>
@@ -295,8 +304,7 @@
   <br>
 </div>
 <!-- End pgSiteContainer -->
-<div id="anuncios2">
- </div>	
+
 <div id="footer">
  </div>	
 

@@ -57,7 +57,7 @@ $paging->mostrarActual("<span class=\"navthis\">{n}</span>");
 //$paging->linkEstructura('deporte_index.php?pag={n}');
  
 $sql="";
-$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen Img ";
+$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen Img, canchaxclub.C_Reputacion ";
 $from="FROM club, canchaxclub, cancha  ";
 $where=" WHERE club.ID_Club=canchaxclub.ID_Club 
 AND canchaxclub.ID_cancha=cancha.ID_Cancha AND cancha.ID_Deporte=".$_SESSION["deporte"]." ";
@@ -81,6 +81,12 @@ for($i=1;$i<=$cantDistritos;$i++){
 		AND ".$distrito." "	;
 	}
 	
+		/**** RANKING CANCHA *****	*/
+	$rep="";
+	/*$idRep=getPageParameter("rank");
+	if($idRep!="")
+	  {$rep=" ORDER BY canchaxclub.C_Reputacion DESC";};
+	*/
 	
 		/**** TIPO CANCHA ******/	
 $result = mysql_query("SELECT * FROM tipocancha WHERE ID_Deporte=".$dep);
@@ -89,8 +95,8 @@ $tipo="";
 
 for($i=1;$i<=$cantTipoCancha;$i++){
 	$idTipo[$i]=getPageParameter("popup3".$i,"");
-	if($idTipo[$i]!=""){$tipo.=" OR cancha.ID_TipoCancha=".$idTipo[$i];
-	}//if
+	if($idTipo[$i]!="")
+	  {$tipo.=" OR cancha.ID_TipoCancha=".$idTipo[$i];}//if
 }
 	
 	if($tipo!=""){
@@ -240,7 +246,7 @@ for($i=1;$i<=2;$i++){
 $_SESSION["query"]=$select.$from.$where;
 
 $where.=" GROUP BY club.ID_Club, cancha.ID_cancha";
-$sql=$select.$from.$where;
+$sql=$select.$from.$where.$rep;
 
 
 //echo "<br/><b>CONSULTA: </b><br/>".$sql;	
@@ -273,7 +279,10 @@ if($cantClubEncontrados > 0)
                 <div class="shopBtn"> <a href="deporte_horario.php?club=<?php echo $row['ID_Club'];?>&cancha=<?php echo $row['ID_Cancha'];?>" class="comparePricesBtn"><span>Reservar</span> </a> </div>
                 <div class="moreInfo"><a>&nbsp;</a></div>
                 <div class="search_gridView_containerBottom">
-                  &nbsp;
+                   <ul>
+            <li>
+           <img src="http://ai.pricegrabber.com/images/rating_0_newr.gif" height=11 width=60 alt="Nro de votos" border=0>
+        </li></ul>
           
                 </div>
                 <!-- search_gridView_containerBottom DIV *** END -->

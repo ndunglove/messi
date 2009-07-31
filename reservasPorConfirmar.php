@@ -208,9 +208,8 @@
   <br>
 </div>
 <!-- End pgSiteContainer -->
-<div id="anuncios2">
- </div>	
-<div id="footer">
+
+<div id="footer2">
  </div>	
 
 </div>
