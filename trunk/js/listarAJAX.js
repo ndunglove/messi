@@ -59,7 +59,7 @@ function consulta(nombreForm){
     
     precioMin=document.getElementById("lo_p").value;
     precioMax=document.getElementById("hi_p").value;
-    
+	    
     cadena=cadena+"precioMinimo="+precioMin+"&precioMaximo="+precioMax;
     cadena=cadena+"&iddeporte="+deport;
       

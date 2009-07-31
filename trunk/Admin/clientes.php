@@ -25,9 +25,9 @@
 						</a>
 				  </li>
 					<li  class="active">
-						<a href="administradores.php" target="_self">
+						<a href="club_cliente.php" target="_self">
 							<span class="menu-left"></span>
-							<span class="menu-mid">Administradores</span>
+							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
                          <div class="sub">
@@ -40,24 +40,12 @@
 								</li>
 			   				</ul></div>
 				  </li>
- 					<li class="#">
-						<a href="usuarios.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Usuarios</span>
-							<span class="menu-right"></span>
-						</a>
-					</li>
-					<li class="#">
-						<a href="club.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Clubs</span>
-							<span class="menu-right"></span>
-						</a>
-					</li> 
+ 					
+					
 					<li class="#">
 						<a href="notificaciones.php" target="_self">
 							<span class="menu-left"></span>
-							<span class="menu-mid">Notificaciones</span>
+							<span class="menu-mid">Servicios</span>
 							<span class="menu-right"></span>
 						</a>
 					</li>

@@ -13,16 +13,4 @@
 		</ul>
 
 	</div>
-    
-    <div id="bienvenido">
-    	<?php 
-		
-		$query="SELECT N_Nombre FROM usuario WHERE ID_Usuario=".$_SESSION["ID"];		
-		$result=mysql_query($query);
-		$row=mysql_fetch_row($result);
-		
-		print('<div class="texto">Bienvenido, '.$row[0].'</div>');
-		
-		
-		?>
-    </div>
+   

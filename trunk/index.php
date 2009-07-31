@@ -2,7 +2,8 @@
     session_start();
     require ('funciones.php'); 
     require ('Conexion.php');
-    
+    require ('php-captcha.inc.php');
+
     $link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
     
@@ -15,13 +16,9 @@
     {
         $_SESSION['op2']=1; 
     }
-    
-    
-    
+     
     $usuario="";
     $clave="";
-	
-	
     
     if (!isset($_POST['action'])) 
     {
@@ -53,11 +50,14 @@
 		{
 			$email=$_POST["email"];
 			$nombre=$_POST["nombre"];
-			$pass=$_POST["pass"];
-			$pass2=$_POST["pass2"];
+			$apellido=$_POST["apellido"];
+			$pass=$_POST["pass2"];
+			$pass2=$_POST["pass3"];
 			$distrito=$_POST["distrito"];
 			$fechas=$_POST["dia"]."-".$_POST["mes"]."-".$_POST["anio"];
-			
+
+			if (PhpCaptcha::Validate($_POST['cod_captcha'],false)==false)
+			{
 			if ($pass==$pass2)
 				{
 					$result = mysql_query("SELECT ID_Usuario FROM usuario WHERE T_Email='".$email."'");
@@ -65,14 +65,15 @@
 					
 					if ($row==false)
 					{
-						$result = mysql_query("INSERT INTO usuario(N_Nombre, T_Email, T_Pass, D_FechaNacimiento, ID_Distrito,F_Estado) VALUES ('".$nombre."','".$email."','".$pass."','".cambiaf_a_mysql($fechas)."',".$distrito.",1) " );						
+						$result = mysql_query("INSERT INTO usuario(N_Nombre, N_Apellido, T_Email, T_Pass, D_FechaNacimiento, ID_Distrito,F_Estado) VALUES ('".$nombre."','".$apellido."','".$email."','".$pass."','".cambiaf_a_mysql($fechas)."',".$distrito.",1) " );						
 						if ($result!=false)
 							$_SESSION['op2']=4; 
 					}
 					else $_SESSION['op2']=3; 
 				}
 			else  $_SESSION['op2']=2;			
-			
+			}
+			else $_SESSION['op2']=5;			
 		}
 		
     $ver=$_SESSION['op'];
@@ -130,8 +131,14 @@
 <div id="nubes">
 
 <div id="todoIndex">
+<div id="bienve">
+<img src="images/bienvenidos.gif" border="0" usemap="#Map" /> <map name="Map" id="Map">
+<area shape="rect" coords="244,62,305,82" href="#" target="_blank" />
+</map> </div>
+
 <div class="logo">
 </div>
+
   <div class="login">
     <form id="Formulario"
               name="Formulario"
@@ -182,25 +189,7 @@
               <td>&#160;</td>
               <td>&#160;</td>
               <td><div align="right">
-                  <input type="Submit"
-                                         class="boton"
-                                         name="BtnIngresar"
-                                         id="BtnIngresar"
-                                         value="Ingresar" />
-                  <input type=
-                                         "reset"
-                                         class="boton"
-                                         name="BtnCancelar"
-                                         id="BtnCancelar"
-                                         value="Cancelar" />
-                  <input name=
-                                         "action"
-                                         type="hidden"
-                                         value="login" />
-                  <br />
-                </div></td>
-            </tr>
-            <tr><td colspan="3" align="right"><span style="color:red; font-size=11px;">
+              <span style="color:red; font-size=11px;">
             <?php                                                                
                                                                     $msg="";
                                                                     
@@ -217,7 +206,27 @@
                                                                     
                                                                     print($salida);
                                                                 ?>
-            </span></td></tr>
+            </span>
+                  <input type="Submit"
+                                         class="boton"
+                                         name="BtnIngresar"
+                                         id="BtnIngresar"
+                                         value="Ingresar" />
+                  <input name=
+                                         "action"
+                                         type="hidden"
+                                         value="login" />
+                  <br />
+                </div></td>
+            </tr>
+            <tr>
+              <td>&#160;</td>
+              <td>&#160;</td>
+              <td><div align="right"><a href="recuperar_pass.php" target="_self" style="font-size:11px;">¿Olvid&oacute; su contraseña?</a>
+                  <br />
+                </div></td>
+            </tr>
+           
           </tbody>
         </table>
       </div>
@@ -242,9 +251,8 @@ theElement.focus();
 return false;
 }
 //]]>
-</script>
-    <form action="index.php"
-              method="post">
+  </script>
+    <form action="index.php" method="post">
       <table width="509"
                    border="0"
                    >
@@ -254,51 +262,55 @@ return false;
           </tr>
         </thead>
         <tbody>
-          
           <tr>
-            <td>Nombre</td>
+            <td>Nombres</td>
             <td>:</td>
-            <td><span id="sprytextfield4">
-              <input type="text"
+            <td><span id="sprytextfield4"> <input type="text"
                                name="nombre"
                                id="nombre"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $nombre; ?>"/>
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $nombre; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
-              requerido.</span></span></td>
+                requerido.</span></span></td>
+          </tr>
+          <tr>
+            <td>Apellidos</td>
+            <td>:</td>
+            <td> 
+              <span id="sprytextfield8"><input type="text"
+                               name="apellido"
+                               id="apellido"
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $apellido; ?>"/>
+              <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
           </tr>
           <tr>
             <td width="142">E-Mail</td>
             <td width="3">:</td>
-            <td width="350"><span id="sprytextfield3">
-              <input type=
+            <td width="350"><span id="sprytextfield3"> <input type=
                         "text"
                                name="email"
                                id="email"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $email; ?>"/>
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $email; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
-              requerido.</span></span></td>
+                requerido.</span></span></td>
           </tr>
           <tr>
             <td>Password</td>
             <td>:</td>
-            <td><span id="sprytextfield5">
-              <input type="password"
-                               name="pass"
-                               id="pass"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $pass; ?>"/>
+            <td><span id="sprytextfield5"> <input type="password"
+                               name="pass2"
+                               id="pass2"
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $pass; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
-              requerido.</span></span></td>
+                requerido.</span></span></td>
           </tr>
           <tr>
             <td>Confirmar Password</td>
             <td>:</td>
-            <td>
-              <span id="sprytextfield6">
-              <input type="password" name="pass2" id="pass2"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3) echo $pass2; ?>"/>
+            <td><span id="sprytextfield6"> <input type="password" name="pass3" id="pass3"
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $pass2; ?>"/>
               <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
           </tr>
           <tr>
@@ -314,24 +326,24 @@ return false;
                                                                       ?>
               </select>
               </span> <span id="spryselect2">
-              <select name="mes" >
-                <option> Mes: </option>
-                <?php 
+                <select name="mes" >
+                  <option> Mes: </option>
+                  <?php 
                                                                         for ($i=1;$i<=12; $i++){
                                                                             printf("<option value='".$i."'>".$i."</option>");               
                                                                             }
                                                                       ?>
-              </select>
-              </span> <span id="spryselect3">
-              <select name="anio" >
-                <option> A&#241;o: </option>
-                <?php 
+                </select>
+                </span> <span id="spryselect3">
+                  <select name="anio" >
+                    <option> A&#241;o: </option>
+                    <?php 
                                                                         for ($i=2009;$i>=2009-100; $i--){
                                                                             printf("<option value='".$i."'>".$i."</option>");                   
                                                                             }
                                                                       ?>
-              </select>
-              </span></td>
+                  </select>
+                </span></td>
           </tr>
           <tr>
             <td>Distrito</td>
@@ -350,17 +362,21 @@ return false;
                                                                     ?>
               </select>
               <span class="selectRequiredMsg">Seleccione un
-              distrito.</span></span></td>
+                distrito.</span></span></td>
+          </tr>
+          <tr>
+          <td><img src="captcha.php" width="140" height="50" alt="Visual CAPTCHA" /></td>
+          <td>:</td>
+          <td><span id="sprytextfield7"><input type="text" name="cod_captcha" id="cod_captcha" class="edit"/>
+              <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
           </tr>
           <tr>
             <td></td>
             <td></td>
-            <td><span id="sprycheckbox1" style="font-weight:normal; color:#2B2700">
-      <input type="checkbox" name="checkbox1" id="checkbox1" /> Acepto los términos y condiciones de uso.
-      <br/><span class="checkboxRequiredMsg">Por favor, acepte los términos y condiciones.</span></span>
-              </td>
+            <td><span id="sprycheckbox1" style="font-weight:normal; color:#2B2700"> <input type="checkbox" name="checkbox1" id="checkbox1" />
+              Acepto los <a href="#" title="Garantizamos que tu información privada no será compartida." >términos y condiciones de uso.</a> <br/>
+              <span class="checkboxRequiredMsg">Por favor, acepte los términos y condiciones.</span></span></td>
           </tr>
-        
           <tr>
             <td></td>
             <td></td>
@@ -379,10 +395,10 @@ return false;
                                value="registrar" /></td>
           </tr>
           <tr>
-          <td></td>
+            <td></td>
             <td></td>
             <td  align="left"><span style="color:red; font-size=11px;">
-          <?php 
+              <?php 
                                                                 
                                                                     $msg="";
                                                                     
@@ -398,26 +414,28 @@ return false;
                                                                     {
                                                                         $msg="Se ha registrado satisfactoriamente";
                                                                     }
-                                                                    
-                                                                    $salida=$msg;
-                                                                    
-                                                                    printf($salida);
+																	elseif ($chekreg==5)
+                                                                    {
+                                                                        $msg="Por favor, reingrese el código de validación.";
+                                                                    }
+                                                                    print($msg);
                                                                 ?>
-          </span></td></tr>
+            </span></td>
+          </tr>
         </tbody>
       </table>
     </form>
   </div>
-
   <div class="clearing">&nbsp;</div>
 </div>
 
 </div>
-<div id="anuncios">
- </div>	
+
 <div id="footer">
 </div>
+
 </div>
+
 <script type="text/javascript"
       xml:space="preserve">
 //<![CDATA[
@@ -435,8 +453,11 @@ var spryselect4 = new Spry.Widget.ValidationSelect("spryselect4");
 //]]>
 var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
 var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
+var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
+var sprytextfield8 = new Spry.Widget.ValidationTextField("sprytextfield8");
 </script>
 <?php } ?>
 
+ 
 </body>
 </html>

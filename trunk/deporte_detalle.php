@@ -130,7 +130,7 @@
 <div id="sa_listTop">
 		<div id="sortBy">
             <ul>            
-                <li ><em>Canchas</em></li>    
+                <li ><em>Paso 3 de 4</em></li>    
             </ul>
         </div>        
         <div id="sa_products">
@@ -152,7 +152,7 @@
         <?php }
 		else 
 			{
-				print("Muchas gracias, su reserva se ha realizado satisfactoriamente.<br/>");
+				print('<div><span style="margin-left:50px; font-weight:bold; color:green;">Muchas gracias, su reserva se ha realizado satisfactoriamente.</div>');
 				
 				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio FROM reserva, horario, canchaxclub, club, cancha, distrito, hora WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"];
 				$result=mysql_query($query);
@@ -161,11 +161,12 @@
 				$cant=mysql_num_rows($result); 
 				$tot=$cant*$row['nprecio'];
 				?>
-               
+               <form>
+
                	<table id="horario2">
                 	<thead>
                     	<tr>
-                        	<th>DETALLE DE LA RESERVA</th>
+                        	<th>DETALLES DE LA RESERVA</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -179,10 +180,12 @@
                         <tr><td><span style="font-weight:bold;">Detalles Reserva:</span> <?php print($row['nadicionales']); ?></td></tr>                        
                         <tr><td><span style="font-weight:bold;">Monto a pagar </span> <?php print('S/.'.$row['nprecio'].' x '.$cant.' = S/.'.$tot); ?> (No incluye cargos por servicios adicionales)</td></tr>
                         <tr><td><span style="font-weight:bold;">Banco a Depositar:</span></td></tr>
-                        <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td></tr>                        
+                        <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td></tr>
+                        <tr><td align="right"><input type="button" name="confirmar" value="Confirmar Reserva" class="boton">
+                                              <input type="button" name="imprimir" value="Imprimir" onclick="window.print();" class="boton"></td></tr>                                                
                     </tbody>
                 </table>
-
+				</form>
 			<?php }
 		
 		?>
@@ -217,14 +220,12 @@
  	
 
 
-<div id="anuncios2">
- </div>	
-<div id="footer">
- </div>
+
  
  </div>
 <!-- End Nubes -->
-
+<div id="footer2">
+ </div>
 
 </div>
 <!-- End Todo -->

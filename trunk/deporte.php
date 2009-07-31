@@ -48,8 +48,7 @@
 
 
 </div> <!-- fin todo deporte --> 
-<div id="anuncios">
- </div>	
+
 <div id="footer">
  </div>	
 

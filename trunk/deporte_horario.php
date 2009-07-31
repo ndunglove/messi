@@ -149,7 +149,7 @@ function todos(num) {
 <div id="sa_listTop">
 <div id="sortBy">
             <ul>                
-                <li ><em>Horarios</em></li>
+                <li ><em>Paso 2 de 4</em></li>
             </ul>
         </div>
           <div id="sa_products">
@@ -166,21 +166,22 @@ function todos(num) {
 	?>
 </h3>
 <br/>
-<h4 align="right" style="padding-right:134px;">
+<h4 align="right" style="padding-right:108px; ">
 	<?php
 		//imprime la navegación
 		if ($pg>1)
 			{	$ante=$pg-1;
-				printf('<a href="deporte_horario.php?pg='.$ante.'" style="font-weight:bold; font-size:11px; color:green;">semana anterior</a>');
+				printf('<a href="deporte_horario.php?pg='.$ante.'" style="font-weight:bold; font-size:11px; color:#09C;">semana anterior</a>');
 			}
 		if ($pg<5)
 			{
 				printf(' | ');
 				$desp=$pg+1;
-				printf(' <a href="deporte_horario.php?pg='.$desp.'" style="font-weight:bold; font-size:11px; color:green;">semana siguiente</a>');
+				printf(' <a href="deporte_horario.php?pg='.$desp.'" style="font-weight:bold; font-size:11px; color:#09C;">semana siguiente</a>');
 			}
 	?>
 </h4>
+<div id="temporal">
 <form method="post" action="deporte_detalle.php">
 <table id="horario" align="center">
 	<colgroup>
@@ -195,7 +196,7 @@ function todos(num) {
     </colgroup>
 	<thead>
     	<tr>
-        	<th scope="col" id="vzebra-comedy">Hora</th>
+        	<th scope="col" id="vzebra-adventure">Hora</th>
             <?php
 				//imprime el head de la tabla
 				$nroDia=$CDia;
@@ -255,12 +256,14 @@ function todos(num) {
 	?>	
     </tbody>
 </table>
-<div align="right" style="padding-right:134px;">
+<div align="right" style="padding-right:108px;">
 <input type="submit" name="reservar" id="reservar" value="Reservar" class="boton" />
 <input type="reset" name="reset" id="reset" value="Cancelar" class="boton" />
 <input type="hidden" name="action" value="reservar" />
 </div>
 </form>
+</div>
+
 </div>
 
 </div>
@@ -292,8 +295,7 @@ function todos(num) {
   <!-- End pgPageContent -->
   <br>
   </div><!-- End pgSiteContainer -->
-<div id="anuncios2">
- </div>	
+
 <div id="footer">
 </div>
 			   
