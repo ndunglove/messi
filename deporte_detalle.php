@@ -219,7 +219,12 @@ function confirmation() {
                         <tr><td><span style="font-weight:bold;">Banco a Depositar:</span></td></tr>
                         <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td></tr>
                         <tr><td align="right"><input type="button" name="confirmar" value="Confirmar Reserva" class="boton" onclick="confirmation()" >
-                                              <input type="button" name="imprimir" value="Imprimir" onclick="window.print();" class="boton"></td></tr>                                                
+                                              <input type="button" name="imprimir" value="Imprimir" onclick="window.print();" class="boton"></td></tr>
+                        <tr>
+                          <td align="right">Por favor, para ingresar el voucher de pago ir a <br/>
+                          <span style="font-weight:bold;">&quot;Reservas No confirmadas&quot;</span> dentro del menú de la página de<span style="font-weight:bold;"> Perfil</span> <br/>
+                          (link en la parte superior de la página)</td>
+                        </tr>                                                
                     </tbody>
                 </table>
 				</form>
