@@ -94,6 +94,24 @@
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
 <![endif]-->
 <title>CanchasOnline.com | Detalles de reserva</title>
+
+<script type="text/javascript">
+<!--
+function confirmation() {
+	var answer = confirm("¿Esta seguro que desea confirmar la reserva?")
+	if (answer){
+		alert("Gracias, su reserva se ha confirmado satisfactoriamente")
+		window.location = "reservasPorConfirmar.php";
+	}
+	else{
+		alert("Su reserva ha sido cancelada")
+		window.location = "perfil.php";
+	}
+}
+//-->
+</script>
+
+
 </head>
 
 <body>
@@ -152,9 +170,9 @@
         <?php }
 		else 
 			{
-				print('<div><span style="margin-left:50px; font-weight:bold; color:green;">Muchas gracias, su reserva se ha realizado satisfactoriamente.</div>');
+				print('<div><span style="font-weight:bold; color:green;">Muchas gracias, su reserva se ha realizado satisfactoriamente.</div>');
 				
-				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio FROM reserva, horario, canchaxclub, club, cancha, distrito, hora WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"];
+				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio, servicioxclub.F_Recargo recargo FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"];
 				$result=mysql_query($query);
 				
 				$row=mysql_fetch_array($result);
@@ -170,18 +188,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                    	<tr><td><span style="font-weight:bold;">Club:</span> <?php print($row['nclub']); ?></td></tr>
-                    	<tr><td><span style="font-weight:bold;">Cancha:</span> <?php print($row['ncancha']); ?></td></tr>
-                        <tr><td><span style="font-weight:bold;">Fecha:</span> <?php print(cambiaf_a_normal($row['nfecha'])); ?></td></tr>
-                        <tr><td><span style="font-weight:bold;">Hora(s):</span> <?php print($row['nhora'].':00; ');
+                    	<tr><td><span style="font-weight:bold;">Club:</span><span style="font-weight:normal;"> <?php print($row['nclub']); ?></span></td></tr>
+                    	<tr><td><span style="font-weight:bold;">Cancha:</span><span style="font-weight:normal;"> <?php print($row['ncancha']); ?></span></td></tr>
+                        <tr><td><span style="font-weight:bold;">Fecha:</span><span style="font-weight:normal;"> <?php print(cambiaf_a_normal($row['nfecha'])); ?></span></td></tr>
+                        <tr><td><span style="font-weight:bold;">Hora(s):</span><span style="font-weight:normal;"> <?php 
+						    $horasluz=0;
+							print($row['nhora'].':00; ');
+							if ($row['nhora']>=18)
+								$horasluz=$horasluz + 1;
+								
 							while ($row2 = mysql_fetch_array($result)){
-									print($row2['nhora'].':00; ');} ?></td></tr>
-                        <tr><td><span style="font-weight:bold;">Distrito:</span> <?php print($row['ndistrito']); ?></td></tr>
-                        <tr><td><span style="font-weight:bold;">Detalles Reserva:</span> <?php print($row['nadicionales']); ?></td></tr>                        
-                        <tr><td><span style="font-weight:bold;">Monto a pagar </span> <?php print('S/.'.$row['nprecio'].' x '.$cant.' = S/.'.$tot); ?> (No incluye cargos por servicios adicionales)</td></tr>
+									print($row2['nhora'].':00; ');
+									if ($row2['nhora']>=18)
+										$horasluz=$horasluz + 1;
+									
+									} 
+							$tot2=$horasluz*$row['recargo'];	
+							$TOTAL=$tot+$tot2;
+									?></span></td></tr>
+                        <tr><td><span style="font-weight:bold;">Distrito:</span> <span style="font-weight:normal;"><?php print($row['ndistrito']); ?></span></td></tr>
+                        <tr><td><span style="font-weight:bold;">Servicios Adicionales:</span> <span style="font-weight:normal;"><?php print($row['nadicionales']); ?></span></td></tr>                        
+                        <tr>
+                          <td><span style="font-weight:bold;">Sub Total: </span><span style="font-weight:normal;"> <?php print('S/.'.$row['nprecio'].' x '.$cant.' = S/.'.$tot); ?> (No incluye cargos por servicios adicionales)</span></td></tr>
+                        <tr>
+                          <td><span style="font-weight:bold;">Recargo por hora de luz:  </span><span style="font-weight:normal;"> <?php print('S/.'.$row['recargo'].' x '.$horasluz.' = S/.'.$tot2); ?></span></td>
+                        </tr>
+                        <tr>
+                          <td><span style="font-weight:bold;">Monto Total:</span>   <span style="font-weight:normal;"><?php print('S/.'.$TOTAL); ?> (No incluye IGV)</span></td>
+                        </tr>
                         <tr><td><span style="font-weight:bold;">Banco a Depositar:</span></td></tr>
                         <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td></tr>
-                        <tr><td align="right"><input type="button" name="confirmar" value="Confirmar Reserva" class="boton">
+                        <tr><td align="right"><input type="button" name="confirmar" value="Confirmar Reserva" class="boton" onclick="confirmation()" >
                                               <input type="button" name="imprimir" value="Imprimir" onclick="window.print();" class="boton"></td></tr>                                                
                     </tbody>
                 </table>
