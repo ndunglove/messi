@@ -151,7 +151,7 @@
 					</td>
 					<td> <?php 
 						if($row[4]==null || $row[4]=="0") 
-							echo "<a href='IngresarVoucher.php?id=".$row["6"]."'>no</a>";
+							echo "<a href='IngresarVoucher.php?id=".$row["6"]."'>pagar aquí</a>";
 						else
 							echo "si";
 						?>
