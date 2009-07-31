@@ -135,7 +135,7 @@ setTimeout ("redireccionar()", 0);
         <div id="sortBy">
             <ul>
                 
-                <li ><em>Clubs</em></li>
+                <li ><em>Pago de reserva</em></li>
 
     
             </ul>
