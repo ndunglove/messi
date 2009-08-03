@@ -1,3 +1,30 @@
+       <?php 
+	   
+	   		session_start();
+			require('Conexion.php');
+			require('funciones.php');
+			$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
+	        mysql_select_db($MySQL_BaseDatos, $link);
+			
+			if (!isset($_SESSION["id_admin"]))
+			{
+				$_SESSION["id_admin"]=0;
+			}
+			
+			$cant=0;
+			if ($_SESSION["id_admin"]!=0)
+			{
+				$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION["id_admin"];
+				$result = mysql_query($query);
+				
+				$cant=mysql_num_rows($result);
+			}
+			
+			
+			
+		?>
+       
+       
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
          <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
@@ -25,25 +52,27 @@
 						</a>
 				  </li>
 					<li  class="active">
-						<a href="club_cliente.php" target="_self">
+						<a href="clientes.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
-                         <div class="sub">
+                        <?php if ($cant==0) { ?>
+	                         <div class="sub">
 			   				<ul>
          			   					<li>
-									<a href="administradores_nuevo.php" target="_blank">Nuevo</a>
+									<a href="club_nuevo.php" target="_blank">Nuevo</a>
 								</li>
          			   					<li>
-									<a href="administradores.php" target="_self">Listar</a>
+									<a href="clientes.php" target="_self">Listar</a>
 								</li>
 			   				</ul></div>
+                         <?php } ?>
 				  </li>
  					
 					
 					<li class="#">
-						<a href="notificaciones.php" target="_self">
+						<a href="servicios.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Servicios</span>
 							<span class="menu-right"></span>
@@ -64,27 +93,20 @@
 		<table width="700" border="0" class="cuerpo" >
         <thead>              
 		  <tr>
-		    <th colspan="5" >Administradores</th>
+		    <th colspan="5" >Club</th>
           </tr>
 		  <tr>
           	<th width="50">ID</th>
 		    <th width="230">Nombre</th>
-            <th width="200">Nick</th>
-		    <th width="100">Privilegio</th>
+            <th width="200">Administrador</th>
+		    <th width="100">Distrito</th>
 		  
 		    <th width="120">Opciones</th>
 	      </tr>
          </thead>
          <tbody>
-         <?php
-		
-		require('Conexion.php');
-		require('funciones.php');
-		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
-        mysql_select_db($MySQL_BaseDatos, $link);
-
-		
-         	$result = mysql_query("SELECT a.ID_Administrador, a.N_Nombre,a.N_Usuario, p.N_Nombre FROM administrador a JOIN privilegio p on a.ID_privilegio = p.ID_privilegio ORDER BY p.ID_privilegio ASC");
+         <?php         	
+			
 		 	while ($row = mysql_fetch_array($result)){
 				
 				$salida = '<tr>
@@ -92,7 +114,7 @@
 		    				<td >'.$row[1].'</td>
 		    				<td >'.$row[2].'</td>
 							<td >'.$row[3].'</td>
-		    				<td align="center"><a href="administradores_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="administradores_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td align="center"><a href="club_ver2.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
 				printf ($salida);}

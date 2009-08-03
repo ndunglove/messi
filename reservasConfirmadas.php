@@ -15,6 +15,24 @@
 	
 	$_SESSION["cancha"]=0;
 	$dep=$_SESSION["deporte"];
+	
+	if (isset($_GET["idhor"]))
+	{
+		$query="UPDATE horario SET F_Califica=1 WHERE ID_horario=".$_GET["idhor"];
+		mysql_query($query);
+		
+		$query="SELECT ID_Club, ID_Cancha FROM horario WHERE ID_horario=".$_GET["idhor"];
+		$result=mysql_query($query);
+		$row=mysql_fetch_row($result);
+		
+		$query="SELECT C_Reputacion FROM canchaxclub WHERE ID_Cancha=".$row[1]." AND ID_Club=".$row[0];
+		$result2=mysql_query($query);
+		$row2=mysql_fetch_row($result2);
+		
+		$aux=$row2[0]+1;
+		$query="UPDATE canchaxclub SET C_Reputacion=".$aux." WHERE ID_Cancha=".$row[1]." AND ID_Club=".$row[0];
+		mysql_query($query);
+	}
 
 ?>
 
@@ -111,7 +129,7 @@
 				
 <table id="horario2">
 				<tr>
-					<th colspan='7'> RESERVAS ACTUALES CONFIRMADAS
+					<th colspan='8'> RESERVAS ACTUALES CONFIRMADAS
 					</th>
 				</tr>
 				<tr>
@@ -127,6 +145,7 @@
 					</td>
 					<td>Confirmado
 					</td>
+					<td>Recomendar</td>
 					<td>&nbsp;
 					</td>
 				</tr>				
@@ -135,7 +154,7 @@
 				$fecha_aux=split('/',$fecha);
 				$fecha_aux=$fecha_aux[0].'-'.$fecha_aux[1].'-'.$fecha_aux[2];
 	
-				$sql="SELECT club.N_Nombre, cancha.N_Nombre, horario.D_Fecha, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado, reserva.ID_Reserva FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.ID_Pago=pago.ID_Pago AND reserva.T_Estado=1 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."'";
+				$sql="SELECT club.N_Nombre, cancha.N_Nombre, horario.D_Fecha, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado, reserva.ID_Reserva, horario.ID_Horario, horario.F_Califica FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.ID_Pago=pago.ID_Pago AND reserva.T_Estado=1 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."'";
 					
 				$result = mysql_query($sql);
 				
@@ -163,8 +182,12 @@
 							echo "si";
 						?>
 					</td>
+						<td><?php if ($row[9]==0) { ?>
+                        		<a href='reservasConfirmadas.php?idhor=<?php echo $row[8]?>' target='_new'>recomendar</a> 
+                            <?php } ?>    
+                                </td>
 				
-					<td><a href='DetalleHistorial.php?id=<?php echo $row[6]?>' target='_new'> Ver</a> 
+					<td><a href='DetalleHistorial.php?id=<?php echo $row[6]?>' target='_new'>Ver</a> 
 					</td>
 				</tr>
 				<?php	

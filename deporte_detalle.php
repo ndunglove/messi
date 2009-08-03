@@ -105,7 +105,7 @@ function confirmation() {
 	}
 	else{
 		alert("Su reserva ha sido cancelada")
-		window.location = "perfil.php";
+		window.location = "perfil.php?cancelar=1";
 	}
 }
 //-->

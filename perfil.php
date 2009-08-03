@@ -3,9 +3,36 @@
 	require('conexion.php');
 	require('config.php');
 	
-	
 	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
+	
+	if (isset($_GET["cancelar"]))
+	{
+		if ($_GET["cancelar"]==1)
+			{
+				$query="DELETE FROM reserva WHERE ID_Reserva=".$_SESSION["reserva"];
+				mysql_query($query);
+				
+				$_SESSION["reserva"]=-1;
+				$_GET["cancelar"]=0;
+				
+				?>
+
+					<script language="javascript"
+				      type="text/javascript"
+			    	  xml:space="preserve">
+					  //<![CDATA[
+            		  function redireccionar()
+ 	                  {
+       	                 location.href="perfil.php";
+        		      }
+                      setTimeout ("redireccionar()", 0);
+			 		  //]]>
+					</script>
+
+				<?php
+			}
+	}
 	
 	if (!isset($_SESSION["deporte"]))
 	{

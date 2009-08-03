@@ -10,7 +10,7 @@
 					}
 					$valor = $_GET['id']; 
 					
-					$query="SELECT * FROM administrador WHERE ID_Administrador=".$valor;
+					$query="SELECT N_Nombre, ID_Distrito, T_Direccion, C_Telefono FROM club WHERE ID_Club=".$valor;
 					$result = mysql_query($query);
 					$row = mysql_fetch_row($result)
 				?>    
@@ -41,7 +41,7 @@
 				 <li class="active">
 						<a>
 							<span class="menu-left"></span>
-							<span class="menu-mid">Nueva Cancha</span>
+							<span class="menu-mid">Ver Club</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
@@ -54,29 +54,32 @@
 		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Nueva Cancha </th>
+		    <th colspan="3" >Ver Club</th>
           </tr>
          </thead>
-		<form action="acciones.php" method="post">
+
          <tbody>
 		  <tr>
 		    <td>Nombre</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value=""/>
+		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit" disabled="disabled" value="<?php print($row[1]); ?>"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
-          	<td width="200">Tama&ntilde;o</td>
+          	<td width="200">Distrito</td>
 		    <td width="10">:</td>
 		    <td width="490"><span id="spryselect1">
-		      <select name="select1" id="select1" class="edit" >
-              <option>Seleccione un Tamaño</option>
+		      <select name="select1" id="select1" class="edit" disabled="disabled">
+              <option>Seleccione un distrito</option>
 	          <?php 
 										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
+					$query="SELECT ID_Distrito, N_Nombre FROM distrito";
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
+						if ($row2[0]==$row[2])
+							$sel='selected="selected"';
+						else $sel="";
 						$salida = '<option value="'.$row2[0].'" '.$sel.'>'.$row2[1].'</option>';						
 						print ($salida);
 						}
@@ -85,61 +88,72 @@
 		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
 	      </tr>
 		  <tr>
-		    <td>Tipo</td>
+		    <td>Direccion</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield3">
-		      <select name="select2" id="select2" class="edit" >
-		        <option>Seleccione un Tipo</option>
-		        <?php 
-										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
-					$sel = "";	
-					$result = mysql_query($query);
-						while ($row2 = mysql_fetch_array($result)){
-						$salida = '<option value="'.$row2[0].'" '.$sel.'>'.$row2[1].'</option>';						
-						print ($salida);
-						}
-				?>
-		        </select>
-		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" disabled="disabled" value="<?php print($row[3]); ?>" />
+	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
-		    <td>Deporte</td>
+		    <td>Telefono</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield4">
-		      <select name="select3" id="select3" class="edit" >
-		        <option>Seleccione un Deporte</option>
-		        <?php 
-										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
-					$sel = "";	
-					$result = mysql_query($query);
-						while ($row2 = mysql_fetch_array($result)){
-						$salida = '<option value="'.$row2[0].'" '.$sel.'>'.$row2[1].'</option>';						
-						print ($salida);
-						}
-				?>
-		        </select>
-		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" disabled="disabled" value="<?php print($row[4]); ?>" />
+	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
-		  <tr>
-		    <td>Precio</td>
-		    <td>:</td>
-		    <td><span id="sprytextfield5"><input type="text" name="text2" id="text3" class="edit"  value=""/>
-		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
-		    </tr>
-           <tr>
-        <td>&nbsp;</td>
-		    <td>&nbsp;</td>
-		    <td><input type="submit" name="button" id="button" value="Registrar" /></td>
-           </tr>
 	      <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 	      </tr>
           </tbody>
-		</form>
+
+	    </table>
+        
+        
+        </div>
+        
+        <div id="tabla">
+		<table width="700" border="0" class="cuerpo" >
+        <thead>              
+		  <tr>
+		    <th colspan="5" >Ver canchas del Club</th>
+          </tr>
+          <tr>
+		    <th colspan="5" align="right"><a href="cancha_nuevo.php" target="_blank" style="text-decoration:underline">Nueva cancha</a></th>
+          </tr>
+		  <tr>
+          	<th width="50">ID</th>
+		    <th width="230">Nombre</th>
+            <th width="200">Tipo</th>
+		    <th width="100">Deporte</th>
+		  
+		    <th width="120">Opciones</th>
+	      </tr>
+         </thead>
+         <tbody>
+         <?php
+         	$result = mysql_query("SELECT c.ID_Cancha, c.N_Nombre, t.N_Tipo, d.N_Nombre FROM cancha c JOIN tipocancha t ON c.ID_TipoCancha = t.ID_TipoCancha JOIN deporte d ON c.ID_Deporte=d.ID_Deporte JOIN canchaxclub cc ON c.ID_Cancha=cc.ID_Cancha WHERE cc.ID_Club =".$valor);
+			
+		 	while ($row = mysql_fetch_array($result)){
+				
+				$salida = '<tr>
+		    				<td align="center">'.$row[0].'</td>
+		    				<td >'.$row[1].'</td>
+		    				<td >'.$row[2].'</td>
+							<td >'.$row[3].'</td>
+		    				<td align="center"><a href="cancha_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="cancha_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+	      			   	   </tr>';
+					   
+				printf ($salida);}
+				
+		 ?>
+		  <tr>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		     <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+	      </tr>
+          </tbody>
 	    </table>
         </div>
 	  </div>
@@ -151,7 +165,6 @@ var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4");
 var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
-var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
 //-->
         </script>
         </body>
