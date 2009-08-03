@@ -1,3 +1,28 @@
+             <?php 
+	   
+	   		session_start();
+			require('Conexion.php');
+			require('funciones.php');
+			$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
+	        mysql_select_db($MySQL_BaseDatos, $link);
+			
+			if (!isset($_SESSION["id_admin"]))
+			{
+				$_SESSION["id_admin"]=0;
+			}
+			$cant=0;
+			if ($_SESSION["id_admin"]!=0)
+			{
+				$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION["id_admin"];
+				$result = mysql_query($query);
+				
+				$cant=mysql_num_rows($result);
+			}
+			
+			
+			
+		?>
+      
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
          <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
@@ -18,73 +43,56 @@
 			<div class="nav">
 				<ul id="navigation" >
 				 <li class="#">
-						<a href="administrar.php" target="_self">
+						<a href="configurar.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Configuraci&oacute;n</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
-					<li  class="active">
-						<a href="club.php" target="_self">
+					<li  class="#">
+						<a href="clientes.php" target="_self">
 							<span class="menu-left"></span>
-							<span class="menu-mid">Clubs</span>
+							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
+                        <?php if ($cant==0) { ?>
+	                         <div class="sub">
+			   				<ul>
+         			   					<li>
+									<a href="club_nuevo.php" target="_blank">Nuevo</a>
+								</li>
+         			   					<li>
+									<a href="clientes.php" target="_self">Listar</a>
+								</li>
+			   				</ul></div>
+                         <?php } ?>
 				  </li>
- 					<li class="#">
-						<a href="usuarios.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Usuarios</span>
-							<span class="menu-right"></span>
-						</a>
-            	   	    <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="articulo_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="articulo.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-					</li>
-					<li class="#">
-						<a href="administradores.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Administradores</span>
-							<span class="menu-right"></span>
-						</a>
-            	   	    <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="desayuno_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="desayuno.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-					</li>
- 
+ 					
 					
- 
-					<li class="#">
-						<a href="notificaciones.php" target="_self">
+					<li class="active">
+						<a href="servicios.php" target="_self">
 							<span class="menu-left"></span>
-							<span class="menu-mid">Notificaciones</span>
+							<span class="menu-mid">Servicios</span>
 							<span class="menu-right"></span>
 						</a>
-            	   	    <div class="sub">
+                        
+                         <div class="sub">
 			   				<ul>
          			   					<li>
-									<a href="evento_nuevo.php" target="_blank">Nuevo</a>
+									<a href="servicios_nuevo.php" target="_blank">Nuevo</a>
 								</li>
          			   					<li>
-									<a href="evento.php" target="_self">Listar</a>
+									<a href="servicios.php" target="_self">Listar</a>
 								</li>
 			   				</ul></div>
 					</li>
- 
-					
-
+                    <li class="#">
+						<a href="buscar.php" target="_self">
+							<span class="menu-left"></span>
+							<span class="menu-mid">Buscar</span>
+							<span class="menu-right"></span>
+						</a>
+					</li>
 			   	</ul>
 			</div>
 		<div class="nav-right"></div> 
@@ -93,33 +101,26 @@
 		<table width="700" border="0" class="cuerpo" >
         <thead>              
 		  <tr>
-		    <th colspan="4" >Clubs registrados</th>
+		    <th colspan="3" >Servicios registrados</th>
           </tr>
 		  <tr>
-          	<th width="11%">ID</th>
-		    <th width="35%">Nombre</th>
-		    <th width="15%">Direccion</th>
-		  
-		    <th width="17%">Opciones</th>
+          	<th width="50">ID</th>
+		    <th >Nombre</th>
+		    <th width="120">Opciones</th>
 	      </tr>
          </thead>
          <tbody>
          <?php
-		
-		require('Conexion.php');
-		require('funciones.php');
-		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
-        mysql_select_db($MySQL_BaseDatos, $link);
+	
 
 		
-         	$result = mysql_query("SELECT * FROM club ORDER BY N_Nombre ASC");
+         	$result = mysql_query("SELECT * FROM servicio ORDER BY N_Nombre ASC");
 		 	while ($row = mysql_fetch_array($result)){
 				
 				$salida = '<tr>
 		    				<td align="center">'.$row[0].'</td>
-		    				<td >'.$row["N_Nombre"].'</td>
-		    				<td >'.$row["T_Direccion"].'</td>		
-		    				<td align="center"><a href="club_ver.php?id='.$row["ID_Club"].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row["ID_Club"].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td >'.$row["N_Nombre"].'</td>		
+		    				<td align="center"><a href="club_ver.php?id='.$row["ID_Servicio"].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row["ID_Servicio"].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   </tr>';
 					   
 				printf ($salida);}
@@ -131,7 +132,7 @@
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		  
-		    <td>&nbsp;</td>
+		
 	      </tr>
           </tbody>
 	    </table>
