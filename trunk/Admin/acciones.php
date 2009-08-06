@@ -100,7 +100,7 @@ elseif ($_POST["action"] == "usuarios_editar") {
 			}		
 	
 	}
-elseif ($_POST["action"] == "club_nuevo") {
+elseif ($_POST["action"] == "club_nuevo") {//falta
 
 		$query=   "INSERT INTO evento (N_Nombre,
 									   D_Fecha,
@@ -145,7 +145,7 @@ elseif ($_POST["action"] == "club_editar") {
 			}
 	
 	}
-elseif ($_POST["action"] == "libro_nuevo") {
+elseif ($_POST["action"] == "cancha_nuevo") {//falta
 	if 	( (($_POST['editorial']!="0")) || (($_POST['editorial']=="0") && ($_POST['otro']!="")) ) 
 		{
 		$editorial=0;
@@ -194,35 +194,32 @@ elseif ($_POST["action"] == "libro_nuevo") {
 		}
 	
 	}
-elseif ($_POST["action"] == "libro_editar") {
+elseif ($_POST["action"] == "cancha_editar") {
 	$tipo=2;
-	if 	( ($_POST['editorial']!="0") || (($_POST['editorial']=="0") && (empty($_POST['otro'])==false))) 
-		{
-		$editorial=0;
-		if ($_POST['editorial']=="0")
-			{
-				$aux="INSERT INTO editorial (N_Nombre) VALUES ('".$_POST['otro']."')";
-				mysql_query($aux);
-				$editorial=mysql_insert_id();				
-			}
-		else { $editorial=$_POST['editorial']; }		
+		$tec=$_POST['techado']-1;
 		
-		$query=    "UPDATE libro SET N_Nombre='".$_POST['nombre']."',
-									  D_FechaPublicacion='".cambiaf_a_mysql($_POST['fecha'])."',
-									  T_Detalle='".$_POST['detalle']."',
-									  ID_Editorial= ".$editorial."
-							    WHERE ID_Libro=".$_POST['id'];
+		$query=   "UPDATE cancha SET N_Nombre='".$_POST['nombre']."',
+								     ID_TamanoCancha=".$_POST['tamano'].",
+								     ID_TipoCancha=".$_POST['tipo'].",
+								     ID_Deporte=".$_POST['deporte'].",
+									 F_Techado=".$tec.",
+								     F_Estado=".$_POST['estado']." 
+  						       WHERE ID_Cancha=".$_POST['id'];
 							 
 		$chek = mysql_query($query);
 		
-		$link2="libro_editar.php?id=".$_POST['id'];
-		$link3="libro_ver.php?id=".$_POST['id'];
-
-		if ($chek!=false)
+		$query=   "UPDATE canchaxclub SET C_Precio=".$_POST['precio']." 
+                				   WHERE ID_Cancha=".$_POST['id']." AND ID_Club=".$_POST['id_club'];
+	
+		$chek3 = mysql_query($query);
+		
+		$link2="cancha_editar.php?id=".$_POST['id']."&club=".$_POST['id_club'];
+		$link3="cancha_ver.php?id=".$_POST['id']."&club=".$_POST['id_club'];
+		
+		if (($chek!=false) && ($chek3!=false))
 			{
-				$estado=1;
+				$estado=1;				
 			}
-		}
 	
 	}
 elseif ($_POST["action"] == "video_nuevo") {
