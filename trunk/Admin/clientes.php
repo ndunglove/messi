@@ -11,17 +11,7 @@
 				$_SESSION["id_admin"]=0;
 			}
 			
-			$cant=0;
-			if ($_SESSION["id_admin"]!=0)
-			{
-				$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION["id_admin"];
-				$result = mysql_query($query);
-				
-				$cant=mysql_num_rows($result);
-			}
-			
-			
-			
+						
 		?>
        
        
@@ -43,21 +33,34 @@
 	  <div class="nav-wrapper">
 			<div class="nav-left"></div>
 			<div class="nav">
+					
 				<ul id="navigation" >
 				 <li class="#">
-						<a href="configurar.php" target="_self">
+						<a href="clientes_administrar.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Configuraci&oacute;n</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
-					<li  class="active">
+					<li  class="Active">
 						<a href="clientes.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
-                        <?php if ($cant==0) { ?>
+                        <?php
+					
+						$cant=0;
+						if ($_SESSION['ID_admin']!=0)
+						{
+							$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['ID_admin'];
+							$result = mysql_query($query);
+							$cant=mysql_num_rows($result);
+						}
+						if ($cant==0) { 
+						
+						
+						?>
 	                         <div class="sub">
 			   				<ul>
          			   					<li>

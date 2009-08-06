@@ -62,18 +62,18 @@
 		  <tr>
 		    <td>Nombre</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value=""/>
+		    <td><span id="sprytextfield1"><input type="text" name="nombre" class="edit"  value=""/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
           	<td width="200">Tama&ntilde;o</td>
 		    <td width="10">:</td>
 		    <td width="490"><span id="spryselect1">
-		      <select name="select1" id="select1" class="edit" >
+		      <select name="tamano" class="edit" >
               <option>Seleccione un Tamaño</option>
 	          <?php 
 										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
+					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamCancha";
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
@@ -81,6 +81,7 @@
 						print ($salida);
 						}
 				?>     
+                <option value="99999" >Otro</option>
 		        </select>
 		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
 	      </tr>
@@ -88,11 +89,11 @@
 		    <td>Tipo</td>
 		    <td>:</td>
 		    <td><span id="sprytextfield3">
-		      <select name="select2" id="select2" class="edit" >
+		      <select name="tipo" class="edit" >
 		        <option>Seleccione un Tipo</option>
 		        <?php 
 										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
+					$query="SELECT ID_TipoCancha, N_Tipo FROM tipocancha";
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
@@ -107,11 +108,11 @@
 		    <td>Deporte</td>
 		    <td>:</td>
 		    <td><span id="sprytextfield4">
-		      <select name="select3" id="select3" class="edit" >
+		      <select name="deporte" id="select3" class="edit" >
 		        <option>Seleccione un Deporte</option>
 		        <?php 
 										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
+					$query="SELECT ID_Deporte, N_Nombre FROM deporte";
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
@@ -125,13 +126,15 @@
 		  <tr>
 		    <td>Precio</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield5"><input type="text" name="text2" id="text3" class="edit"  value=""/>
+		    <td><span id="sprytextfield5"><input type="text" name="precio" class="edit"  value=""/>
 		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
            <tr>
         <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		    <td><input type="submit" name="button" id="button" value="Registrar" /></td>
+		    <td><input type="submit" name="button" id="button" value="Registrar" />
+            	<input type="hidden" name="action" value="cancha_nuevo" />
+            </td>
            </tr>
 	      <tr>
 		    <td>&nbsp;</td>

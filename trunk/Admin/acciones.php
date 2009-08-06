@@ -145,53 +145,25 @@ elseif ($_POST["action"] == "club_editar") {
 			}
 	
 	}
-elseif ($_POST["action"] == "cancha_nuevo") {//falta
-	if 	( (($_POST['editorial']!="0")) || (($_POST['editorial']=="0") && ($_POST['otro']!="")) ) 
-		{
-		$editorial=0;
-		if ($_POST['editorial']=="0")
-			{
-				$aux="INSERT INTO editorial (N_Nombre) VALUES ('".$_POST['otro']."')";
-				mysql_query($aux);
-				$editorial=mysql_insert_id();				
-			}
-		else { $editorial=$_POST['editorial']; }		
+elseif ($_POST["action"] == "cancha_nuevo") {
+		$query= " ";
 		
-		$query=    "INSERT INTO libro (N_Nombre,
-									   D_FechaPublicacion,
-									   T_Detalle,
-									   T_URL_Imagen,
-									   T_Indice,
-									   ID_Editorial)
-							   VALUES ('".$_POST['nombre']."',
-									   '".cambiaf_a_mysql($_POST['fecha'])."',
-									   '".$_POST['detalle']."',
-									   '".$_POST['url_img']."',
-									   '".$_POST['url_pdf']."',
-									   ".$editorial."												 
-									  )";
+		
 		$chek = mysql_query($query);
 		
-  		$link1="libro_nuevo.php";
+  		$link1="cancha_nuevo.php";
 		
 		if ($chek!=false)
 			{
 				$estado=1;
-				$link2="libro_editar.php?id=".mysql_insert_id();
-				$link3="libro_ver.php?id=".mysql_insert_id();
+				$link2="cancha_editar.php?id=".mysql_insert_id();
+				$link3="cancha_ver.php?id=".mysql_insert_id();
 			}
 		else 
 			{
 				unlink($_POST['url_img']);
 				unlink($_POST['url_pdf']);			
 			}
-			
-		}
-	else 
-		{
-			unlink($_POST['url_img']);
-			unlink($_POST['url_pdf']);			
-		}
 	
 	}
 elseif ($_POST["action"] == "cancha_editar") {

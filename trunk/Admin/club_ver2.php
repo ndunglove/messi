@@ -10,7 +10,7 @@
 					}
 					$valor = $_GET['id']; 
 					
-					$query="SELECT N_Nombre, ID_Distrito, T_Direccion, C_Telefono FROM club WHERE ID_Club=".$valor;
+					$query="SELECT ID_Club, N_Nombre, ID_Distrito, T_Direccion, C_Telefono FROM club WHERE ID_Club=".$valor;
 					$result = mysql_query($query);
 					$row = mysql_fetch_row($result)
 				?>    
@@ -88,16 +88,15 @@
 		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
 	      </tr>
 		  <tr>
-		    <td>Direccion</td>
+		    <td>Direcci&oacute;n</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" disabled="disabled" value="<?php print($row[3]); ?>" />
+		    <td><span id="sprytextfield3"><input type="text" name="text3" class="edit" disabled="disabled" value="<?php print($row[3]); ?>" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
-		    <td>Telefono</td>
+		    <td>Tel&eacute;fono</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" disabled="disabled" value="<?php print($row[4]); ?>" />
-	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    <td><span id="sprytextfield4"><input type="text" name="text4"  class="edit" disabled="disabled" value="<?php print($row[4]); ?>" /><span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 	      <tr>
 		    <td>&nbsp;</td>
