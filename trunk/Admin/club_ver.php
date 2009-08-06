@@ -10,9 +10,9 @@
 					}
 					$valor = $_GET['id']; 
 					
-					$query="SELECT * FROM administrador WHERE ID_Administrador=".$valor;
+					$query="SELECT * FROM club WHERE ID_Club=".$valor;
 					$result = mysql_query($query);
-					$row = mysql_fetch_row($result)
+					$row = mysql_fetch_row($result);
 				?>    
 
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -54,26 +54,44 @@
 		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Ver Club</th>
+		    <th colspan="3" >Ver Club </th>
           </tr>
          </thead>
-
+		
          <tbody>
 		  <tr>
 		    <td>Nombre</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit" disabled="disabled" value="<?php print($row[1]); ?>"/>
+		    <td><span id="sprytextfield1"><input type="text" name="nombre" class="edit"  value="<?php print($row[1]); ?>" disabled="disabled"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
-          	<td width="200">Privilegios</td>
+          	<td width="200">Direcci&oacute;n</td>
 		    <td width="10">:</td>
-		    <td width="490"><span id="spryselect1">
-		      <select name="select1" id="select1" class="edit" disabled="disabled">
-              <option>Seleccione un privilegio</option>
-	          <?php 
+		    <td width="490"><span id="sprytextfield5"><input type="text" name="direccion" class="edit"  value="<?php print($row[3]); ?>" disabled="disabled"/>
+		        <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+	      </tr>
+		  <tr>
+		    <td>Tel&eacute;fono</td>
+		    <td>:</td>
+		    <td><span id="sprytextfield3"><input type="text" name="telefono"  class="edit" value="<?php print($row[4]); ?>" disabled="disabled" />
+	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    </tr>
+            <tr>
+             <td>Relevancia</td>
+             <td>:</td>
+             <td><span id="sprytextfield2"><input type="text" name="relevancia" class="edit" value="<?php print($row[9]); ?>" disabled="disabled" />
+               <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+           </tr>
+		  <tr>
+		    <td>Distrito</td>
+		    <td>&nbsp;</td>
+		    <td><span id="spryselect3">
+		      <select name="distrito" class="edit" disabled="disabled" >
+               <option >Seleccione un distrito</option>
+	           <?php 
 										
-					$query="SELECT ID_Privilegio, N_Nombre FROM privilegio";
+					$query="SELECT ID_Distrito, N_Nombre FROM distrito";
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
@@ -85,27 +103,38 @@
 						}
 				?>     
 		        </select>
+		      <span class="selectRequiredMsg">Please select an item.</span></span></td>
+		    </tr>
+           
+           <tr>
+        <td>Estado</td>
+		    <td>:</td>
+		    <td><span id="spryselect2">
+		      <?php 
+			  
+				  $sel1="";
+				  $sel2="";
+                  if ($row[12]==1)
+					  $sel1='selected="selected"';
+                  elseif ($row[12]==2)
+					  $sel2='selected="selected"';
+				  
+                  ?>
+             
+	           <select name="estado" class="edit" disabled="disabled">
+                    <option>Seleccione un estado</option>
+                    <option value="1" <?php echo $sel1; ?> >Habilitado</option>
+                    <option value="2" <?php echo $sel2; ?> >Deshabilitado</option>
+	              </select>
 		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
-	      </tr>
-		  <tr>
-		    <td>Nombre de Usuario</td>
-		    <td>:</td>
-		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" disabled="disabled" value="<?php print($row[3]); ?>" />
-	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
-		    </tr>
-		  <tr>
-		    <td>Password</td>
-		    <td>:</td>
-		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" disabled="disabled" value="<?php print($row[4]); ?>" />
-	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
-		    </tr>
+           </tr>
 	      <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 	      </tr>
           </tbody>
-
+	
 	    </table>
         
         
@@ -160,8 +189,11 @@
 <!--
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
-var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4");
 var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
+var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
+var spryselect3 = new Spry.Widget.ValidationSelect("spryselect3");
 //-->
         </script>
         </body>

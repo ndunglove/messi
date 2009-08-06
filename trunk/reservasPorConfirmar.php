@@ -125,7 +125,7 @@
 					</td>
 					<td>Pagado
 					</td>
-					<td>Confirmado
+					<td>Estado
 					</td>
 					<td>&nbsp;
 					</td>
@@ -157,10 +157,12 @@
 						?>
 					</td>
 						<td> <?php 
-						if($row[5]=="0") 
-							echo "no";
-						else
-							echo "si";
+						if($row[5]==0) 
+							echo "en espera";
+						elseif($row[5]==1) 
+							echo "aprobado";
+						elseif($row[5]==1) 
+							echo "rechazado";
 						?>
 					</td>
 				

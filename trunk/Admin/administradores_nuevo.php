@@ -1,3 +1,41 @@
+<?php 
+	session_start();
+	require('Conexion.php');
+	require('funciones.php');
+	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
+	mysql_select_db($MySQL_BaseDatos, $link);
+	
+	if (!isset($_POST['action'])) 
+	{
+       	$_POST['action'] = "undefine"; 
+	}
+	
+	if ($_POST['action'] == "registrar")
+		{
+			$nombre=$_POST["nombre"];
+			$privilegios=$_POST["privilegio"];
+			$usuario=$_POST["user"];
+			$pass=$_POST["pass"];
+			$pass2=$_POST["pass2"];
+
+			if ($pass==$pass2)
+				{
+					$result = mysql_query("SELECT N_Usuario FROM administrador WHERE N_Usuario='".$usuario."'");
+			        $row = mysql_fetch_row($result);
+					
+					if ($row==false)
+					{
+						$result = mysql_query("INSERT INTO administrador (N_Nombre, ID_privilegio, N_Usuario, T_Pass) VALUES ('".$nombre."',".$privilegios.",'".$usuario."','".$pass."') " );						
+						if ($result!=false)
+							$_SESSION['op']=4; 
+					}
+					else $_SESSION['op']=3; 
+				}
+			else  $_SESSION['op']=2;			
+		
+		}
+		
+?>
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
          <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
@@ -45,20 +83,17 @@
 		  <tr>
 		    <td>Nombre</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"/>
+		    <td><span id="sprytextfield1"><input type="text" name="nombre" class="edit"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
           	<td width="200">Privilegios</td>
 		    <td width="10">:</td>
 		    <td width="490"><span id="spryselect1">
-		      <select name="select1" id="select1" class="edit">
+		      <select name="privilegio"  class="edit">
               <option>Seleccione un privilegio</option>
 	            <?php 
-					require('Conexion.php');
-					require('funciones.php');
-					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
-	    		    mysql_select_db($MySQL_BaseDatos, $link);
+				
 					
 					$query="SELECT ID_Privilegio, N_Nombre FROM privilegio";
 					$result = mysql_query($query);
@@ -73,19 +108,29 @@
 		  <tr>
 		    <td>Nombre de Usuario</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit"/>
+		    <td><span id="sprytextfield3"><input type="text" name="user" class="edit"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
-		    <td>Password</td>
+		    <td>Contrase&ntilde;a</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" />
+		    <td><span id="sprytextfield4"><input type="password" name="pass" class="edit" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    </tr>
+		  <tr>
+		    <td>Confirme contrase&ntilde;a</td>
+		    <td>:</td>
+		    <td><span id="sprytextfield2"><input type="password" name="pass2" class="edit"/>
+		        <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		    <td><input type="submit" name="button" id="button" value="Registrar" /></td>
+		    <td>
+            <input type="submit" name="enviar" value="Registrar" />
+            <input type="reset" name="cancelar" value="Cancelar" />
+              <input type="hidden" name="action" value="administradores_nuevo" />
+            </td>
 		    </tr>
          
          
@@ -107,6 +152,7 @@ var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4");
 var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
 //-->
         </script>
         </body>

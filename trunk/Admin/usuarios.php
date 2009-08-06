@@ -1,3 +1,11 @@
+<?php 	
+		session_start();
+
+		require('Conexion.php');
+		require('funciones.php');
+		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
+        mysql_select_db($MySQL_BaseDatos, $link);
+?>
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
          <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
@@ -83,12 +91,6 @@
          <tbody>
          <?php
 		
-		require('Conexion.php');
-		require('funciones.php');
-		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
-        mysql_select_db($MySQL_BaseDatos, $link);
-
-		
          	$result = mysql_query("SELECT ID_Usuario, N_Nombre, N_Apellido, T_Email FROM usuario ORDER BY N_Nombre");
 		 	while ($row = mysql_fetch_array($result)){
 				
@@ -97,7 +99,7 @@
 		    				<td >'.$row[1].'</td>
 		    				<td >'.$row[2].'</td>
 							<td >'.$row[3].'</td>
-		    				<td align="center"><a href="usuario_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="usuario_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td align="center"><a href="usuarios_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="usuarios_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
 				printf ($salida);}

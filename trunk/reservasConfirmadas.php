@@ -3,7 +3,7 @@
 	session_start();
 	require('conexion.php');
 	require('config.php');
-	
+	require('funciones.php');
 	
 	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
@@ -143,20 +143,21 @@
 					</td>
 					<td>Pagado
 					</td>
-					<td>Confirmado
+					<td>Estado
 					</td>
 					<td>Recomendar</td>
 					<td>&nbsp;
 					</td>
 				</tr>				
 				<?php 
-				require('funciones.php');
+				
 				$fecha_aux=split('/',$fecha);
 				$fecha_aux=$fecha_aux[0].'-'.$fecha_aux[1].'-'.$fecha_aux[2];
 	
-				$sql="SELECT club.N_Nombre, cancha.N_Nombre, horario.D_Fecha, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado, reserva.ID_Reserva, horario.ID_Horario, horario.F_Califica FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.ID_Pago=pago.ID_Pago AND reserva.T_Estado=1 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."'";
+				$sql="SELECT club.N_Nombre, cancha.N_Nombre, horario.D_Fecha, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado, reserva.ID_Reserva, horario.F_Califica FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.ID_Pago=pago.ID_Pago AND reserva.T_Estado=1 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."'";
 					
 				$result = mysql_query($sql);
+				
 				
 				while($row = mysql_fetch_array($result)) { ?>
 				<tr>
@@ -176,10 +177,12 @@
 						?>
 					</td>
 						<td> <?php 
-						if($row[5]=="0") 
-							echo "no";
-						else
-							echo "si";
+						if($row[5]==0) 
+							echo "en espera";
+						elseif($row[5]==1) 
+							echo "aprobado";
+						elseif($row[5]==1) 
+							echo "rechazado";
 						?>
 					</td>
 						<td><?php if ($row[9]==0) { ?>
@@ -192,6 +195,7 @@
 				</tr>
 				<?php	
 				}	//while	
+				
 				?>	
 				</table></div>
           

@@ -1,6 +1,5 @@
 <?php 
-					session_start();
-				require('Conexion.php');
+					require('Conexion.php');
 					require('funciones.php');
 					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
 	    		    mysql_select_db($MySQL_BaseDatos, $link);
@@ -42,7 +41,7 @@
 				 <li class="active">
 						<a>
 							<span class="menu-left"></span>
-							<span class="menu-mid">Editar Reserva</span>
+							<span class="menu-mid">Editar Club</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
@@ -55,22 +54,22 @@
 		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Ver  Administrador</th>
+		    <th colspan="3" >Editar Club </th>
           </tr>
          </thead>
-
+		<form action="acciones.php" method="post">
          <tbody>
 		  <tr>
 		    <td>Nombre</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit" disabled="disabled" value="<?php print($row[1]); ?>"/>
+		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value="<?php print($row[1]); ?>"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
           	<td width="200">Privilegios</td>
 		    <td width="10">:</td>
 		    <td width="490"><span id="spryselect1">
-		      <select name="select1" id="select1" class="edit" disabled="disabled">
+		      <select name="select1" id="select1" class="edit" >
               <option>Seleccione un privilegio</option>
 	          <?php 
 										
@@ -91,22 +90,27 @@
 		  <tr>
 		    <td>Nombre de Usuario</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" disabled="disabled" value="<?php print($row[3]); ?>" />
+		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" value="<?php print($row[3]); ?>" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
 		    <td>Password</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" disabled="disabled" value="<?php print($row[4]); ?>" />
+		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" value="<?php print($row[4]); ?>" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
+           <tr>
+        <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td><input type="submit" name="button" id="button" value="Guardar Cambios" /></td>
+           </tr>
 	      <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 	      </tr>
           </tbody>
-
+		</form>
 	    </table>
         </div>
 	  </div>

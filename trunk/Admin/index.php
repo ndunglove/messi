@@ -1,1 +1,1 @@
-<?php header ("Location: administrar.php"); ?>
+<?php header ("Location: login.php"); ?>

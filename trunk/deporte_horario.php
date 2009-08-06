@@ -166,7 +166,11 @@ function todos(num) {
 	?>
 </h3>
 <br/>
-<h4 align="right" style="padding-right:108px; ">
+
+<div id="temporal">
+<form method="post" action="deporte_detalle.php">
+<div align="right" style="padding-right:60px;">
+<h4 align="left" style="float:left; padding-left:60px;">
 	<?php
 		//imprime la navegación
 		if ($pg>1)
@@ -181,8 +185,10 @@ function todos(num) {
 			}
 	?>
 </h4>
-<div id="temporal">
-<form method="post" action="deporte_detalle.php">
+<input type="submit" name="reservar" id="reservar" value="Reservar" class="boton2" />
+<input type="reset" name="reset" id="reset" value="Cancelar" class="boton2" />
+</div>
+<div align="right" style="padding-right:60px;"><br/><span style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas o 6:00 pm</span><br/><br/></div>
 <table id="horario" align="center">
 	<colgroup>
     	<col class="vzebra-odd" />
@@ -200,10 +206,12 @@ function todos(num) {
             <?php
 				//imprime el head de la tabla
 				$nroDia=$CDia;
+				$temp="";
 				for ($i=1;$i<8;$i++)
 				{
+					$temp=aumenta_fecha($fecha_inicio,$i-1);
 					$nombre=get_NDia($nroDia);
-					printf('<th scope="col" id="vzebra-adventure">'.$nombre.'</th>');					
+					printf('<th scope="col" id="vzebra-adventure">'.$nombre.'<br/><span style="font-size:10px;"> '.$temp.'</span></th>');					
 					if ($nroDia+1>7)
 						$nroDia=1;
 					else $nroDia++;
@@ -256,9 +264,9 @@ function todos(num) {
 	?>	
     </tbody>
 </table>
-<div align="right" style="padding-right:108px;">
-<input type="submit" name="reservar" id="reservar" value="Reservar" class="boton" />
-<input type="reset" name="reset" id="reset" value="Cancelar" class="boton" />
+<div align="right" style="padding-right:60px;">
+<input type="submit" name="reservar" id="reservar" value="Reservar" class="boton2" />
+<input type="reset" name="reset" id="reset" value="Cancelar" class="boton2" />
 <input type="hidden" name="action" value="reservar" />
 </div>
 </form>

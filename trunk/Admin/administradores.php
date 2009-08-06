@@ -1,3 +1,11 @@
+<?php 	
+		session_start();
+
+		require('Conexion.php');
+		require('funciones.php');
+		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
+        mysql_select_db($MySQL_BaseDatos, $link);
+?>       
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
          <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
@@ -18,7 +26,7 @@
 			<div class="nav">
 				<ul id="navigation" >
 				 <li class="#">
-						<a href="configurar.php" target="_self">
+						<a href="admin_administrar.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Configuraci&oacute;n</span>
 							<span class="menu-right"></span>
@@ -90,10 +98,7 @@
          <tbody>
          <?php
 		
-		require('Conexion.php');
-		require('funciones.php');
-		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
-        mysql_select_db($MySQL_BaseDatos, $link);
+		
 
 		
          	$result = mysql_query("SELECT a.ID_Administrador, a.N_Nombre,a.N_Usuario, p.N_Nombre FROM administrador a JOIN privilegio p on a.ID_privilegio = p.ID_privilegio ORDER BY p.ID_privilegio ASC");
