@@ -2,7 +2,7 @@
 	session_start();
 	require('conexion.php');
 	require('config.php');
-	
+	require('funciones.php');
 	
 	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
@@ -15,7 +15,22 @@
 	$_SESSION["cancha"]=0;
 	$dep=$_GET["deporte"];
 	$_SESSION["deporte"]=$dep;
-?>
+
+					$valor = $_GET['id']; 
+					
+					$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta, reserva.C_MontoTotal total, reserva.T_Estado estado FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$valor;
+					
+				$result=mysql_query($query);
+				
+				$row=mysql_fetch_array($result);
+				$cant=mysql_num_rows($result); 
+				$tot=0;
+				$tot=$cant*$row['nprecio'];
+				
+				
+				
+			
+				?>  
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -138,60 +153,97 @@
 
 	$sql="";	
 			
-									
-				
-		
 				?>
 				
-<table id="horario2">
-				<tr>
-					<th colspan='6'> Reserva <?php echo $idReserva; ?>
-					</th>
-				</tr>
-				<tr>
-					<td width="74">Club
-					</td>
-					<td width="100">Distrito	
-					</td>
-					<td width="74">Cancha
-					</td>
-					<td width="90">Fecha
-					</td>
-					<td width="76">Nro vaucher
-					</td>
-					<td width="100">Detalles
-					</td>
-					
-				</tr>
+<table width="400" border="0" id="horario2" >
+        <thead>              
+		  <tr>
+		    <th colspan="3" align="center">Ver Reserva</th>
+          </tr>
+         </thead>
+
+         <tbody>
+	      <tr>
+	        <td width="216"><span style="font-weight:bold;">Club</span></td>
+	        <td width="38">:</td>
+	        <td width="430"><span style="font-weight:normal;"><?php print($row['nclub']); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Cancha</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;"><?php print($row['ncancha']); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Fecha</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;"><?php print(cambiaf_a_normal($row['nfecha'])); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Hora(s)</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;">
+	          <?php 
+						    $horasluz=0;
+							print($row['nhora'].':00; ');
+							if ($row['nhora']>=18)
+								$horasluz=$horasluz + 1;
+								
+							while ($row2 = mysql_fetch_array($result)){
+									print($row2['nhora'].':00; ');
+									if ($row2['nhora']>=18)
+										$horasluz=$horasluz + 1;
+									
+									} 
+							$tot2=$horasluz*$row['recargo'];	
+							$TOTAL=$tot+$tot2;
+						
+						
+									?>
+	        </span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Distrito</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;"><?php print($row['ndistrito']); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Servicios Adicionales</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;"><?php print($row['nadicionales']); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Sub Total</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;"><?php print('S/.'.$row['nprecio'].' x '.$cant.' = S/.'.$tot); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Recargo por hora de luz</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;"><?php print('S/.'.$row['recargo'].' x '.$horasluz.' = S/.'.$tot2); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Monto Total</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:normal;"><?php print('S/.'.$row['total']); ?></span></td>
+	        </tr>
+	      <tr>
+	        <td><span style="font-weight:bold;">Estado</span></td>
+	        <td>:</td>
+	        <td><?php 
 				
-				<?php 
-				
-				require ('funciones.php');
-				
-				$sql="SELECT club.N_Nombre, distrito.N_Nombre, cancha.N_Nombre, horario.D_Fecha, pago.C_Voucher, reserva.T_DetallesAdicionales FROM horario, reserva, club, cancha, distrito, pago WHERE reserva.ID_Usuario=".$idUsuario." AND reserva.ID_Reserva=".$idReserva." AND horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.ID_Pago = pago.ID_Pago AND club.ID_Distrito=distrito.ID_Distrito;";
-					
-				$result = mysql_query($sql);
-				
-				while($row = mysql_fetch_array($result)) { ?>
-				<tr>
-					<td><?php echo $row[0]; ?>
-					</td>
-					<td><?php echo $row[1]; ?>
-					</td>
-					<td><?php echo $row[2]; ?>
-					</td>
-					<td><?php echo cambiaf_a_normal($row[3]); ?>
-					</td>
-					<td><?php echo $row[4]; ?>
-					</td>
-					<td><?php echo $row[5]; ?>
-					</td>
-					
-				</tr>
-				<?php	
-				}	//while	
-				?>	
-				</table>
+				if ($row['estado']==0)
+					$est="en espera";
+				elseif ($row['estado']==1)
+						$est="aprobado";
+				elseif ($row['estado']==2)
+						$est="no aprobado";
+			print($est);
+			?>
+			</td>
+	        </tr>
+          </tbody>
+
+	    </table>
 	
 </div>
               

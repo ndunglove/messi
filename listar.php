@@ -57,7 +57,7 @@ $paging->mostrarActual("<span class=\"navthis\">{n}</span>");
 //$paging->linkEstructura('deporte_index.php?pag={n}');
  
 $sql="";
-$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen Img, canchaxclub.C_Reputacion ";
+$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen  Img, canchaxclub.C_Reputacion rep ";
 $from="FROM club, canchaxclub, cancha  ";
 $where=" WHERE club.ID_Club=canchaxclub.ID_Club 
 AND canchaxclub.ID_cancha=cancha.ID_Cancha AND cancha.ID_Deporte=".$_SESSION["deporte"]." ";
@@ -270,18 +270,18 @@ if($cantClubEncontrados > 0)
                 <div class="featuredProduct">&nbsp;</div>
                 <div class="productImage">             
                   
-                  <a href="#"  ><img src="<?php print($ruta_img.$row["ID_Club"].".jpg"); ?>"  width="100" height="100"  border="0"> </a> </div>
+                  <a  ><img src="<?php print($ruta_img.$row["ID_Club"].".jpg"); ?>"  width="100" height="100"  border="0"> </a> </div>
                 <!-- productImage DIV *** END -->
-                <div class="prodTitle"> <a href="#"  class="prod_title"  ><b> <?php echo $row["NombreClub"]; ?><br/><?php echo $row["NombreCancha"]; ?></b> </a> </div>
+                <div class="prodTitle"> <a   style="text-decoration:none; border-bottom:none;" ><b> <?php echo $row["NombreClub"]; ?><br/><?php echo $row["NombreCancha"]; ?></b> </a> </div>
              	<div class="productImage2"> 
-                  <a href="#"  ><img src="<?php print($row['Img']); ?>"  width="150" height="150"  border="0"> </a> </div>
+                  <a  ><img src="<?php print($row['Img']); ?>"  width="150" height="150"  border="0"> </a> </div>
                 <!-- productImage DIV *** END -->
                 <div class="shopBtn"> <a href="deporte_horario.php?club=<?php echo $row['ID_Club'];?>&cancha=<?php echo $row['ID_Cancha'];?>" class="comparePricesBtn"><span>Reservar</span> </a> </div>
                 <div class="moreInfo"><a>&nbsp;</a></div>
                 <div class="search_gridView_containerBottom">
                    <ul>
-            <li>
-           <img src="http://ai.pricegrabber.com/images/rating_0_newr.gif" height=11 width=60 alt="Nro de votos" border=0>
+            <li style="font-size:10px;">
+           Lo recomiendan: <?php echo $row['rep'];?> veces.
         </li></ul>
           
                 </div>

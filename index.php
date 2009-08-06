@@ -58,20 +58,24 @@
 
 			if (PhpCaptcha::Validate($_POST['cod_captcha'],false)==false)
 			{
-			if ($pass==$pass2)
+				if ((strlen($pass)>3) && (strlen($pass2)>3))
 				{
-					$result = mysql_query("SELECT ID_Usuario FROM usuario WHERE T_Email='".$email."'");
-			        $row = mysql_fetch_row($result);
-					
-					if ($row==false)
+					if ($pass==$pass2)
 					{
-						$result = mysql_query("INSERT INTO usuario(N_Nombre, N_Apellido, T_Email, T_Pass, D_FechaNacimiento, ID_Distrito,F_Estado) VALUES ('".$nombre."','".$apellido."','".$email."','".$pass."','".cambiaf_a_mysql($fechas)."',".$distrito.",1) " );						
-						if ($result!=false)
-							$_SESSION['op2']=4; 
+						$result = mysql_query("SELECT ID_Usuario FROM usuario WHERE T_Email='".$email."'");
+				        $row = mysql_fetch_row($result);
+						
+						if ($row==false)
+						{
+							$result = mysql_query("INSERT INTO usuario(N_Nombre, N_Apellido, T_Email, T_Pass, D_FechaNacimiento, ID_Distrito,F_Estado) VALUES ('".$nombre."','".$apellido."','".$email."','".$pass."','".cambiaf_a_mysql($fechas)."',".$distrito.",1) " );						
+							if ($result!=false)
+								$_SESSION['op2']=4; 
+						}
+						else $_SESSION['op2']=3; 
 					}
-					else $_SESSION['op2']=3; 
+					else  $_SESSION['op2']=2;			
 				}
-			else  $_SESSION['op2']=2;			
+				else  $_SESSION['op2']=6;			
 			}
 			else $_SESSION['op2']=5;			
 		}
@@ -268,7 +272,7 @@ return false;
             <td><span id="sprytextfield4"> <input type="text"
                                name="nombre"
                                id="nombre"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $nombre; ?>"/>
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5 || $chekreg==6) echo $nombre; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
                 requerido.</span></span></td>
@@ -280,7 +284,7 @@ return false;
               <span id="sprytextfield8"><input type="text"
                                name="apellido"
                                id="apellido"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $apellido; ?>"/>
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5 || $chekreg==6) echo $apellido; ?>"/>
               <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
           </tr>
           <tr>
@@ -290,7 +294,7 @@ return false;
                         "text"
                                name="email"
                                id="email"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $email; ?>"/>
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5 || $chekreg==6) echo $email; ?>"/>
               <span class=
                                "textfieldRequiredMsg">Valor
                 requerido.</span></span></td>
@@ -301,17 +305,15 @@ return false;
             <td><span id="sprytextfield5"> <input type="password"
                                name="pass2"
                                id="pass2"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $pass; ?>"/>
-              <span class=
-                               "textfieldRequiredMsg">Valor
-                requerido.</span></span></td>
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5 || $chekreg==6) echo $pass; ?>"/>
+              <span class="textfieldRequiredMsg">Valor requerido.</span></span><span style="font-size:10px;">(min 4 caracteres)</span></td>
           </tr>
           <tr>
             <td>Confirmar Password</td>
             <td>:</td>
             <td><span id="sprytextfield6"> <input type="password" name="pass3" id="pass3"
-                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5) echo $pass2; ?>"/>
-              <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+                               class="edit" value="<?php if ($chekreg==2 || $chekreg==3 || $chekreg==5 || $chekreg==6) echo $pass2; ?>"/>
+              <span class="textfieldRequiredMsg">Valor requerido.</span></span><span id="sprytextfield9"><span class="textfieldRequiredMsg">Valor requerido.</span></span><span style="font-size:10px;">(min 4 caracteres)</span></td>
           </tr>
           <tr>
             <td>Fecha de Nacimiento</td>
@@ -408,7 +410,7 @@ return false;
                                                                     }
                                                                     elseif ($chekreg==3)
                                                                     {
-                                                                        $msg="El email ingresado ya existe. Por favor ingrese otro.";
+                                                                        $msg="El email ingresado ya existe. Por favor ingrese uno distinto.";
                                                                     }
 																	elseif ($chekreg==4)
                                                                     {
@@ -417,6 +419,10 @@ return false;
 																	elseif ($chekreg==5)
                                                                     {
                                                                         $msg="Por favor, reingrese el código de validación.";
+                                                                    }
+																	elseif ($chekreg==6)
+                                                                    {
+                                                                        $msg="La contraseña ingresada posee menos de 4 caracteres.";
                                                                     }
                                                                     print($msg);
                                                                 ?>

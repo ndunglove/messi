@@ -1,3 +1,13 @@
+<?php 	
+		session_start();
+
+		require('Conexion.php');
+		require('funciones.php');
+		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
+        mysql_select_db($MySQL_BaseDatos, $link);
+?>       
+        
+        
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
          <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
@@ -82,11 +92,6 @@
          </thead>
          <tbody>
          <?php
-		
-		require('Conexion.php');
-		require('funciones.php');
-		$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
-        mysql_select_db($MySQL_BaseDatos, $link);
 
 		
          	$result = mysql_query("SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito");

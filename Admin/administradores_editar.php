@@ -1,4 +1,5 @@
 <?php 
+				session_start();
 					require('Conexion.php');
 					require('funciones.php');
 					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
@@ -62,14 +63,14 @@
 		  <tr>
 		    <td>Nombre</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value="<?php print($row[1]); ?>"/>
+		    <td><span id="sprytextfield1"><input type="text" name="nombre" class="edit"  value="<?php print($row[1]); ?>"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
           	<td width="200">Privilegios</td>
 		    <td width="10">:</td>
 		    <td width="490"><span id="spryselect1">
-		      <select name="select1" id="select1" class="edit" >
+		      <select name="privilegio" class="edit" >
               <option>Seleccione un privilegio</option>
 	          <?php 
 										
@@ -90,19 +91,22 @@
 		  <tr>
 		    <td>Nombre de Usuario</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield3"><input type="text" name="text3" id="text3" class="edit" value="<?php print($row[3]); ?>" />
+		    <td><span id="sprytextfield3"><input type="text" name="user" class="edit" value="<?php print($row[3]); ?>" disabled="disabled"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
 		    <td>Password</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" value="<?php print($row[4]); ?>" />
+		    <td><span id="sprytextfield4"><input type="text" name="pass" class="edit" value="<?php print($row[4]); ?>" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
            <tr>
         <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		    <td><input type="submit" name="button" id="button" value="Guardar Cambios" /></td>
+		    <td><input type="submit" name="button" value="Guardar Cambios" />
+	            <input type="hidden" name="action" value="administradores_editar" />
+                <input type="hidden" name="id" value="<?php print($valor)?>" />
+            </td>
            </tr>
 	      <tr>
 		    <td>&nbsp;</td>

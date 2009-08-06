@@ -98,9 +98,9 @@
 <script type="text/javascript">
 <!--
 function confirmation() {
-	var answer = confirm("¿Esta seguro que desea confirmar la reserva?")
+	var answer = confirm("¿Esta seguro que desea grabar su reserva?")
 	if (answer){
-		alert("Gracias, su reserva se ha confirmado satisfactoriamente")
+		alert("Gracias, su reserva se ha guardado satisfactoriamente")
 		window.location = "reservasPorConfirmar.php";
 	}
 	else{
@@ -158,26 +158,36 @@ function confirmation() {
 			//lista los servicios adicionales que se pueden contratar.
 			$query="SELECT servicio.N_Nombre FROM servicioxclub, servicio WHERE servicio.ID_Deporte=".$_SESSION["deporte"]." AND servicioxclub.ID_Club=".$_SESSION["club"]." AND servicioxclub.ID_Servicio=servicio.ID_Servicio GROUP BY servicio.N_Nombre";
 			$result = mysql_query($query);
+			
 			while ($row = mysql_fetch_array($result))
 			{			
 				printf('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].'" /> '.$row[0].'</span> <br/><br/>');	
+				if ($row[0]=='luz')
+					printf('<span style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas o 6:00 pm</span><br/><br/>');
+					
 			}
+			
+			if (($result==false) || (mysql_num_rows($result)==0))
+				printf('<span style="font-weight:bold;">NO SE HAN ENCONTRADO SERVICIOS ADICIONALES PARA MOSTRAR.</span><br/><br/>');
+			
 		?>
 			<input type="submit" name="reservar" id="reservar" value="Continuar" class="boton"/>
-			<input type="hidden" name="action" value="adicional" />          
+			<input type="hidden"  name="action" value="adicional" />          
 		</form>
         
         <?php }
 		else 
 			{
-				print('<div><span style="font-weight:bold; color:green;">Muchas gracias, su reserva se ha realizado satisfactoriamente.</div>');
+			
 				
-				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio, servicioxclub.F_Recargo recargo FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"];
+				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"];
 				$result=mysql_query($query);
 				
 				$row=mysql_fetch_array($result);
 				$cant=mysql_num_rows($result); 
+				$tot=0;
 				$tot=$cant*$row['nprecio'];
+				
 				?>
                <form>
 
@@ -205,6 +215,10 @@ function confirmation() {
 									} 
 							$tot2=$horasluz*$row['recargo'];	
 							$TOTAL=$tot+$tot2;
+							
+							$query_5="UPDATE reserva SET C_MontoTotal=".$TOTAL." WHERE ID_Reserva=".$_SESSION["reserva"];
+							mysql_query($query_5);
+							
 									?></span></td></tr>
                         <tr><td><span style="font-weight:bold;">Distrito:</span> <span style="font-weight:normal;"><?php print($row['ndistrito']); ?></span></td></tr>
                         <tr><td><span style="font-weight:bold;">Servicios Adicionales:</span> <span style="font-weight:normal;"><?php print($row['nadicionales']); ?></span></td></tr>                        
@@ -216,14 +230,16 @@ function confirmation() {
                         <tr>
                           <td><span style="font-weight:bold;">Monto Total:</span>   <span style="font-weight:normal;"><?php print('S/.'.$TOTAL); ?> (No incluye IGV)</span></td>
                         </tr>
-                        <tr><td><span style="font-weight:bold;">Banco a Depositar:</span></td></tr>
-                        <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td></tr>
-                        <tr><td align="right"><input type="button" name="confirmar" value="Confirmar Reserva" class="boton" onclick="confirmation()" >
+                        <tr><td><span style="font-weight:bold;">Banco a Depositar:</span><span style="font-weight:normal;"><?php print($row['banco']); ?></span></td></tr>
+                        <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span><span style="font-weight:normal;"><?php print($row['cuenta']); ?></span></td></tr>
+                        <tr><td align="right"><input type="button" name="confirmar" value="Grabar Reserva" class="boton" onclick="confirmation()" >
                                               <input type="button" name="imprimir" value="Imprimir" onclick="window.print();" class="boton"></td></tr>
                         <tr>
-                          <td align="right">Por favor, para ingresar el voucher de pago ir a <br/>
-                          <span style="font-weight:bold;">&quot;Reservas No confirmadas&quot;</span> dentro del menú de la página de<span style="font-weight:bold;"> Perfil</span> <br/>
-                          (link en la parte superior de la página)</td>
+                          <td align="right"><p>EL monto mínimo a depositar es el 50% del Monto total mostrado arriba <br />
+en un plazo de 6 horas.</p>
+                            <p>Por favor, para ingresar el voucher de pago ir a <br/>
+                              <span style="font-weight:bold;">&quot;Reservas No confirmadas&quot;</span> dentro del menú de la página de<span style="font-weight:bold;"> Perfil</span> <br/>
+                            (link en la parte superior de la página)</p></td>
                         </tr>                                                
                     </tbody>
                 </table>

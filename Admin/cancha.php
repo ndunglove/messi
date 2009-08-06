@@ -18,7 +18,7 @@
 			<div class="nav">
 				<ul id="navigation" >
 				 <li class="#">
-						<a href="administrar.php" target="_self">
+						<a href="admin_administrar.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Configuraci&oacute;n</span>
 							<span class="menu-right"></span>
