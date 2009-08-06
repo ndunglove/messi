@@ -25,10 +25,10 @@
 	<div class="wrapper">
 	  <div class="nav-wrapper">
 			<div class="nav-left"></div>
-			<div class="nav">
+			     <div class="nav">
 				<ul id="navigation" >
 				 <li class="#">
-						<a href="configurar.php" target="_self">
+						<a href="admin_administrar.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Configuraci&oacute;n</span>
 							<span class="menu-right"></span>
@@ -57,21 +57,21 @@
 							<span class="menu-right"></span>
 						</a>
 					</li>
-					<li class="active">
+<li class="active">
 						<a href="club.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Clubs</span>
 							<span class="menu-right"></span>
 						</a>
-					</li> 
-					<li class="#">
-						<a href="notificaciones.php" target="_self">
+					</li>
+                    <li class="#">
+						<a href="buscar.php" target="_self">
 							<span class="menu-left"></span>
-							<span class="menu-mid">Notificaciones</span>
+							<span class="menu-mid">Buscar</span>
 							<span class="menu-right"></span>
 						</a>
 					</li>
-			   	</ul>
+		   	  </ul>
 			</div>
 		<div class="nav-right"></div>
         

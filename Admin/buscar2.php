@@ -37,53 +37,62 @@
 
 	<div class="wrapper">
 	  <div class="nav-wrapper">
-			<div class="nav-left"></div><div class="nav">
+			<div class="nav-left"></div>			<div class="nav">
 				<ul id="navigation" >
 				 <li class="#">
-						<a href="admin_administrar.php" target="_self">
+						<a href="clientes_administrar.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Configuraci&oacute;n</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
 					<li  class="#">
-						<a href="administradores.php" target="_self">
+						<a href="clientes.php" target="_self">
 							<span class="menu-left"></span>
-							<span class="menu-mid">Administradores</span>
+							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
-                         <div class="sub">
+                        <?php
+					
+						$cant=0;
+						if ($_SESSION['ID_admin']!=0)
+						{
+							$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['ID_admin'];
+							$result = mysql_query($query);
+							$cant=mysql_num_rows($result);
+						}
+						if ($cant==0) { 
+						
+						
+						?>
+	                         <div class="sub">
 			   				<ul>
          			   					<li>
-									<a href="administradores_nuevo.php" target="_blank">Nuevo</a>
+									<a href="club_nuevo.php" target="_blank">Nuevo</a>
 								</li>
          			   					<li>
-									<a href="administradores.php" target="_self">Listar</a>
+									<a href="clientes.php" target="_self">Listar</a>
 								</li>
 			   				</ul></div>
+                         <?php } ?>
 				  </li>
- 					<li class="#">
-						<a href="usuarios.php" target="_self">
+ 					
+					
+					<li class="#">
+						<a href="servicios.php" target="_self">
 							<span class="menu-left"></span>
-							<span class="menu-mid">Usuarios</span>
-							<span class="menu-right"></span>
-						</a>
-					</li>
-<li class="#">
-						<a href="club.php" target="_self">
-							<span class="menu-left"></span>
-							<span class="menu-mid">Clubs</span>
+							<span class="menu-mid">Servicios</span>
 							<span class="menu-right"></span>
 						</a>
 					</li>
                     <li class="active">
-						<a href="buscar.php" target="_self">
+						<a href="buscar2.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Buscar</span>
 							<span class="menu-right"></span>
 						</a>
 					</li>
-		   	  </ul>
+			   	</ul>
 			</div>
 		<div class="nav-right"></div>
         
