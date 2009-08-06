@@ -154,7 +154,7 @@
 				$fecha_aux=split('/',$fecha);
 				$fecha_aux=$fecha_aux[0].'-'.$fecha_aux[1].'-'.$fecha_aux[2];
 	
-				$sql="SELECT club.N_Nombre, cancha.N_Nombre, horario.D_Fecha, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado, reserva.ID_Reserva, horario.F_Califica FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.ID_Pago=pago.ID_Pago AND reserva.T_Estado=1 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."'";
+				$sql="SELECT club.N_Nombre, cancha.N_Nombre, reserva.D_FechaReserva, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado, reserva.ID_Reserva, horario.F_Califica FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.ID_Pago=pago.ID_Pago AND reserva.T_Estado=1 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."'";
 					
 				$result = mysql_query($sql);
 				

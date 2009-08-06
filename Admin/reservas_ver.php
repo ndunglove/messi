@@ -11,7 +11,7 @@
 					}
 					$valor = $_GET['id']; 
 					
-					$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, cancha.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta, reserva.C_MontoTotal total, reserva.T_Estado estado FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$valor;
+					$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, reserva.D_FechaReserva rfecha,  horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, canchaxclub.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta, reserva.C_MontoTotal total, reserva.T_Estado estado FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$valor." ORDER BY horario.D_Fecha ASC";
 				$result=mysql_query($query);
 				
 				$row=mysql_fetch_array($result);
@@ -75,9 +75,9 @@
 	        <td><span style="font-weight:normal;"><?php print($row['ncancha']); ?></span></td>
 	        </tr>
 	      <tr>
-	        <td><span style="font-weight:bold;">Fecha</span></td>
+	        <td><span style="font-weight:bold;">Fecha de reserva</span> </td>
 	        <td>:</td>
-	        <td><span style="font-weight:normal;"><?php print(cambiaf_a_normal($row['nfecha'])); ?></span></td>
+	        <td><span style="font-weight:normal;"><?php print(cambiaf_a_normal($row['rfecha'])); ?></span></td>
 	        </tr>
 	      <tr>
 	        <td><span style="font-weight:bold;">Hora(s)</span></td>
@@ -85,12 +85,12 @@
 	        <td><span style="font-weight:normal;">
 	          <?php 
 						    $horasluz=0;
-							print($row['nhora'].':00; ');
+							print($row['nhora'].':00 ('.cambiaf_a_normal($row['nfecha']).')');
 							if ($row['nhora']>=18)
 								$horasluz=$horasluz + 1;
 								
 							while ($row2 = mysql_fetch_array($result)){
-									print($row2['nhora'].':00; ');
+									print('<br/>'.$row2['nhora'].':00 ('.cambiaf_a_normal($row2['nfecha']).')');
 									if ($row2['nhora']>=18)
 										$horasluz=$horasluz + 1;
 									

@@ -105,6 +105,7 @@ function todos(num) {
 	if (varCheck.checked==true)
 	{
 		varCheck.checked=false;
+		//varCheck.style.display=none;
 		//varCheck2[num-1].style.display = "none" ;
 		
 	}
@@ -188,7 +189,7 @@ function todos(num) {
 <input type="submit" name="reservar" id="reservar" value="Reservar" class="boton2" />
 <input type="reset" name="reset" id="reset" value="Cancelar" class="boton2" />
 </div>
-<div align="right" style="padding-right:60px;"><br/><span style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas o 6:00 pm</span><br/><br/></div>
+<div align="right" style="padding-right:60px;"><br/><label style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas o 6:00 pm</label><br/><br/></div>
 <table id="horario" align="center">
 	<colgroup>
     	<col class="vzebra-odd" />
@@ -211,7 +212,7 @@ function todos(num) {
 				{
 					$temp=aumenta_fecha($fecha_inicio,$i-1);
 					$nombre=get_NDia($nroDia);
-					printf('<th scope="col" id="vzebra-adventure">'.$nombre.'<br/><span style="font-size:10px;"> '.$temp.'</span></th>');					
+					printf('<th scope="col" id="vzebra-adventure">'.$nombre.'<br/><label style="font-size:10px;"> '.$temp.'</label></th>');					
 					if ($nroDia+1>7)
 						$nroDia=1;
 					else $nroDia++;
@@ -245,8 +246,10 @@ function todos(num) {
 										 {
 											 if (es_reservado($fecha_fin,$i,$cancha,$link,$club)==true)
 												  printf('<label>reservado</label>');
-											 else { $k++;
-												 printf('<a href="#"  onClick="todos('.$k.');" ><span id="'.$k.'"><input name="reserva[]" type="checkbox" value="'.$i.';'.$nroDia.';'.$fecha_fin.'" id="'.$k.'"/></span></a>'); }
+											 else 
+											     { $k++;
+												 printf('<a  ><span id="'.$k.'"><input name="reserva[]" onClick="todos('.$k.');" type="checkbox" value="'.$i.';'.$nroDia.';'.$fecha_fin.'" /></span></a>'); 
+												 }
 										 }
 
 										 if ($nroDia+1>7)

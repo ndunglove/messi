@@ -57,7 +57,7 @@
 		    <th colspan="3" >Ver Club </th>
           </tr>
          </thead>
-		
+		<form method="post" action="acciones.php">
          <tbody>
 		  <tr>
 		    <td>Nombre</td>
@@ -103,7 +103,7 @@
 						}
 				?>     
 		        </select>
-		      <span class="selectRequiredMsg">Please select an item.</span></span></td>
+		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
            
            <tr>
@@ -134,7 +134,7 @@
 		    <td>&nbsp;</td>
 	      </tr>
           </tbody>
-	
+	</form>
 	    </table>
         
         
@@ -166,7 +166,7 @@
 		    				<td >'.$row[1].'</td>
 		    				<td >'.$row[2].'</td>
 							<td >'.$row[3].'</td>
-		    				<td align="center"><a href="cancha_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="cancha_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td align="center"><a href="cancha_ver.php?id='.$row[0].'&club='.$valor.'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="cancha_editar.php?id='.$row[0].'&club='.$valor.'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
 				printf ($salida);}
@@ -189,7 +189,6 @@
 <!--
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
-var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
 var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
