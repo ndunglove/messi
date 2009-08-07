@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 					require('Conexion.php');
 					require('funciones.php');
 					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
@@ -12,7 +13,7 @@
 					
 					$query="SELECT ID_Club, N_Nombre, ID_Distrito, T_Direccion, C_Telefono FROM club WHERE ID_Club=".$valor;
 					$result = mysql_query($query);
-					$row = mysql_fetch_row($result)
+					$row = mysql_fetch_row($result);
 				?>    
 
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -117,7 +118,7 @@
 		    <th colspan="5" >Ver canchas del Club</th>
           </tr>
           <tr>
-		    <th colspan="5" align="right"><a href="cancha_nuevo.php" target="_blank" style="text-decoration:underline">Nueva cancha</a></th>
+		    <th colspan="5" align="right"><a href="cancha_nuevo.php?club=<?php echo $valor; ?>" target="_blank" style="text-decoration:underline">Nueva cancha</a></th>
           </tr>
 		  <tr>
           	<th width="50">ID</th>
@@ -139,7 +140,7 @@
 		    				<td >'.$row[1].'</td>
 		    				<td >'.$row[2].'</td>
 							<td >'.$row[3].'</td>
-		    				<td align="center"><a href="cancha_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="cancha_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td align="center"><a href="cancha_ver.php?id='.$row[0].'&club='.$valor.'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="cancha_editar.php?id='.$row[0].'&club='.$valor.'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
 				printf ($salida);}

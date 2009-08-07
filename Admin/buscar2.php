@@ -103,7 +103,7 @@
 		    <th colspan="3" >Buscar</th>
           </tr>
          </thead>
-		<form action="resultado.php" method="post">
+		<form action="resultado2.php" method="post">
          <tbody>
 		  <tr>
 		    <td>Texto</td>
@@ -117,7 +117,6 @@
 		    <td width="490"><span id="spryselect1">
 		      <select name="tabla" class="edit" >
               <option>Seleccione una tabla</option>
-	          <option value="1" >Administradores</option>
 	          <option value="2" >Usuarios</option>
 	          <option value="3" >Clubs</option>
 	          <option value="4" >Canchas</option>                                                       

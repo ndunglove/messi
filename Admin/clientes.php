@@ -1,6 +1,5 @@
-       <?php 
-	   
-	   		session_start();
+<?php 
+	session_start();
 			require('Conexion.php');
 			require('funciones.php');
 			$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
@@ -82,7 +81,7 @@
 						</a>
 					</li>
                     <li class="#">
-						<a href="buscar.php" target="_self">
+						<a href="buscar2.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Buscar</span>
 							<span class="menu-right"></span>
@@ -117,7 +116,7 @@
 		    				<td >'.$row[1].'</td>
 		    				<td >'.$row[2].'</td>
 							<td >'.$row[3].'</td>
-		    				<td align="center"><a href="club_ver2.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td align="center"><a href="club_ver2.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar2.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
 				printf ($salida);}

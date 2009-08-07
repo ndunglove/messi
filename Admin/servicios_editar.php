@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 					require('Conexion.php');
 					require('funciones.php');
 					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);

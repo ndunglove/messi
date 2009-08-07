@@ -114,7 +114,7 @@
 						</a>
 					</li>
                     <li class="#">
-						<a href="buscar.php" target="_self">
+						<a href="buscar2.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Buscar</span>
 							<span class="menu-right"></span>

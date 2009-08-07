@@ -189,7 +189,7 @@ function todos(num) {
 <input type="submit" name="reservar" id="reservar" value="Reservar" class="boton2" />
 <input type="reset" name="reset" id="reset" value="Cancelar" class="boton2" />
 </div>
-<div align="right" style="padding-right:60px;"><br/><label style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas o 6:00 pm</label><br/><br/></div>
+<div align="right" style="padding-right:60px;"><br/><label style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas</label>.<br/><br/></div>
 <table id="horario" align="center">
 	<colgroup>
     	<col class="vzebra-odd" />
