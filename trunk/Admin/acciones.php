@@ -1,5 +1,5 @@
 <?php 
-
+	session_start();
  	require('Conexion.php');
 	require('funciones.php');
  	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
@@ -145,33 +145,91 @@ elseif ($_POST["action"] == "club_editar") {
 			}
 	
 	}
-elseif ($_POST["action"] == "cancha_nuevo") {
-		$query= " ";
-		
-		
+elseif ($_POST["action"] == "club_editar2") {
+	$tipo=2;
+		$query=   "UPDATE club SET N_Nombre='".$_POST['nombre']."',
+								   T_Direccion='".$_POST['direccion']."',
+								   C_Telefono='".$_POST['telefono']."',
+								   ID_Distrito=".$_POST['distrito'].",
+								   F_Estado=".$_POST['estado']." 
+  						     WHERE ID_Club=".$_POST['id'];
+							
 		$chek = mysql_query($query);
 		
-  		$link1="cancha_nuevo.php";
+		$link2="club_editar2.php?id=".$_POST['id'];
+		$link3="club_ver.php?id=".$_POST['id'];
 		
 		if ($chek!=false)
 			{
-				$estado=1;
-				$link2="cancha_editar.php?id=".mysql_insert_id();
-				$link3="cancha_ver.php?id=".mysql_insert_id();
-			}
-		else 
-			{
-				unlink($_POST['url_img']);
-				unlink($_POST['url_pdf']);			
+				$estado=1;				
 			}
 	
+	}
+elseif ($_POST["action"] == "cancha_nuevo") {
+		
+		$tec=$_POST['techado']-1;
+		
+		if ($_POST['tamano']==99999)
+			{	$query= "INSERT INTO cancha (N_Nombre,									
+									 ID_TipoCancha,
+									 ID_Deporte,
+									 F_Techado
+									 )
+						     VALUES ('".$_POST['nombre']."',
+									 ".$_POST['tipo'].",
+									 ".$_POST['deporte'].",
+									 ".$tec." )";
+			}
+		else {	$query= "INSERT INTO cancha (N_Nombre,
+									 ID_TamanoCancha,
+									 ID_TipoCancha,
+									 ID_Deporte,
+									 F_Techado
+									 )
+						     VALUES ('".$_POST['nombre']."',
+									 ".$_POST['tamano'].",
+									 ".$_POST['tipo'].",
+									 ".$_POST['deporte'].",
+									 ".$tec." )";
+		}
+		
+		
+		
+		$chek = mysql_query($query);		
+		$id_cancha=mysql_insert_id();
+		
+		$query= "INSERT INTO canchaxclub (ID_Club, 
+										  ID_Cancha,
+										  C_Precio
+										  ) 
+								  VALUES (".$_POST['id_club'].",
+									      ".$id_cancha.",
+										  ".$_POST['precio'].")";
+		$chek2 = mysql_query($query);
+			
+  		$link1="cancha_nuevo.php?club=".$_POST['id_club'];
+		
+		if ($chek!=false && $chek2!=false)
+			{
+				$estado=1;
+				$link2="cancha_editar.php?id=".$id_cancha."&club=".$_POST['id_club'];
+				$link3="cancha_ver.php?id=".$id_cancha."&club=".$_POST['id_club'];
+			}
+		
 	}
 elseif ($_POST["action"] == "cancha_editar") {
 	$tipo=2;
 		$tec=$_POST['techado']-1;
-		
+		if ($_POST['tamano']!=99999)
 		$query=   "UPDATE cancha SET N_Nombre='".$_POST['nombre']."',
 								     ID_TamanoCancha=".$_POST['tamano'].",
+								     ID_TipoCancha=".$_POST['tipo'].",
+								     ID_Deporte=".$_POST['deporte'].",
+									 F_Techado=".$tec.",
+								     F_Estado=".$_POST['estado']." 
+  						       WHERE ID_Cancha=".$_POST['id'];
+							   
+		else $query=   "UPDATE cancha SET N_Nombre='".$_POST['nombre']."',
 								     ID_TipoCancha=".$_POST['tipo'].",
 								     ID_Deporte=".$_POST['deporte'].",
 									 F_Techado=".$tec.",

@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 					require('Conexion.php');
 					require('funciones.php');
 					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
@@ -123,7 +124,7 @@
 		        <tr>
 		          <td>Contrase&ntilde;a</td>
 		          <td>:</td>
-		          <td><span id="sprytextfield7"><input type="text" name="pass"  class="edit"  value="<?php print($row[9]); ?>" disabled="disabled"/>
+		          <td><span id="sprytextfield7"><input type="password" name="pass"  class="edit"  value="<?php print($row[9]); ?>" disabled="disabled"/>
 		            <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
   </tr>
 		        <tr>

@@ -2,7 +2,7 @@
 session_start();
 require('conexion.php');
 require('config.php');
-require_once 'PHPPaging.lib.php'; 
+//require_once 'PHPPaging.lib.php'; 
 
 /* function getPageParameter($nombre, $defaultvalue, $debug=false):
  * Función que busca y devuelve un parametro '$nombre' de Pagina 
@@ -50,9 +50,9 @@ $dep=getPageParameter("iddeporte","");
 $link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
 mysql_select_db($MySQL_BaseDatos, $link);
  
-$paging = new PHPPaging($link);
-$paging->porPagina(8);
-$paging->mostrarActual("<span class=\"navthis\">{n}</span>"); 
+//$paging = new PHPPaging($link);
+//$paging->porPagina(8);
+//$paging->mostrarActual("<span class=\"navthis\">{n}</span>"); 
 //$paging->nombreVariable("pag"); 
 //$paging->linkEstructura('deporte_index.php?pag={n}');
  
@@ -132,11 +132,11 @@ for($i=1;$i<=$cantTamCancha;$i++){
 		$precioMax=getPageParameter("precioMaximo","");
 	
 	if($precioMin=="")
-	$precioMin="(SELECT min(C_precio) FROM cancha)";	
+	$precioMin="(SELECT min(C_precio) FROM canchaxclub)";	
 	if($precioMax=="" || $precioMax=="0")
-	$precioMax="(SELECT max(C_precio) FROM cancha)";	
+	$precioMax="(SELECT max(C_precio) FROM canchaxclub)";	
 		
-	$precio="cancha.C_Precio BETWEEN $precioMin AND $precioMax";
+	$precio="canchaxclub.C_Precio BETWEEN $precioMin AND $precioMax";
 	$precio="(".$precio.")";
 	$where.=" AND $precio "	;
 		
@@ -250,19 +250,21 @@ $sql=$select.$from.$where.$rep;
 
 
 //echo "<br/><b>CONSULTA: </b><br/>".$sql;	
-$paging->agregarConsulta($sql); 
-$paging->ejecutar();
+//$paging->agregarConsulta($sql); 
+//$paging->ejecutar();
 //$result = mysql_query($sql);
-$cantClubEncontrados=$paging->numTotalRegistros();
+//$cantClubEncontrados=$paging->numTotalRegistros();
 $i=0;
 
-if($cantClubEncontrados > 0)
+$result=mysql_query($sql);
+
+if($result!=false)
 	{ 
-	$links = $paging->fetchNavegacion();
-	if ($paging->numTotalPaginas()>1)
-		print('<div class="navi">'.$links.'</div><br/>');
+	//$links = $paging->fetchNavegacion();
+//	if ($paging->numTotalPaginas()>1)
+//		print('<div class="navi">'.$links.'</div><br/>');
 	
-		while ($row = $paging->fetchResultado()){	
+		while ($row = mysql_fetch_array($result)){	
 		?>
 		 
 							

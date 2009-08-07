@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 					require('Conexion.php');
 					require('funciones.php');
 					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
@@ -147,7 +148,7 @@
 <!--
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
-var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
+
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
 var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");

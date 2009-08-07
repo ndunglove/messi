@@ -148,6 +148,16 @@ setTimeout ("redireccionar()", 0);
          <table width="352" class="horario" align="center">
           
           <tr>
+            <td colspan="3">Por favor, ingrese solo los números que aparecen en el<br/> voucher, 
+            				sin guiones, puntos u otro caracter especial.</td>
+           
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
           	<td width="102">
 	Nro. Voucher</td><td width="10">:</td><td width="232" align="left"> <span id="sprytextfield1"><input type="text" name="voucher" onkeyup="validaVoucher(this.value);"  class="edit"/>
 	    <span class="textfieldRequiredMsg">A value is required.</span></span></td>

@@ -13,7 +13,7 @@
 			$cant=0;
 			if ($_SESSION["id_admin"]!=0)
 			{
-				$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION["id_admin"];
+				$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['id_admin'];
 				$result = mysql_query($query);
 				
 				$cant=mysql_num_rows($result);
@@ -87,7 +87,7 @@
 			   				</ul></div>
 					</li>
                     <li class="#">
-						<a href="buscar.php" target="_self">
+						<a href="buscar2.php" target="_self">
 							<span class="menu-left"></span>
 							<span class="menu-mid">Buscar</span>
 							<span class="menu-right"></span>

@@ -90,18 +90,25 @@
 		      <select name="tamano" class="edit">
               <option>Seleccione un tamaño</option>
 	          <?php 
-										
+							$cont=0;			
 					$query="SELECT ID_TamanoCancha, N_Nombre FROM tamCancha";
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
 						if ($row2[0]==$row[2])
-							$sel='selected="selected"';
+							{
+								$sel='selected="selected"';
+								$cont=1;
+							}
 						else $sel="";
 						$salida = '<option value="'.$row2[0].'" '.$sel.'>'.$row2[1].'</option>';						
 						print ($salida);
 						}
-				?>     
+					if ($cont==0)
+						print('<option value="99999" selected="selected" >Otro</option> ');
+					else print('<option value="99999" >Otro</option>');
+				?>    
+                
 		        </select>
 		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
 	      </tr>
@@ -117,7 +124,7 @@
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
-						if ($row2[0]==$row[5])
+						if ($row2[0]==$row[4])
 							$sel='selected="selected"';
 						else $sel="";
 						$salida = '<option value="'.$row2[0].'" '.$sel.'>'.$row2[1].'</option>';						
@@ -139,7 +146,7 @@
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
-						if ($row2[0]==$row[6])
+						if ($row2[0]==$row[5])
 							$sel='selected="selected"';
 						else $sel="";
 						$salida = '<option value="'.$row2[0].'" '.$sel.'>'.$row2[1].'</option>';						
@@ -175,17 +182,17 @@
 		    <td>:</td>
 		    <td><span id="spryselect5">
 		      <select name="estado" class="edit">
-              <option> Seleccione un estado</option>
-              <?php 
+		        <option> Seleccione un estado</option>
+		        <?php 
 				 $des1="";
 				 $des2="";
-				 if ($row[8]==1)
+				 if ($row[7]==1)
 				 	 $des1='selected="selected"';
-				 elseif ($row[8]==2)
+				 elseif ($row[7]==2)
 			   		   $des2='selected="selected"';
 			  ?>
-              <option value="1" <?php echo $des1; ?> >Habilitado</option>
-                <option value="2" <?php echo $des2; ?> >Deshabilitado</option>
+		        <option value="1" <?php echo $des1; ?> >Habilitado</option>
+		        <option value="2" <?php echo $des2; ?> >Deshabilitado</option>
 		        </select>
 		      <span class="selectRequiredMsg">Please select an item.</span></span></td>
 	      </tr>

@@ -1,4 +1,6 @@
 <?php 
+					
+	session_start();
 					require('Conexion.php');
 					require('funciones.php');
 					$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
@@ -9,6 +11,7 @@
 						$_GET['id'] = "0"; 
 					}
 					$valor = $_GET['id']; 
+
 					
 					$query="SELECT * FROM administrador WHERE ID_Administrador=".$valor;
 					$result = mysql_query($query);
@@ -123,17 +126,30 @@
 		        </select>
 		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
+           <tr>
+             <td>Techado</td>
+             <td>&nbsp;</td>
+             <td><span id="spryselect2">
+               <select name="techado"  class="edit">
+               <option>Seleccione un tipo </option>
+               <option value="1">No posee techado</option>
+               <option value="2">Posee techado</option>
+               </select>
+               <span class="selectRequiredMsg">Valor requerido.</span></span></td>
+           </tr>
 		  <tr>
 		    <td>Precio</td>
 		    <td>:</td>
 		    <td><span id="sprytextfield5"><input type="text" name="precio" class="edit"  value=""/>
 		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
+           
            <tr>
         <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		    <td><input type="submit" name="button" id="button" value="Registrar" />
+		    <td><input type="submit" name="button" value="Registrar" />
             	<input type="hidden" name="action" value="cancha_nuevo" />
+               	<input type="hidden" name="id_club" value="<?php echo $_GET['club']; ?>" />
             </td>
            </tr>
 	      <tr>
@@ -155,6 +171,7 @@ var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4");
 var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
+var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
 //-->
         </script>
         </body>

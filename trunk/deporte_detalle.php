@@ -145,7 +145,9 @@ function confirmation() {
 <div id="sa_wrapper">
  <div id="sa_content_wrapper">
     <div id="sa_content">
-<div id="sa_listTop">
+<div id="sa_listTop"> 
+
+
 		<div id="sortBy">
             <ul>            
                 <li ><em>Paso 3 de 4</em></li>    
@@ -158,12 +160,13 @@ function confirmation() {
 			//lista los servicios adicionales que se pueden contratar.
 			$query="SELECT servicio.N_Nombre FROM servicioxclub, servicio WHERE servicio.ID_Deporte=".$_SESSION["deporte"]." AND servicioxclub.ID_Club=".$_SESSION["club"]." AND servicioxclub.ID_Servicio=servicio.ID_Servicio GROUP BY servicio.N_Nombre";
 			$result = mysql_query($query);
-			
+		print('<span style="font-size:13px; font-weight:bold;">SERVICIOS ADICIONALES (Opcional)</span><br/><br/>');
 			while ($row = mysql_fetch_array($result))
 			{			
-				printf('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].'" /> '.$row[0].'</span> <br/><br/>');	
+				
+				print('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].'" /> '.$row[0].'</span> <br/><br/>');	
 				if ($row[0]=='luz')
-					printf('<span style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas o 6:00 pm</span><br/><br/>');
+					printf('<span style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas.</span><br/><br/>');
 					
 			}
 			
