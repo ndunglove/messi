@@ -57,7 +57,7 @@
 						$cant=0;
 						if ($_SESSION['ID_admin']!=0)
 						{
-							$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['ID_admin'];
+							$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['ID_Admin'];
 							$result = mysql_query($query);
 							$cant=mysql_num_rows($result);
 						}
@@ -118,7 +118,7 @@
 		      <select name="tabla" class="edit" >
               <option>Seleccione una tabla</option>
 	          <option value="2" >Usuarios</option>
-	          <option value="3" >Clubs</option>
+
 	          <option value="4" >Canchas</option>                                                       
 		        </select>
 		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
