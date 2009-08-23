@@ -137,10 +137,10 @@
 					
 					
 					$query="SELECT c.ID_Club, c.N_Nombre, a.N_Nombre 
-											   FROM club c, distrito d, administrador a  
-				                              WHERE c.ID_Distrito=d.ID_Distrito AND
+											   FROM club c JOIN distrito d ON c.ID_Distrito=d.ID_Distrito JOIN administrador a ON c.ID_Administrador=a.ID_Administrador 
+				                              WHERE 
 											  		d.N_Nombre LIKE '%".$bu."%' OR
-													c.ID_Administrador=a.ID_Administrador AND
+													
 													a.N_Nombre LIKE '%".$bu."%' OR
 											  		c.ID_Club LIKE '%".$bu."%' OR
 													c.N_Nombre LIKE '%".$bu."%' OR
@@ -156,14 +156,14 @@
 					
 					
 					$query="SELECT c.ID_Cancha, c.N_Nombre, cu.N_Nombre, cu.ID_Club 
-											   FROM cancha c, canchaxclub ch, club cu, tamcancha t, tipocancha ti, deporte d 
+											   FROM cancha c JOIN canchaxclub ch ON c.ID_Cancha=ch.ID_Cancha JOIN club cu ON ch.ID_Club=cu.ID_Club, tamcancha t, tipocancha ti, deporte d 
 				                              WHERE t.ID_TamanoCancha=c.ID_TamanoCancha AND
 											  		t.N_Nombre LIKE '%".$bu."%' OR
 											  		ti.ID_TipoCancha=c.ID_TipoCancha AND
 													ti.N_Tipo LIKE '%".$bu."%' OR
 													d.ID_Deporte=c.ID_Deporte AND
 													d.N_Nombre LIKE '%".$bu."%' OR													
-													cu.ID_Club=ch.ID_Club AND ch.ID_Cancha=c.ID_Cancha AND
+													
 													cu.N_Nombre LIKE '%".$bu."%' OR																										
 													c.ID_Cancha LIKE '%".$bu."%' OR
 													c.N_Nombre LIKE '%".$bu."%' OR

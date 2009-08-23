@@ -24,6 +24,68 @@
 					$query="SELECT C_Precio FROM canchaxclub WHERE ID_Cancha=".$valor." AND ID_Club=".$club;
 					$result2 = mysql_query($query);
 					$row2 = mysql_fetch_row($result2);
+					
+					//-----------------------------------------------
+		if (!isset($_POST['action'])) {
+		$_POST['action'] = "undefine";
+	}	
+		
+	$estado = 0;
+	$estado2=0;
+	$status='';
+	
+	if ($_POST["action"] == "upload") 
+	{
+	
+		$prefijo = substr(md5(uniqid(rand())),0,6);
+
+    	// obtenemos los datos del archivo pdf
+		$archivo = $_FILES["archivo"]['name'];
+	
+		if ($archivo != "") 
+		{
+			// guardamos el archivo a la carpeta files
+			$destino =  "../Files/canchas/".$prefijo."_".$archivo;
+			$img_mime=array("image/jpeg","image/jpg","image/png","image/gif","image/pjpeg"); 
+			if ( (in_array($_FILES['archivo']['type'],$img_mime)) )
+			{		
+				if (copy($_FILES['archivo']['tmp_name'],$destino))
+				{
+					$status = $destino;
+					$query="UPDATE cancha SET T_Imagen='".$destino."' WHERE ID_Cancha=".$valor;
+					$chek = mysql_query($query);
+					if ($chek!=false)
+						$estado2=1;				
+					else  $estado2=0; 
+				} else {
+					$status = "Error al subir el archivo";
+				}
+			} else {
+				$status = "Error: Tipo de archivo no permitido";
+			}
+		} else {
+			$status = "Error al subir archivo";
+		}
+	}
+	elseif ($_POST["action"] == "eliminar") {
+		
+		$query="SELECT T_Imagen FROM cancha WHERE ID_Cancha=".$valor;					 
+		$res = mysql_query($query);
+		if (is_file('"'.$res[0].'"'))
+			unlink('"'.$res[0].'"');
+		
+		$query="UPDATE cancha SET T_Imagen='' WHERE ID_Cancha=".$valor;
+		$chek = mysql_query($query);
+		if ($chek!=false)
+			$estado=0;				
+		else  $estado=1;
+	}
+	//--------------------------
+		if ($_POST['action'] == "undefine")
+			$status=$row[6];
+
+		if ($row[6]!=NULL && $row[6]!='')
+			$estado = 1;
 ?>
 
 
@@ -208,7 +270,58 @@
           </tbody>
 		</form>
 	    </table>
-       
+      </div>
+       <div id="tabla">
+       <table  border="0" align="center" class="cuerpo2">
+                 <thead>
+                   <tr>
+                     <th colspan="4" >Foto</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+				<form action="cancha_editar.php?id=<?php echo $_GET['id']; ?>&club=<?php echo $_GET['club']; ?>" method="post" enctype="multipart/form-data">
+                 
+                 <tr>
+					<tr>
+                	  <td width="140" rowspan="4" ><span class="foto"><?php if ($estado==1) print('<img src="'.$row[6].'" width="130" height="185" />'); ?></span></td>
+                   <td width="140">Especificar fotograf&iacute;a </td>
+                   <td width="10">:</td>
+                   <td width="320"><span id="sprytextfield3">
+                     <label> <input type="file" name="archivo" id="archivo" size="30" <?php if ($estado==1) print ('disabled="disabled"');  ?> style="background-color:white;" />
+                     </label>
+                     <span class="textfieldRequiredMsg">ruta requerida</span></span></td>
+                  
+                 </tr>
+				<tr>
+					
+                   <td>&nbsp;</td>
+                   <td>&nbsp;</td>
+                   <td><input name="enviar" type="submit" id="enviar" value="Subir" <?php if ($estado==1) print ('disabled="disabled"'); ?> class="boton"/>
+                     <input name="action" type="hidden" value="upload" />
+                     <label class="info">(jpg, gif, png -&gt; max 1 MB)</label></td>
+                   
+                 </tr>
+                 </form>    
+                 <tr>
+				
+                   <td>URL foto</td>
+                   <td>:</td>
+                   <td><?php if ($status!='') print($status); ?></td>
+                  
+                 </tr>
+                 <form action="perfil.php" method="post">            
+                 <tr>
+
+                   <td></td>
+                   <td></td>
+                   <td><input name="enviar" type="submit" id="enviar" value="eliminar" <?php if ($estado==0) print ('disabled="disabled"'); ?> class="boton"/>
+                     <input name="action" type="hidden" value="eliminar" /></td>
+                 
+                 </tr>
+                 </form>
+            
+                 </tbody>
+               </table>
         </div>
        
 	  </div>

@@ -123,25 +123,6 @@
 													u.F_Estado LIKE '%".$bu."%' 
 										   GROUP BY u.ID_Usuario";									
 				}
-			if ($_POST['tabla']==3)//clubs
-				{	$t1="ID";
-					$t2="Nombre";
-					$t3="Administrador";
-					
-					
-					$query="SELECT c.ID_Club, c.N_Nombre, a.N_Nombre, a.ID_Administrador
-											   FROM club c, distrito d, administrador a  
-				                              WHERE c.ID_Distrito=d.ID_Distrito AND
-											  		d.N_Nombre LIKE '%".$bu."%' OR
-													c.ID_Administrador=a.ID_Administrador AND
-													a.N_Nombre LIKE '%".$bu."%' OR
-											  		c.ID_Club LIKE '%".$bu."%' OR
-													c.N_Nombre LIKE '%".$bu."%' OR
-													c.C_Telefono LIKE '%".$bu."%' OR
-													c.T_Banco LIKE '%".$bu."%' OR
-													c.F_Estado LIKE '%".$bu."%' 
-										   GROUP BY c.ID_Club";
-				}
 			if ($_POST['tabla']==4)//canchas
 				{	$t1="ID";
 					$t2="Nombre";
@@ -149,14 +130,14 @@
 					
 					
 					$query="SELECT c.ID_Cancha, c.N_Nombre, cu.N_Nombre, cu.ID_Club, cu.ID_Administrador 
-											   FROM cancha c, canchaxclub ch, club cu, tamcancha t, tipocancha ti, deporte d 
+											   FROM cancha c JOIN canchaxclub ch ON c.ID_Cancha=ch.ID_Cancha JOIN club cu ON ch.ID_Club=cu.ID_Club, tamcancha t, tipocancha ti, deporte d 
 				                              WHERE t.ID_TamanoCancha=c.ID_TamanoCancha AND
 											  		t.N_Nombre LIKE '%".$bu."%' OR
 											  		ti.ID_TipoCancha=c.ID_TipoCancha AND
 													ti.N_Tipo LIKE '%".$bu."%' OR
 													d.ID_Deporte=c.ID_Deporte AND
 													d.N_Nombre LIKE '%".$bu."%' OR													
-													cu.ID_Club=ch.ID_Club AND ch.ID_Cancha=c.ID_Cancha AND
+													
 													cu.N_Nombre LIKE '%".$bu."%' OR																										
 													c.ID_Cancha LIKE '%".$bu."%' OR
 													c.N_Nombre LIKE '%".$bu."%' OR
