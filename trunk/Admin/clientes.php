@@ -5,10 +5,6 @@
 			$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
 	        mysql_select_db($MySQL_BaseDatos, $link);
 			
-			if (!isset($_SESSION["id_admin"]))
-			{
-				$_SESSION["id_admin"]=0;
-			}
 			
 						
 		?>
@@ -47,29 +43,7 @@
 							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
-                        <?php
-					
-						$cant=0;
-						if ($_SESSION['ID_admin']!=0)
-						{
-							$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['ID_admin'];
-							$result = mysql_query($query);
-							$cant=mysql_num_rows($result);
-						}
-						if ($cant==0) { 
-						
-						
-						?>
-	                         <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="club_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="clientes.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-                         <?php } ?>
+                     
 				  </li>
  					
 					
@@ -96,6 +70,28 @@
         <thead>              
 		  <tr>
 		    <th colspan="5" >Club</th>
+           </tr>
+           <tr>
+           	<th colspan="5" align="right">
+               <?php
+					
+						$cant=0;
+						$result='';
+						if ($_SESSION['ID_admin']!=0)
+						{
+							$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['ID_admin'];
+							
+							$result = mysql_query($query);
+							$cant=mysql_num_rows($result);
+						}
+						if ($cant==0) { 
+						
+						
+						?>
+	                   		<a href="club_nuevo.php" target="_blank" style="text-decoration:underline;">Nuevo club</a>
+						
+                         <?php } ?>
+                        </th>
           </tr>
 		  <tr>
           	<th width="50">ID</th>
@@ -108,7 +104,7 @@
          </thead>
          <tbody>
          <?php         	
-			
+			if ($result!='')
 		 	while ($row = mysql_fetch_array($result)){
 				
 				$salida = '<tr>

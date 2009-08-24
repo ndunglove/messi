@@ -78,15 +78,7 @@
 							<span class="menu-mid">Administradores</span>
 							<span class="menu-right"></span>
 						</a>
-                         <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="administradores_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="administradores.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
+                         
 				  </li>
  					<li class="#">
 						<a href="usuarios.php" target="_self">

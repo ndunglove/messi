@@ -52,29 +52,7 @@
 							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
-                        <?php
-					
-						$cant=0;
-						if ($_SESSION['ID_admin']!=0)
-						{
-							$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['ID_Admin'];
-							$result = mysql_query($query);
-							$cant=mysql_num_rows($result);
-						}
-						if ($cant==0) { 
-						
-						
-						?>
-	                         <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="club_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="clientes.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-                         <?php } ?>
+                        
 				  </li>
  					
 					

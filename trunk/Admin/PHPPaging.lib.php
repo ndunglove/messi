@@ -549,9 +549,10 @@ class PHPPaging {
 	**/
 	function nombreVariable ($var) {
 		if(!is_string($var) or empty($var)) return $this->error(true, "El nombre de variable indicado está vacío o es inválido.");
-		if(!ereg("(^[a-zA-Z0-9]+)$",$var)) return $this->error(true, "El nombre de la variable indicado contiene caracteres no válidos");
+		if(!preg_match("(^[a-zA-Z0-9]+)$",$var)) return $this->error(true, "El nombre de la variable indicado contiene caracteres no válidos");
 		$this->nombreVariable = (string)$var; 
 		return true;
+		
 	}
 	
 	/**
@@ -751,7 +752,7 @@ class PHPPaging {
 	**/
 	function linkClase ($id) {
 		if(empty($id)) return $this->error(true, "El valor indicado en el método linkClase() está vacío");
-		if(!ereg("(^[a-zA-Z0-9_ ]+)$",$id) or $id === true) return $this->error(true, "El nombre indicado en el método linkClase() es inválido");
+		if(!preg_match("(^[a-zA-Z0-9_ ]+)$",$id) or $id === true) return $this->error(true, "El nombre indicado en el método linkClase() es inválido");
 		$this->linkClase = $id;
 		return true;
 	}
@@ -1126,7 +1127,7 @@ class PHPPaging {
 			if(!empty($this->sql)) {
 				$sql = $this->sql." LIMIT $numPrimerRegistro, {$this->porPagina}"; //Separada version 2.0
 				$result = (isset($this->conn)) ? @mysql_query($sql, $this->conn) : @mysql_query($sql);
-				if(!$result) return $this->error(false, @mysql_error(), $sql, ereg("limit[ ]+[0-9]+(,[ ]*[0-9]+)?", strtolower($sql))); // version 2.0
+				if(!$result) return $this->error(false, @mysql_error(), $sql, preg_match("limit[ ]+[0-9]+(,[ ]*[0-9]+)?", strtolower($sql))); // version 2.0
 				$this->ejecutard = $result;
 				$this->numTotalRegistros_actual = mysql_num_rows($result);
 			} else {
