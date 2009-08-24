@@ -6,18 +6,7 @@
 			$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
 	        mysql_select_db($MySQL_BaseDatos, $link);
 			
-			if (!isset($_SESSION["id_admin"]))
-			{
-				$_SESSION["id_admin"]=0;
-			}
-			$cant=0;
-			if ($_SESSION["id_admin"]!=0)
-			{
-				$query="SELECT c.ID_Club, c.N_Nombre, a.N_Usuario, d.N_Nombre FROM club c JOIN administrador a ON c.ID_Administrador = a.ID_Administrador JOIN distrito d ON c.ID_Distrito=d.ID_Distrito WHERE c.ID_Administrador=".$_SESSION['id_admin'];
-				$result = mysql_query($query);
-				
-				$cant=mysql_num_rows($result);
-			}
+			
 			
 			
 			
@@ -55,17 +44,7 @@
 							<span class="menu-mid">Club</span>
 							<span class="menu-right"></span>
 						</a>
-                        <?php if ($cant==0) { ?>
-	                         <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="club_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="clientes.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
-                         <?php } ?>
+                     
 				  </li>
  					
 					
@@ -75,16 +54,7 @@
 							<span class="menu-mid">Servicios</span>
 							<span class="menu-right"></span>
 						</a>
-                        
-                         <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="servicios_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="servicios.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
+                     
 					</li>
                     <li class="#">
 						<a href="buscar2.php" target="_self">
@@ -102,6 +72,9 @@
         <thead>              
 		  <tr>
 		    <th colspan="3" >Servicios registrados</th>
+           </tr>
+           <tr>
+             <th colspan="3" align="right"><a href="servicios_nuevo.php" target="_blank" style="text-decoration:underline;">Nuevo servicio</a></th>
           </tr>
 		  <tr>
           	<th width="50">ID</th>
@@ -113,14 +86,15 @@
          <?php
 	
 
+			$query="SELECT s.ID_Servicio, s.N_Nombre  FROM servicio s JOIN servicioxclub sc ON s.ID_Servicio=sc.ID_Servicio JOIN club c ON sc.ID_Club=c.ID_Club WHERE c.ID_Club=".$_SESSION['ID_club']." AND s.N_Nombre!='luz' GROUP BY s.N_Nombre ORDER BY s.N_Nombre ASC ";
+         	$result = mysql_query($query);
 		
-         	$result = mysql_query("SELECT * FROM servicio ORDER BY N_Nombre ASC");
 		 	while ($row = mysql_fetch_array($result)){
 				
 				$salida = '<tr>
 		    				<td align="center">'.$row[0].'</td>
-		    				<td >'.$row["N_Nombre"].'</td>		
-		    				<td align="center"><a href="club_ver.php?id='.$row["ID_Servicio"].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row["ID_Servicio"].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td >'.$row[1].'</td>		
+		    				<td align="center"><a href="club_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="club_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   </tr>';
 					   
 				printf ($salida);}

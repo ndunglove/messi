@@ -38,15 +38,7 @@
 							<span class="menu-mid">Administradores</span>
 							<span class="menu-right"></span>
 						</a>
-                         <div class="sub">
-			   				<ul>
-         			   					<li>
-									<a href="administradores_nuevo.php" target="_blank">Nuevo</a>
-								</li>
-         			   					<li>
-									<a href="administradores.php" target="_self">Listar</a>
-								</li>
-			   				</ul></div>
+                         
 				  </li>
  					<li class="#">
 						<a href="usuarios.php" target="_self">
@@ -78,6 +70,9 @@
         <thead>              
 		  <tr>
 		    <th colspan="5" >Administradores</th>
+          </tr>
+          <tr>
+            <th colspan="5" align="right"><a href="administradores_nuevo.php" target="_blank" style="text-decoration:underline">Nuevo administrador</a></th>
           </tr>
 		  <tr>
           	<th width="50">ID</th>
