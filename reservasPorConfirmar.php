@@ -74,12 +74,7 @@
   <div class="clearing">&nbsp;</div>
  
   <div id="sa_filters">
-    <div id="featuredStores">
-      <div id="featuresStoresContainer">
-        <span style="font-family:Verdana; color:#666; font-size:12px; font-weight:bold; text-align:center;">Busqueda Avanzada</span>
-      </div>
-    </div>
-    <!-- End featuredStores -->
+
   
      <?php include('menu_izq.php'); ?>
     <div height="10">&nbsp;</div>
@@ -95,7 +90,7 @@
         <div id="sortBy">
             <ul>
                 
-                <li ><em>Clubs</em></li>
+                <li ><em>Reservas no confirmadas</em></li>
 
     
             </ul>
@@ -104,6 +99,9 @@
           	<div id="searchContainerBox_background"><br/>
           		
           	<div class="wrap" align='center'>
+            <div align='left' style="padding-left:150px; font-size:14px;">
+             Aqu&iacute; podr&aacute;s ver las reservas realizadas pendientes de pago y aprobaci&oacute;n.
+            </div>
            <?php 
 		  $idUsuario=$_SESSION["ID"];
 	
@@ -115,20 +113,13 @@
 					<th colspan='7'> RESERVAS ACTUALES POR CONFIRMAR</th>
 				</tr>
 				<tr>
-					<td>Club
-					</td>
-					<td>Cancha
-					</td>
-					<td>Fecha
-					</td>
-					<td>Detalles
-					</td>
-					<td>Pagado
-					</td>
-					<td>Estado
-					</td>
-					<td>&nbsp;
-					</td>
+					<td>Club</td>
+					<td>Cancha</td>
+					<td>Fecha</td>
+					<td>Detalles</td>
+					<td>Pagado</td>
+					<td>Estado</td>
+					<td>&nbsp;</td>
 				</tr>				
 				<?php 
 				require('funciones.php');

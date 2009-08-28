@@ -61,18 +61,18 @@
 		  <tr>
 		    <td width="200">Nombre</td>
 		    <td width="10">:</td>
-		    <td width="490"><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value=""/>
+		    <td width="490"><span id="sprytextfield1"><input type="text" name="nombre" class="edit"  value=""/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
 		    <td>Deporte</td>
 		    <td>:</td>
 		    <td><span id="sprytextfield4">
-		      <select name="select3" id="select3" class="edit" >
+		      <select name="deporte" class="edit" >
 		        <option>Seleccione un Deporte</option>
 		        <?php 
 										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
+					$query="SELECT ID_Deporte, N_Nombre FROM deporte";
 					$sel = "";	
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
@@ -86,13 +86,16 @@
 		  <tr>
 		    <td>Precio</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield5"><input type="text" name="text2" id="text3" class="edit"  value=""/>
+		    <td><span id="sprytextfield5"><input type="text" name="precio" class="edit"  value=""/>
 		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
            <tr>
         <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		    <td><input type="submit" name="button" id="button" value="Registrar" /></td>
+		    <td><input type="submit" name="button" id="button" value="Registrar" />
+            	<input type="hidden" name="action" value="servicio_nuevo" />
+                <input type="hidden" name="club_id" value="<?php echo $_SESSION['ID_club']; ?>" />
+            </td>
            </tr>
 	      <tr>
 		    <td>&nbsp;</td>

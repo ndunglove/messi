@@ -24,6 +24,17 @@
 					$query="SELECT C_Precio FROM canchaxclub WHERE ID_Cancha=".$valor." AND ID_Club=".$club;
 					$result2 = mysql_query($query);
 					$row2 = mysql_fetch_row($result2);
+					
+					if (!isset($_GET['re'])) 
+					{
+						$_GET['re'] = 0; 
+					}
+					
+					if ($_GET['re']!=0)
+					{
+						$query="UPDATE reserva SET T_Estado='1' WHERE ID_Reserva=".$_GET['re'];
+						mysql_query($query);	
+					}
 ?>
 
 
@@ -234,7 +245,10 @@
 		    				<td >'.$row[3].'</td>
 		    				<td >'.$row[2].'</td>	
 							<td >'.$estado.'</td>	
-		    				<td align="center"><a href="reservas_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
+		    				<td align="right">';
+				if ($_SESSION['privi']==2 && $row[4]==0)
+				$salida .=	'<a href="cancha_ver.php?id='.$valor.'&club='.$club.'&re='.$row[0].'" ><img src="images/check.gif" alt="ver" border="0" /></a>';
+				$salida .=	'<a href="reservas_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   </tr>';
 					   
 				printf ($salida);}

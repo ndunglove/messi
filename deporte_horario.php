@@ -113,6 +113,36 @@ function todos(num) {
 		varCheck2[num-1].style.display = "block" ;
 	}
 }
+
+function validate(esto) 
+{ 
+    var error = ''; 
+    var validate = false; 
+    var input = esto.getElementsByTagName('input'); 
+    for(var i=0;i<input.length;i++) 
+    { 
+        switch(input[i].type) 
+        { 
+            case 'checkbox': 
+                if(input[i].checked==true) 
+                { 
+                    validate = true; 
+                } 
+                break; 
+            default: 
+                break; 
+        } 
+    } 
+    if(validate==true) 
+    { 
+        return true; 
+    } 
+    else 
+    { 
+        alert('Por favor debe seleccionar al menos una hora de reserva.'); 
+        return false; 
+    } 
+} 
 </script>
 
 </head>
@@ -169,7 +199,7 @@ function todos(num) {
 <br/>
 
 <div id="temporal">
-<form method="post" action="deporte_detalle.php">
+<form method="post" action="deporte_detalle.php" onsubmit="return validate(this)" >
 <div align="right" style="padding-right:60px;">
 <h4 align="left" style="float:left; padding-left:60px;">
 	<?php
@@ -187,7 +217,7 @@ function todos(num) {
 	?>
 </h4>
 <input type="submit" name="reservar" id="reservar" value="Reservar" class="boton2" />
-<input type="reset" name="reset" id="reset" value="Cancelar" class="boton2" />
+<input type="reset" name="reset" id="reset" value="Borrar selecci&oacute;n" class="boton2" />
 </div>
 <div align="right" style="padding-right:60px;"><br/><label style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas</label>.<br/><br/></div>
 <table id="horario" align="center">
@@ -269,7 +299,7 @@ function todos(num) {
 </table>
 <div align="right" style="padding-right:60px;">
 <input type="submit" name="reservar" id="reservar" value="Reservar" class="boton2" />
-<input type="reset" name="reset" id="reset" value="Cancelar" class="boton2" />
+<input type="reset" name="reset" id="reset" value="Borrar selecci&oacute;n" class="boton2" />
 <input type="hidden" name="action" value="reservar" />
 </div>
 </form>

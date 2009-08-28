@@ -5,7 +5,7 @@
 //Convierte fecha de mysql a normal 
 //////////////////////////////////////////////////// 
 function cambiaf_a_normal($fecha){ 
-    preg_match( "([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $fecha, $mifecha); 
+    ereg( "([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $fecha, $mifecha); 
     $lafecha=$mifecha[3]."-".$mifecha[2]."-".$mifecha[1]; 
     return $lafecha; 
 } 
@@ -15,7 +15,7 @@ function cambiaf_a_normal($fecha){
 //////////////////////////////////////////////////// 
 
 function cambiaf_a_mysql($fecha){ 
-    preg_match( "([0-9]{1,2})-([0-9]{1,2})-([0-9]{2,4})", $fecha, $mifecha); 
+    ereg( "([0-9]{1,2})-([0-9]{1,2})-([0-9]{2,4})", $fecha, $mifecha); 
     $lafecha=$mifecha[3]."-".$mifecha[2]."-".$mifecha[1]; 
     return $lafecha; 
 } 

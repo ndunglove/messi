@@ -146,6 +146,11 @@ body {
         font-size: 12px;
         color: #FF8000;
 }
+.boton2:hover {
+        background-color: #7AB83D;
+        font-size: 13px;
+
+}
 
 #topmenu {
 	float: right;
@@ -181,6 +186,11 @@ body {
 	font-weight: bold;
 	color: #565913;
 	border: 0px;
+	
+}
+#topmenu a:hover{
+	
+	padding-top:9px;
 	
 }
 
@@ -235,11 +245,11 @@ body {
 	
 	margin-left:auto;
 	margin-right:auto;
-	background-image:url(../images/deporte.png);
+	background-image:url(../images/deporte2.png);
 	background-repeat:no-repeat;
 	width:1010px;
 	padding-bottom:80px;
-	height:630px;
+	height:480px;
 	}
 #todoDeporte2{
 	
@@ -263,18 +273,40 @@ body {
 	border-width:0px;
 	}
 
-#todoDeporte .tenis{
-	
+#todoDeporte .tenis{	
 	float: left;
-	margin-top:375px;
-	margin-left:402px;
+	margin-top:158px;
+	margin-left:357px;
+	width:154px;
+	height:81px;
+	background-image:none;
+	
 	}
+#todoDeporte .tenis:hover {
+	background-image:url(../images/efecto.png);
+	
+}
+
+#todoDeporte .tenis img {
+	margin-top:27px;
+	margin-left:47px;
+}
 	
 #todoDeporte .futbol{
 	float: left;
-	margin-top:335px;
-	margin-left:127px;
+	margin-top:126px;
+	margin-left:36px;
+	width:154px;
+	height:81px;
+	background-image:none;
 	}
+#todoDeporte .futbol:hover {
+	background-image:url(../images/efecto.png);
+}
+#todoDeporte .futbol img {
+	margin-top:27px;
+	margin-left:42px;
+}
 
 .clearing{
 	clear: both;

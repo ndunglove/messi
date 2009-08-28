@@ -69,7 +69,12 @@
 						{
 							$result = mysql_query("INSERT INTO usuario(N_Nombre, N_Apellido, T_Email, T_Pass, D_FechaNacimiento, ID_Distrito,F_Estado) VALUES ('".$nombre."','".$apellido."','".$email."','".$pass."','".cambiaf_a_mysql($fechas)."',".$distrito.",1) " );						
 							if ($result!=false)
+							{
 								$_SESSION['op2']=4; 
+								$_SESSION['ID']=mysql_insert_id();								
+								$_SESSION['op']=0;
+							}
+								
 						}
 						else $_SESSION['op2']=3; 
 					}
@@ -355,7 +360,7 @@ return false;
                 <option> Distrito: </option>
                 <?php 
                                                                     
-                                                                        $result = mysql_query("SELECT * FROM distrito ");
+                                                                        $result = mysql_query("SELECT * FROM distrito ORDER BY  N_Nombre");
                                                                         while ($row = mysql_fetch_array($result)){
                                                                         
                                                                         $salida = ' <option value="'.$row["ID_Distrito"].'">'.$row["N_Nombre"].'</option> ';                                

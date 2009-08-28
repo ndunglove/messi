@@ -143,13 +143,13 @@ img.vMiddle{
 
 div#sa_listTop #sortBy{
 	float:right;
-	color:#A4A4A4;
+	color:#7D7D7D;
 	font:bold 16px Arial;
 }
 
 div#sa_listTop #sortBy em{
-	color:#A4A4A4;
-	font:bold 16px Arial;
+	color:#7D7D7D;
+	font:bold 20px Arial;
 	float:left;
 	line-height:34px;
 	margin-right:15px;

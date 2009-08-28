@@ -76,7 +76,7 @@
   <div id="sa_filters">
     <div id="featuredStores">
       <div id="featuresStoresContainer">
-        <span style="font-family:Verdana; color:#666; font-size:12px; font-weight:bold; text-align:center;">Busqueda Avanzada</span>
+        <span style="font-family:Verdana; color:#666; font-size:12px; font-weight:bold; text-align:center;">B&uacute;squeda Avanzada</span>
       </div>
     </div>
     <!-- End featuredStores -->
@@ -91,7 +91,7 @@
           <!-- Manufacture/Vendor -->
           <li class="off">
             <h3 onclick="javascript:toggleFilter(this);" style="cursor:pointer;">Ubicación</h3>
-            <ul id="vendorFilters" class="sa_filters_sub" style="overflow:auto;">
+            <ul id="vendorFilters" class="sa_filters_sub" style="overflow:auto; height:200px; width:160px;">
             <?php 
 			
 				$result = mysql_query("SELECT * FROM distrito ORDER BY C_Prioridad DESC");
@@ -102,14 +102,14 @@
 					$salida = ' <li id="'.$row["ID_Distrito"].'">
 								<input disabled="disabled" name="vendorIds'.$cont.'" type="checkbox" value="'.$row["ID_Distrito"].'" onclick="consulta(this.form.name); " >
  								'.$row["N_Nombre"].'</li> ';
-				else $salida = ' <li id="'.$row["ID_Distrito"].'" style="display:none; ">
+				else $salida = ' <li id="'.$row["ID_Distrito"].'" >
 								<input disabled="disabled" name="vendorIds'.$cont.'" type="checkbox" value="'.$row["ID_Distrito"].'" onclick="consulta(this.form.name); " >
  								'.$row["N_Nombre"].'</li> ';									
 				printf ($salida);}
 			
 			?>
               
-              <li onclick="exposeAllVendors(this);" style="cursor:pointer;"><img src="images/sa_filters_seemoreArrow.gif" class="vMiddle"> <a style="text-decoration:none;color:#999999">Ver más...</a></li>
+             
             </ul>
           </li>  
           <li class="on">

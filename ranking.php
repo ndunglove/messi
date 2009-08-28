@@ -72,12 +72,7 @@
   <div class="clearing">&nbsp;</div>
  
   <div id="sa_filters">
-    <div id="featuredStores">
-      <div id="featuresStoresContainer">
-        <span style="font-family:Verdana; color:#666; font-size:12px; font-weight:bold; text-align:center;">Busqueda Avanzada</span>
-      </div>
-    </div>
-    <!-- End featuredStores -->
+   
   
      <?php include('menu_izq.php'); ?>
     <div height="10">&nbsp;</div>
