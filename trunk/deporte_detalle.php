@@ -103,10 +103,6 @@ function confirmation() {
 		alert("Gracias, su reserva se ha guardado satisfactoriamente")
 		window.location = "reservasPorConfirmar.php";
 	}
-	else{
-		alert("Su reserva ha sido cancelada")
-		window.location = "perfil.php?cancelar=1";
-	}
 }
 //-->
 </script>
@@ -163,7 +159,7 @@ function confirmation() {
 		print('<span style="font-size:13px; font-weight:bold;">SERVICIOS ADICIONALES (Opcional)</span><br/><br/>');
 			while ($row = mysql_fetch_array($result))
 			{			
-				
+				if ($row[0]!='luz')
 				print('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].'" /> '.$row[0].'</span> <br/><br/>');	
 				if ($row[0]=='luz')
 					printf('<span style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas.</span><br/><br/>');
@@ -183,7 +179,7 @@ function confirmation() {
 			{
 			
 				
-				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, reserva.D_FechaReserva rfecha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, canchaxclub.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"]." ORDER BY horario.D_Fecha ASC";
+				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, reserva.ID_reserva idreserva, reserva.D_FechaReserva rfecha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, canchaxclub.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"]." ORDER BY horario.D_Fecha ASC";
 				$result=mysql_query($query);
 				
 				$row=mysql_fetch_array($result);
@@ -201,6 +197,10 @@ function confirmation() {
                         </tr>
                     </thead>
                     <tbody>
+                    	<tr>
+                    	  <td><span style="font-weight:bold;">Nro. de reserva:</span></td>
+                    	  <td><span style="font-weight:bold;">000<?php print($row['idreserva']);?></span></td>
+                  	  </tr>
                     	<tr><td><span style="font-weight:bold;">Club:</span></td><td><span style="font-weight:normal;"> <?php print($row['nclub']); ?></span></td></tr>
                     	<tr><td><span style="font-weight:bold;">Cancha:</span></td><td><span style="font-weight:normal;"> <?php print($row['ncancha']); ?></span></td></tr>
                         <tr>

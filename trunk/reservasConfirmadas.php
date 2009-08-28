@@ -91,12 +91,7 @@
   <div class="clearing">&nbsp;</div>
  
   <div id="sa_filters">
-    <div id="featuredStores">
-      <div id="featuresStoresContainer">
-        <span style="font-family:Verdana; color:#666; font-size:12px; font-weight:bold; text-align:center;">Busqueda Avanzada</span>
-      </div>
-    </div>
-    <!-- End featuredStores -->
+ 
   
      <?php include('menu_izq.php'); ?>
     <div height="10">&nbsp;</div>
@@ -112,7 +107,7 @@
         <div id="sortBy">
             <ul>
                 
-                <li ><em>Clubs</em></li>
+                <li ><em>Reservas confirmadas</em></li>
 
     
             </ul>
@@ -121,9 +116,12 @@
           	<div id="searchContainerBox_background"><br/>
           		
           	<div class="wrap" align='center'>
+            <div align='left' style="padding-left:100px; font-size:14px;">
+             Aqu&iacute; podr&aacute;s ver las reservas que has pagado y hayan sido aprobadas<br/> por el administrador del club.
+            </div>
            <?php 
 		  $idUsuario=$_SESSION["ID"];
-	
+			
 
 				?>						
 				
@@ -181,12 +179,12 @@
 							echo "en espera";
 						elseif($row[5]==1) 
 							echo "aprobado";
-						elseif($row[5]==1) 
+						elseif($row[5]==2) 
 							echo "rechazado";
 						?>
 					</td>
 						<td><?php if ($row[9]==0) { ?>
-                        		<a href='reservasConfirmadas.php?idhor=<?php echo $row[8]?>' target='_new'>recomendar</a> 
+                        		<a href='reservasConfirmadas.php?idhor=<?php echo $row[8];?>' target='_new'>recomendar</a> 
                             <?php } ?>    
                                 </td>
 				

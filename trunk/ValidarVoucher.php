@@ -8,7 +8,7 @@ $cn = fnConnect($msg);
 if($voucher!="")
 if(!$cn) {
 	fnShowMsg("Error",$msg);
-	echo "errrorr";
+	echo "error";
 	return;
 } else {	
 				$sql="select * from pago where C_Voucher='".$voucher."'";
@@ -16,9 +16,9 @@ if(!$cn) {
 				$resultado=mysql_query($sql,$cn) or die ("error al validar voucher");
 				if (mysql_num_rows($resultado)>0)
 				{
-				echo "<span style='color:red;'>Ya existe.</span>";
+				echo "<span style='color:red;'>Nro. de voucher Inv&aacute;lido.</span>";
 				} else {
-				echo "No Existe";
+				echo "<span style='color:green;'> Nro. de voucher V&aacute;lido</span>";
 				
 				}
 	

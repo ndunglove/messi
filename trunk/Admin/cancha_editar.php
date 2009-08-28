@@ -41,15 +41,17 @@
 
     	// obtenemos los datos del archivo pdf
 		$archivo = $_FILES["archivo"]['name'];
-	
+			$temp="../";	
 		if ($archivo != "") 
 		{
 			// guardamos el archivo a la carpeta files
-			$destino =  "../Files/canchas/".$prefijo."_".$archivo;
+
+			$destino =  "Files/canchas/".$prefijo."_".$archivo;
+			$destino2=$temp.$destino;
 			$img_mime=array("image/jpeg","image/jpg","image/png","image/gif","image/pjpeg"); 
 			if ( (in_array($_FILES['archivo']['type'],$img_mime)) )
 			{		
-				if (copy($_FILES['archivo']['tmp_name'],$destino))
+				if (copy($_FILES['archivo']['tmp_name'],$destino2))
 				{
 					$status = $destino;
 					$query="UPDATE cancha SET T_Imagen='".$destino."' WHERE ID_Cancha=".$valor;
@@ -71,8 +73,8 @@
 		
 		$query="SELECT T_Imagen FROM cancha WHERE ID_Cancha=".$valor;					 
 		$res = mysql_query($query);
-		if (is_file('"'.$res[0].'"'))
-			unlink('"'.$res[0].'"');
+		if (is_file('"../'.$res[0].'"'))
+			unlink('"../'.$res[0].'"');
 		
 		$query="UPDATE cancha SET T_Imagen='' WHERE ID_Cancha=".$valor;
 		$chek = mysql_query($query);
@@ -283,7 +285,7 @@
                  
                  <tr>
 					<tr>
-                	  <td width="140" rowspan="4" ><span class="foto"><?php if ($estado==1) print('<img src="'.$row[6].'" width="130" height="185" />'); ?></span></td>
+                	  <td width="140" rowspan="4" ><span class="foto"><?php if ($estado==1) print('<img src="../'.$row[6].'" width="130" height="185" />'); ?></span></td>
                    <td width="140">Especificar fotograf&iacute;a </td>
                    <td width="10">:</td>
                    <td width="320"><span id="sprytextfield3">

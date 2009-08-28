@@ -160,7 +160,7 @@ setTimeout ("redireccionar()", 0);
           <tr>
           	<td width="102">
 	Nro. Voucher</td><td width="10">:</td><td width="232" align="left"> <span id="sprytextfield1"><input type="text" name="voucher" onkeyup="validaVoucher(this.value);"  class="edit"/>
-	    <span class="textfieldRequiredMsg">A value is required.</span></span></td>
+	    <span class="textfieldRequiredMsg">Valor requerido</span></span></td>
     	</tr>
         <tr>
         	<td></td>
@@ -173,8 +173,28 @@ setTimeout ("redireccionar()", 0);
     <input type="submit" value="registrar" name="submit" class="boton" />
     <input type="hidden" value="registrar" name="action"></td>
     </tr>
-    </table>
-	<div id="mensajeVoucher" name='aa' align='center'></div>
+        <tr>
+          <td></td>
+          <td></td>
+          <td align="left">&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td align="left"><div id="mensajeVoucher" name='aa' align='center'></div></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td align="left">&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td align="left">(*) Las confirmaciones se har&aacute;n por correo electr&oacute;nico.</td>
+        </tr>
+         </table>
+	
 	</form>
           
         

@@ -73,12 +73,7 @@
   <div class="clearing">&nbsp;</div>
  
   <div id="sa_filters">
-    <div id="featuredStores">
-      <div id="featuresStoresContainer">
-        <span style="font-family:Verdana; color:#666; font-size:12px; font-weight:bold; text-align:center;">Busqueda Avanzada</span>
-      </div>
-    </div>
-    <!-- End featuredStores -->
+
   
      <?php include ("menu_izq.php") ?>
     <div height="10">&nbsp;</div>
@@ -94,7 +89,7 @@
         <div id="sortBy">
             <ul>
                 
-                <li ><em>Clubs</em></li>
+                <li ><em>Historial de reservas</em></li>
 
     
             </ul>
@@ -103,6 +98,9 @@
           	<div id="searchContainerBox_background"><br/>
           		
           	<div class="wrap" align='center'>
+            <div align='left' style="padding-left:220px; font-size:14px;">
+             Aqu&iacute; podr&aacute;s ver tus reservas pasadas.
+            </div>
 	
 <?php	
 	$idUsuario=$_SESSION["ID"];
@@ -125,17 +123,17 @@
 <table id="horario2">
 				<thead>
 				<tr>
-					<th colspan='2'>Fecha de Reserva
-					</th>
+					<th >Fecha de reserva</th>
+                    <th >Nro Reserva</th>
+                    <th ></th>
 				</tr>
 				</thead>
                 <tbody>
 				<?php while($row = mysql_fetch_array($rs,MYSQL_ASSOC)) { ?>
 				<tr>
-					<td> <?php echo cambiaf_a_normal($row["D_FechaReserva"]); ?> 
-					</td>
-					<td><a href='DetalleHistorial.php?id=<?php echo $row["ID_Reserva"]?>' target='_new'> Ver</a> 
-					</td>
+					<td> <?php echo cambiaf_a_normal($row["D_FechaReserva"]); ?> </td>
+                    <td>000<?php echo $row["ID_Reserva"]?></td>
+					<td><a href='DetalleHistorial.php?id=<?php echo $row["ID_Reserva"]?>' target='_new'> Ver</a>			</td>
 				</tr>
 				<?php	
 				}	//while	

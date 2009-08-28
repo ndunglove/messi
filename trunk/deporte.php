@@ -45,12 +45,9 @@
     	<a href="deporte_index.php?deporte=1"><img src="images/futbol.gif" /></a>
     </div>
     
-
-
 </div> <!-- fin todo deporte --> 
 
-<div id="footer">
- </div>	
+<div id="footer"></div>	
 
 </div> <!-- fin nubes -->
  

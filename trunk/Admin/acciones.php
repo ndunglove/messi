@@ -252,7 +252,7 @@ elseif ($_POST["action"] == "cancha_editar") {
 			}
 	
 	}
-elseif ($_POST["action"] == "video_nuevo") {
+elseif ($_POST["action"] == "servicio_nuevo") {
 		
 		$query=    "INSERT INTO video (N_Nombre,
 									   D_Fecha,
@@ -276,7 +276,7 @@ elseif ($_POST["action"] == "video_nuevo") {
 		else { unlink($_POST['url_video']); }
 	
 	}
-elseif ($_POST["action"] == "video_editar") {
+elseif ($_POST["action"] == "servicio_editar") {
 	$tipo=2;		
 		$query=    "UPDATE video SET N_Nombre='".$_POST['nombre']."',
 									  N_Apellido='".cambiaf_a_mysql($_POST['fecha'])."',

@@ -163,12 +163,7 @@
   <div class="clearing">&nbsp;</div>
  
   <div id="sa_filters">
-    <div id="featuredStores">
-      <div id="featuresStoresContainer">
-        <span style="font-family:Verdana; color:#666; font-size:12px; font-weight:bold; text-align:center;">Busqueda Avanzada</span>
-      </div>
-    </div>
-    <!-- End featuredStores -->
+    
     <?php include('menu_izq.php'); ?>
     <div height="10">&nbsp;</div>
   
@@ -185,7 +180,9 @@
                 
                 <li ><em>Perf&iacute;l</em></li>
 	<?php	
-		$result = mysql_query("SELECT usuario.T_Imagen, usuario.N_Nombre, usuario.T_Email, usuario.C_Puntos, distrito.N_Nombre, usuario.C_Telefono, usuario.T_Direccion FROM usuario, distrito WHERE usuario.ID_Distrito=distrito.ID_Distrito AND usuario.ID_Usuario=".$_SESSION['ID']);
+		$query ="SELECT usuario.T_Imagen, usuario.N_Nombre, usuario.T_Email, usuario.C_Puntos, distrito.N_Nombre, usuario.C_Telefono, usuario.T_Direccion FROM usuario, distrito WHERE usuario.ID_Distrito=distrito.ID_Distrito AND usuario.ID_Usuario=".$_SESSION['ID'];
+		$result = mysql_query($query);
+
 		$row = mysql_fetch_row($result);
 		if ($_POST['action'] == "undefine")
 			$status=$row[0];
