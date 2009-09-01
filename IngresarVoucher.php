@@ -30,7 +30,8 @@
 		$fecha_aux=split('/',$fecha);
 		$fecha_aux=$fecha_aux[0].'-'.$fecha_aux[1].'-'.$fecha_aux[2];
 		
-		$query="INSERT INTO pago (D_FechaPago,C_Voucher) VALUES ('".$fecha_aux."',".$_POST['voucher'].")";	
+		$query="INSERT INTO pago (D_FechaPago,C_Voucher,D_FechaVoucher,D_HoraVoucher) 
+					 VALUES ('".$fecha_aux."',".$_POST['voucher'].",'".cambiaf_a_mysql($_POST['fecha'])."','".$_POST['hora']."')";	
 		
 		mysql_query($query);
 		$pago_id=mysql_insert_id();
@@ -145,7 +146,7 @@ setTimeout ("redireccionar()", 0);
           		
           	
             <form action="IngresarVoucher.php" method="post">
-         <table width="352" class="horario" align="center">
+         <table width="480" class="horario" align="center">
           
           <tr>
             <td colspan="3">Por favor, ingrese solo los números que aparecen en el<br/> voucher, 
@@ -163,20 +164,21 @@ setTimeout ("redireccionar()", 0);
 	    <span class="textfieldRequiredMsg">Valor requerido</span></span></td>
     	</tr>
         <tr>
-        	<td></td>
-            <td></td>
-            <td>&nbsp;</td>
+        	<td>Fecha</td>
+            <td>:</td>
+            <td><span id="sprytextfield2"><input type="text" name="fecha" class="edit" /><span style="font-size:10px;">(DD-MM-AAAA)</span>
+                <span class="textfieldRequiredMsg">Valor requerido</span></span></td>
         <tr>
-        	<td></td>
-            <td></td>
-            <td align="left">
-    <input type="submit" value="registrar" name="submit" class="boton" />
-    <input type="hidden" value="registrar" name="action"></td>
+        	<td>Hora</td>
+            <td>:</td>
+            <td align="left"><span id="sprytextfield3"><input type="text" name="hora" class="edit" /><span style="font-size:10px;">(HH:MM am/pm)</span>
+                <span class="textfieldRequiredMsg">Valor requerido</span></span></td>
     </tr>
         <tr>
           <td></td>
           <td></td>
-          <td align="left">&nbsp;</td>
+          <td align="left"><input type="submit" value="registrar" name="submit" class="boton" />
+            <input type="hidden" value="registrar" name="action" /></td>
         </tr>
         <tr>
           <td></td>
@@ -244,6 +246,8 @@ setTimeout ("redireccionar()", 0);
 <script type="text/javascript">
 <!--
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
+var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3");
 //-->
 </script>
 </body>

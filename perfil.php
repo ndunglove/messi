@@ -6,18 +6,43 @@
 	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
 	
-	if (isset($_GET["cancelar"]))
+	
+	
+	if (!isset($_SESSION["deporte"]))
 	{
-		if ($_GET["cancelar"]==1)
-			{
-				$query="DELETE FROM reserva WHERE ID_Reserva=".$_SESSION["reserva"];
-				mysql_query($query);
+			$_SESSION["deporte"]=1;
+	}
+	
+	if (!isset($_POST["action"])) {
+		$_POST["action"] = "undefine";
+	}
+	
+	$_SESSION["cancha"]=0;
+	
+	$dep=$_SESSION["deporte"];
+	$estado = 0;
+	$estado2=0;
+	$status='';
+	
+	if (($_POST["action"] == "cancelar") || ((isset($_GET['eliminar']) && ($_GET['eliminar']==1)) )
+	{
+		$query="SELECT ID_Hora FROM horario WHERE ID_Reserva=".$_SESSION["reserva"];
+		$result=mysql_query($query);		
+		while ($row = mysql_fetch_array($result))
+		{
+			$query="DELETE FROM hora WHERE ID_Hora=".$row[0];	
+			mysql_query($query);
+		}
+		
+		$query="DELETE FROM horario WHERE ID_Reserva=".$_SESSION["reserva"];	
+		mysql_query($query);
+		
+		$query="DELETE FROM reserva WHERE ID_Reserva=".$_SESSION["reserva"];
+		mysql_query($query);
 				
-				$_SESSION["reserva"]=-1;
-				$_GET["cancelar"]=0;
-				
-				?>
-
+		$_SESSION["reserva"]=-1;
+			
+		?>
 					<script language="javascript"
 				      type="text/javascript"
 			    	  xml:space="preserve">
@@ -30,25 +55,9 @@
 			 		  //]]>
 					</script>
 
-				<?php
-			}
-	}
-	
-	if (!isset($_SESSION["deporte"]))
-	{
-			$_SESSION["deporte"]=1;
-	}
-	
-	if (!isset($_POST['action'])) {
-		$_POST['action'] = "undefine";
-	}
-	
-	$_SESSION["cancha"]=0;
-	
-	$dep=$_SESSION["deporte"];
-	$estado = 0;
-	$estado2=0;
-	$status='';
+		<?php
+
+	}	
 	
 	if ($_POST["action"] == "upload") 
 	{

@@ -745,7 +745,7 @@ div.search_gridView_container_box div.productImage2{
 
 div.search_gridView_container_box div.prodTitle{
     position:absolute;
-    top:143px;
+    top:123px;
     text-align:center;
     left:8px;
     width:162px;/*178-8-8*/
@@ -762,10 +762,10 @@ div.search_gridView_container_box div.prodTitle a:hover{
 }
     
 div.search_gridView_container_box div.price{
-    position:absolute;
-    top:221px;
+    
+    
     text-align:center;
-    left:8px;
+    
     width:162px;/*178-8-8*/
     color:#999999;
     font-size:10px;

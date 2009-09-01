@@ -57,7 +57,7 @@ mysql_select_db($MySQL_BaseDatos, $link);
 //$paging->linkEstructura('deporte_index.php?pag={n}');
  
 $sql="";
-$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen  Img, canchaxclub.C_Reputacion rep ";
+$select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen  Img, canchaxclub.C_Reputacion rep, canchaxclub.C_Precio precio ";
 $from="FROM club, canchaxclub, cancha  ";
 $where=" WHERE club.ID_Club=canchaxclub.ID_Club 
 AND canchaxclub.ID_cancha=cancha.ID_Cancha AND cancha.ID_Deporte=".$_SESSION["deporte"]." ";
@@ -272,18 +272,38 @@ if($result!=false)
                 <div class="featuredProduct">&nbsp;</div>
                 <div class="productImage">             
                   
-                  <a  ><img src="<?php print($ruta_img.$row["ID_Club"].".jpg"); ?>"  width="100" height="100"  border="0"> </a> </div>
+                  <a href="ver_club.php?id=<?php echo $row['ID_Club'];?>" target="_blank" onclick="abrir(this.href); return false"><img src="<?php print($ruta_img.$row['ID_Club'].".jpg"); ?>"  width="90" height="90"  border="0"> </a> </div>
                 <!-- productImage DIV *** END -->
-                <div class="prodTitle"> <a   style="text-decoration:none; border-bottom:none;" ><b> <?php echo $row["NombreClub"]; ?><br/><?php echo $row["NombreCancha"]; ?></b> </a> </div>
+                <div class="prodTitle"> 
+                	<a href="ver_club.php?id=<?php echo $row['ID_Club'];?>" target="_blank" onclick="abrir(this.href); return false"><b> <?php echo $row["NombreClub"]; ?></b></a><br/>
+                    <a href="ver_cancha.php?club=<?php echo $row['ID_Club'];?>&id=<?php echo $row['ID_Cancha'];?>" target="_blank" onclick="abrir(this.href); return false"> <b><?php echo $row["NombreCancha"]; ?></b></a><br/>
+                    <span style="font-weight:bold; font-size:15px;color:#1C8C00;" >desde S/. <?php echo $row["precio"]; ?> </span> </div>
+               
              	<div class="productImage2"> 
-                  <a  ><img src="<?php print($row['Img']); ?>"  width="150" height="150"  border="0"> </a> </div>
+                  <a href="ver_cancha.php?club=<?php echo $row['ID_Club'];?>&id=<?php echo $row['ID_Cancha'];?>" target="_blank" onclick="abrir(this.href); return false"><img src="<?php print($row['Img']); ?>"  width="150" height="150"  border="0"> </a> </div>
                 <!-- productImage DIV *** END -->
                 <div class="shopBtn"> <a href="deporte_horario.php?club=<?php echo $row['ID_Club'];?>&cancha=<?php echo $row['ID_Cancha'];?>" class="comparePricesBtn"><span>Reservar</span> </a> </div>
                 <div class="moreInfo"><a>&nbsp;</a></div>
                 <div class="search_gridView_containerBottom">
                    <ul>
-            <li style="font-size:10px;">
-           Lo recomiendan: <?php echo $row['rep'];?> veces.
+            <li>
+            <a ><img src="images/rating_<?php 
+				$tempor=$row['rep'];
+				$rank="";
+				switch ($tempor) {
+					case 1:   $rank="1"; break;
+					case 1.5: $rank="1_5"; break;
+					case 2:   $rank=2; break;
+					case 2.5: $rank="2_5"; break;
+					case 3:	  $rank=3; break;
+					case 3.5: $rank="3_5"; break;
+					case 4:   $rank=4; break;
+					case 4.5: $rank="4_5"; break;
+					case 5:   $rank=5; break;
+					default:  $rank=0; break;
+					}
+				echo $rank;			
+			?>.gif" height=11 width=60 border=0></a>
         </li></ul>
           
                 </div>

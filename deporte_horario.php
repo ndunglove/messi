@@ -139,7 +139,7 @@ function validate(esto)
     } 
     else 
     { 
-        alert('Por favor debe seleccionar al menos una hora de reserva.'); 
+        alert('Por favor, debe seleccionar al menos una hora de reserva.'); 
         return false; 
     } 
 } 
