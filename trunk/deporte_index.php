@@ -42,10 +42,16 @@
 <![endif]-->
 <script type="text/javascript" src="js/21EE.js" ></script>
 <script type="text/javascript" src="js/listarAJAX.js" ></script>
+
 </head>
 
 <body>
-
+<script language="Javascript">
+	function abrir(texto) 
+	{ 
+		window.open(texto, 'window','dependent=1,location=0,menubar=0,resizable=0,toolbar=0,status=1,scrollbars=0,width=568,height=414'); 
+	}
+</script>
 <div id="todo">
 <div id="nubes">
 <div id="pgSiteContainer" >

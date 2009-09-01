@@ -3,7 +3,7 @@
 <file name="menu_style.css" server="C:/Servidor/www/Messi/trunk/" local="128940250786670000" remote="128940250780000000" />
 <file name="cabecera.php" server="C:/Servidor/www/Messi/trunk/" local="128940045019470000" remote="128940045010000000" />
 <file name="Conexion.php" server="C:/Servidor/www/Messi/trunk/" local="128876559700155815" remote="128876559700000000" />
-<file name="funciones.php" server="C:/Servidor/www/Messi/trunk/" local="128823056520000000" remote="128823056520000000" />
+<file name="funciones.php" server="C:/Servidor/www/Messi/trunk/" local="128956204392180000" remote="128956204390000000" />
 <file name="administradores.php" server="C:/Servidor/www/Messi/trunk/" local="128927016546237757" remote="128927016540000000" />
 <file name="club.php" server="C:/Servidor/www/Messi/trunk/" local="128927171916297757" remote="128927171910000000" />
 <file name="cancha_ver.php" server="C:/Servidor/www/Messi/trunk/" local="128938080010000000" remote="128938080010000000" />
@@ -13,6 +13,6 @@
 <file name="index.php" server="C:/Servidor/www/Messi/trunk/" local="128940037230710000" remote="128940037230000000" />
 <file name="resultado.php" server="C:/Servidor/www/Messi/trunk/" local="128940595308110000" remote="128940595300000000" />
 <file name="clientes_administrar.php" server="C:/Servidor/www/Messi/trunk/" local="128940605670000000" remote="128940605670000000" />
-<file name="clientes.php" server="C:/Servidor/www/Messi/trunk/" local="128940613162950000" remote="128940613160000000" />
+<file name="clientes.php" server="C:/Servidor/www/Messi/trunk/" local="128956187919990000" remote="128956187910000000" />
 <file name="admin_administrar.php" server="C:/Servidor/www/Messi/trunk/" local="128940134702670000" remote="128940134700000000" />
 </dwsync>

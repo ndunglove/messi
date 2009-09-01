@@ -2,6 +2,7 @@
 	session_start();
 	require("funciones.php");
 	require('conexion.php');
+	require('config.php');
 	
 	$link = mysql_connect($MySQL_Host,$MySQL_Usuario,$MySQL_Pass);
     mysql_select_db($MySQL_BaseDatos, $link);
@@ -30,9 +31,9 @@
 		$reserva=$_POST["reserva"];
 		foreach ($reserva as $r)
 		{
-			$r = split(';',$r);
+			$r = explode(';',$r);
 			$fecha3=$r[2];
-			$fecha3=split("/",$fecha3);
+			$fecha3=explode('/',$fecha3);
 			$fecha3=$fecha3[0].'-'.$fecha3[1].'-'.$fecha3[2];
 			$query_1="INSERT INTO hora (D_HoraInicio,D_HoraFin) VALUES (".$r[0].",".$r[0].")";
 			mysql_query($query_1);
@@ -51,14 +52,16 @@
 		if (isset($_POST["adicionales"]))
 			$adi=$_POST["adicionales"];
 		$adi_aux="";
-		
+		$monto_adi=0;
 		if($adi!=""){
 		foreach ($adi as $r)
-		{			
-			$adi_aux=$r.';'.$adi_aux;
+		{
+			$nr=explode(';',$r);
+			$adi_aux=$nr[0].' - S/.'.$nr[1].';'.$adi_aux;
+			$monto_adi=$nr[1]+$monto_adi;
 		}
 		
-			$query_4="UPDATE reserva SET T_DetallesAdicionales='".$adi_aux."' WHERE ID_Reserva=".$_SESSION["reserva"];
+			$query_4="UPDATE reserva SET T_DetallesAdicionales='".$adi_aux."', C_MontoAdi=".$monto_adi." WHERE ID_Reserva=".$_SESSION["reserva"];
 			$result=mysql_query($query_4);
 			
 			if ($result==false)
@@ -104,13 +107,27 @@ function confirmation() {
 		window.location = "reservasPorConfirmar.php";
 	}
 }
+
+function confirmation2() {
+	return confirm("¿Esta seguro que desea cancelar su reserva?")
+}
+
+function confirmation3() {
+	alert("Al presionar ACEPTAR se guardará la reserva, si desea eliminarla vaya a reservas realizadas.");
+	
+}
 //-->
 </script>
 
 
 </head>
 
+<?php if ($vuelve==0) { ?>
 <body>
+<?php } 
+else { ?>
+<body onunload="return confirmation3();">
+<?php } ?>
 
 <div id="todo2">
 <div id="nubes">
@@ -154,13 +171,13 @@ function confirmation() {
 		<form action="deporte_detalle.php" method="post">
 		<?php 
 			//lista los servicios adicionales que se pueden contratar.
-			$query="SELECT servicio.N_Nombre FROM servicioxclub, servicio WHERE servicio.ID_Deporte=".$_SESSION["deporte"]." AND servicioxclub.ID_Club=".$_SESSION["club"]." AND servicioxclub.ID_Servicio=servicio.ID_Servicio GROUP BY servicio.N_Nombre";
+			$query="SELECT servicio.N_Nombre, servicioxclub.F_Recargo FROM servicioxclub, servicio WHERE servicio.ID_Deporte=".$_SESSION["deporte"]." AND servicioxclub.ID_Club=".$_SESSION["club"]." AND servicioxclub.ID_Servicio=servicio.ID_Servicio GROUP BY servicio.N_Nombre";
 			$result = mysql_query($query);
 		print('<span style="font-size:13px; font-weight:bold;">SERVICIOS ADICIONALES (Opcional)</span><br/><br/>');
 			while ($row = mysql_fetch_array($result))
 			{			
 				if ($row[0]!='luz')
-				print('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].'" /> '.$row[0].'</span> <br/><br/>');	
+				print('<span><input type="checkbox" name="adicionales[]" value="'.$row[0].';'.$row[1].'" /> '.$row[0].'</span> <br/><br/>');	
 				if ($row[0]=='luz')
 					printf('<span style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas.</span><br/><br/>');
 					
@@ -179,7 +196,7 @@ function confirmation() {
 			{
 			
 				
-				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, reserva.ID_reserva idreserva, reserva.D_FechaReserva rfecha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, canchaxclub.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"]." ORDER BY horario.D_Fecha ASC";
+				$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, reserva.ID_reserva idreserva, reserva.D_FechaReserva rfecha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, canchaxclub.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta, reserva.C_MontoAdi adi FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$_SESSION["reserva"]." ORDER BY horario.D_Fecha ASC";
 				$result=mysql_query($query);
 				
 				$row=mysql_fetch_array($result);
@@ -188,7 +205,7 @@ function confirmation() {
 				$tot=$cant*$row['nprecio'];
 				
 				?>
-               <form>
+               <form action="perfil.php" method="post">
 
                	<table id="horario2">
                 	<thead>
@@ -199,7 +216,7 @@ function confirmation() {
                     <tbody>
                     	<tr>
                     	  <td><span style="font-weight:bold;">Nro. de reserva:</span></td>
-                    	  <td><span style="font-weight:bold;">000<?php print($row['idreserva']);?></span></td>
+                    	  <td><span style="font-weight:bold;"><?php printf("%05d",$row['idreserva']);?></span></td>
                   	  </tr>
                     	<tr><td><span style="font-weight:bold;">Club:</span></td><td><span style="font-weight:normal;"> <?php print($row['nclub']); ?></span></td></tr>
                     	<tr><td><span style="font-weight:bold;">Cancha:</span></td><td><span style="font-weight:normal;"> <?php print($row['ncancha']); ?></span></td></tr>
@@ -218,28 +235,48 @@ function confirmation() {
 									
 									} 
 							$tot2=$horasluz*$row['recargo'];	
-							$TOTAL=$tot+$tot2;
+							$TOTAL=$tot+$tot2+$row['adi'];
+							$TOTAL2=$TOTAL+$TOTAL*$IGV;
 							
-							$query_5="UPDATE reserva SET C_MontoTotal=".$TOTAL." WHERE ID_Reserva=".$_SESSION["reserva"];
+							$query_5="UPDATE reserva SET C_MontoTotal=".$TOTAL2." WHERE ID_Reserva=".$_SESSION["reserva"];
 							mysql_query($query_5);
 							
 									?></span></td></tr>
                         <tr><td><span style="font-weight:bold;">Distrito:</span></td><td> <span style="font-weight:normal;"><?php print($row['ndistrito']); ?></span></td></tr>
-                        <tr><td><span style="font-weight:bold;">Servicios Adicionales:</span> </td><td><span style="font-weight:normal;"><?php print($row['nadicionales']); ?></span></td></tr>                        
+                        <tr><td><span style="font-weight:bold;">Servicios Adicionales:</span> </td><td><span style="font-weight:normal;"><?php if ($row['nadicionales']!="")
+							{
+								$na=explode(';',$row['nadicionales']);
+								$j=0;
+								while($na[$j]!="")
+								{
+									print($na[$j]);
+									$j++;
+									if ($j>0)
+										print("<br/>");
+								}
+							}
+							else print("Ninguno"); ?></span></td></tr>                        
                         <tr>
                           <td><span style="font-weight:bold;">Sub Total: </span></td><td><span style="font-weight:normal;"> <?php print('S/.'.$row['nprecio'].' x '.$cant.' = S/.'.$tot); ?> (No incluye cargos por servicios adicionales)</span></td></tr>
+                        <tr>
+                          <td><span style="font-weight:bold;">Recargo por servicios adicionales: </span></td>
+                          <td>S/.<?php print($row['adi']); ?></td>
+                        </tr>
                         <tr>
                           <td><span style="font-weight:bold;">Recargo por hora de luz:  </span></td><td><span style="font-weight:normal;"> <?php print('S/.'.$row['recargo'].' x '.$horasluz.' = S/.'.$tot2); ?></span></td>
                         </tr>
                         <tr>
-                          <td><span style="font-weight:bold;">Monto Total:</span></td><td>   <span style="font-weight:normal;"><?php print('S/.'.$TOTAL); ?> (No incluye IGV)</span></td>
+                          <td><span style="font-weight:bold;">Total sin IGV:</span></td>
+                          <td><?php printf('S/.%6.2f',$TOTAL); ?></td>
+                        </tr>
+                        <tr>
+                          <td><span style="font-weight:bold;">Monto Total (IGV <?php printf('%3.0f',$IGV*100); ?>%):</span></td><td>   <span style="font-weight:normal;"><?php printf('S/.%6.2f',$TOTAL2); ?> (incluye IGV)</span></td>
                         </tr>
                         <tr><td><span style="font-weight:bold;">Banco a Depositar:</span></td><td><span style="font-weight:normal;"><?php print($row['banco']); ?></span></td></tr>
                         <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td><td><span style="font-weight:normal;"><?php print($row['cuenta']); ?></span></td></tr>
-                        <tr><td></td><td align="right"><input type="button" name="confirmar" value="Grabar Reserva" class="boton" onclick="confirmation()" >
-                                              <input type="button" name="imprimir" value="Imprimir" onclick="window.print();" class="boton"></td></tr>
+                        <tr><td></td><td align="right"><input type="button" name="confirmar" value="Grabar Reserva" class="boton" onclick="confirmation()" > <input type="button" name="imprimir" value="Imprimir" onclick="window.print();" class="boton"> <input type="submit" name="cancelar" value="Cancelar" class="boton" onclick="return confirmation2();" ><input type="hidden" name="action" value="cancelar" /></td></tr>
                         <tr><td></td>
-                          <td align="right"><p>EL monto mínimo a depositar es el 50% del Monto total mostrado arriba <br />
+                          <td align="right"><p>EL monto mínimo a depositar es el 50% del monto total mostrado arriba <br />
 en un plazo máximo de 6 horas.</p>
                             <p>Por favor, para ingresar el voucher de pago ir a <br/>
                               <span style="font-weight:bold;">&quot;reservas realizadas&quot;</span><br/>
