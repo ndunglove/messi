@@ -11,7 +11,7 @@
 					}
 					$valor = $_GET['id']; 
 					
-					$query="SELECT * FROM administrador WHERE ID_Administrador=".$valor;
+					$query="SELECT s.ID_Servicio, s.N_Nombre, s.ID_Deporte, sc.F_Recargo FROM servicio s JOIN servicioxclub sc ON s.ID_Servicio=sc.ID_Servicio WHERE s.ID_Servicio=".$valor." AND sc.ID_CLub=".$_SESSION['ID_club'];
 					$result = mysql_query($query);
 					$row = mysql_fetch_row($result)
 				?>    
@@ -61,21 +61,24 @@
 		  <tr>
 		    <td width="200">Nombre</td>
 		    <td width="10">:</td>
-		    <td width="490"><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value=""/>
+		    <td width="490"><span id="sprytextfield1"><input type="text" name="text1" id="text1" class="edit"  value="<?php print($row[1]);?>" disabled="disabled"/>
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
 		  <tr>
 		    <td>Deporte</td>
 		    <td>:</td>
 		    <td><span id="sprytextfield4">
-		      <select name="select3" id="select3" class="edit" >
+		      <select name="select3" id="select3" class="edit" disabled="disabled">
 		        <option>Seleccione un Deporte</option>
 		        <?php 
 										
-					$query="SELECT ID_TamanoCancha, N_Nombre FROM TamanoCancha";
-					$sel = "";	
+					$query="SELECT ID_Deporte, N_Nombre FROM deporte";
+					
 					$result = mysql_query($query);
 						while ($row2 = mysql_fetch_array($result)){
+						$sel = "";	
+						if ($row[2]==$row2[0])
+							$sel="selected='selected'";
 						$salida = '<option value="'.$row2[0].'" '.$sel.'>'.$row2[1].'</option>';						
 						print ($salida);
 						}
@@ -86,19 +89,16 @@
 		  <tr>
 		    <td>Precio</td>
 		    <td>:</td>
-		    <td><span id="sprytextfield5"><input type="text" name="text2" id="text3" class="edit"  value=""/>
+		    <td><span id="sprytextfield5"><input name="precio" type="text" class="edit" value="<?php print($row[3]);?>" />
 		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
-           <tr>
-        <td>&nbsp;</td>
-		    <td>&nbsp;</td>
-		    <td><input type="submit" name="button" id="button" value="Guardar Cambios" /></td>
-           </tr>
 	      <tr>
-		    <td>&nbsp;</td>
-		    <td>&nbsp;</td>
-		    <td>&nbsp;</td>
-	      </tr>
+	        <td>&nbsp;</td>
+	        <td>&nbsp;</td>
+	        <td><input type="submit" name="button" value="Guardar cambios" />
+            	<input type="hidden" name="action" value="servicio_editar" />
+                <input type="hidden" name="id" value="<?php echo $valor; ?>" /></td>
+	        </tr>
           </tbody>
 		</form>
 	    </table>

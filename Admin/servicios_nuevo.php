@@ -26,7 +26,9 @@
 	<![endif]-->
     		<title>CanchasOnline::Manejador de contenido v1.0</title>
         <script src="../SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+        <script src="../SpryAssets/SpryValidationSelect.js" type="text/javascript"></script>
         <link href="../SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
+        <link href="../SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css" />
         </head>
         <body>
           <div id="wrapper1">
@@ -50,10 +52,62 @@
 		<div class="nav-right"></div> 
         
 		<div id="tabla">
+        Los servicios de <strong>estacionamiento, duchas y kiosko</strong> los puede agregar desde la opci&oacute;n "editar club".<br/><br/>
+        
+        <table width="700" border="0" class="cuerpo2" >
+        <thead>              
+		  <tr>
+		    <th colspan="3" >Agregar servicio a club</th>
+          </tr>
+         </thead>
+		<form action="acciones.php" method="post">
+         <tbody>
+		  <tr>
+		    <td width="200">Nombre</td>
+		    <td width="10">:</td>
+		    <td width="490"><span id="spryselect1">
+		      <select name="servicio" class="edit">
+              <option>Seleccione un servicio</option>
+              <?php 
+										
+					$query="SELECT s.ID_Servicio, s.N_Nombre, d.N_Nombre FROM servicio s JOIN deporte d ON s.ID_Deporte=d.ID_Deporte GROUP BY s.N_Nombre ORDER BY d.N_Nombre ASC";
+			
+					$result = mysql_query($query);
+						while ($row2 = mysql_fetch_array($result)){
+						$salida = '<option value="'.$row2[0].'" >'.$row2[2].' - '.$row2[1].'</option>';						
+						print ($salida);
+						}
+				?>
+		        </select>
+		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
+		    </tr>
+		  <tr>
+		    <td>Precio</td>
+		    <td>:</td>
+		    <td><span id="sprytextfield5"><input type="text" name="precio" class="edit"  value=""/>
+		      <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
+		    </tr>
+           <tr>
+        <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td><input type="submit" name="button" id="button" value="Registrar" />
+            	<input type="hidden" name="action" value="servicio_agregar" />
+                <input type="hidden" name="club_id" value="<?php echo $_SESSION['ID_club']; ?>" />
+            </td>
+           </tr>
+	      <tr>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+	      </tr>
+          </tbody>
+		</form>
+	    </table>
+        <br/>
 		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Nuevo Servicio </th>
+		    <th colspan="3" >Registrar nuevo servicio </th>
           </tr>
          </thead>
 		<form action="acciones.php" method="post">
@@ -69,7 +123,7 @@
 		    <td>:</td>
 		    <td><span id="sprytextfield4">
 		      <select name="deporte" class="edit" >
-		        <option>Seleccione un Deporte</option>
+		        <option>Seleccione un deporte</option>
 		        <?php 
 										
 					$query="SELECT ID_Deporte, N_Nombre FROM deporte";
@@ -111,9 +165,8 @@
 </div>
         <script type="text/javascript">
 <!--
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
-var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
+var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
 //-->
         </script>
         </body>

@@ -162,12 +162,23 @@
 													c.F_Estado LIKE '%".$bu."%' 
 										   GROUP BY c.ID_Cancha";
 				}
+			if ($_POST['tabla']==5)//reservas
+				{	$t1="Nro Reserva";
+					$t2="Fecha";
+					$t3="Usuario";
+					
+					
+					$query="SELECT r.ID_Reserva, r.D_FechaReserva, u.T_Email 
+							FROM reserva r JOIN usuario u ON r.ID_Usuario=u.ID_Usuario 
+							WHERE r.ID_Reserva LIKE '%".$bu."%' 
+							";
+				}
 				
 			$result = mysql_query($query);
 			
 			$imp = '<tr>
-				    <th width="80">'.$t1.'</th>
-        		    <th width="300">'.$t2.'</th>
+				    <th width="120">'.$t1.'</th>
+        		    <th width="260">'.$t2.'</th>
 		            <th width="180">'.$t3.'</th>
 					<th width="140">Opciones</th>
           			</tr>
@@ -190,7 +201,9 @@
 			if ($_POST['tabla']==4)//canchas
 				{$hver='cancha_ver.php?id='.$row[0].'&club='.$row[3];
 					$heditar='cancha_editar.php?id='.$row[0].'&club='.$row[3];}
-				
+			if ($_POST['tabla']==5)//reservas
+				{$hver='reservas_ver.php?id='.$row[0];
+					$heditar='';}	
 				
 				$salida = '<tr>
 		    				<td align="center">'.$row[0].'</td>
@@ -204,7 +217,13 @@
 				
 		 ?>
          
-	      
+	      <tr>
+          	<td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          </tbody>
           </tbody>
 		</form>
 	    </table>

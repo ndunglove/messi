@@ -126,7 +126,7 @@ function confirmation3() {
 <body>
 <?php } 
 else { ?>
-<body onunload="return confirmation3();">
+<body >
 <?php } ?>
 
 <div id="todo2">
@@ -236,9 +236,9 @@ else { ?>
 									} 
 							$tot2=$horasluz*$row['recargo'];	
 							$TOTAL=$tot+$tot2+$row['adi'];
-							$TOTAL2=$TOTAL+$TOTAL*$IGV;
+							//$TOTAL2=$TOTAL+$TOTAL*$IGV;
 							
-							$query_5="UPDATE reserva SET C_MontoTotal=".$TOTAL2." WHERE ID_Reserva=".$_SESSION["reserva"];
+							$query_5="UPDATE reserva SET C_MontoTotal=".$TOTAL." WHERE ID_Reserva=".$_SESSION["reserva"];
 							mysql_query($query_5);
 							
 									?></span></td></tr>
@@ -266,11 +266,8 @@ else { ?>
                           <td><span style="font-weight:bold;">Recargo por hora de luz:  </span></td><td><span style="font-weight:normal;"> <?php print('S/.'.$row['recargo'].' x '.$horasluz.' = S/.'.$tot2); ?></span></td>
                         </tr>
                         <tr>
-                          <td><span style="font-weight:bold;">Total sin IGV:</span></td>
+                          <td><span style="font-weight:bold;">Monto total (IGV <?php printf('%3.0f',$IGV*100); ?>%):</span></td>
                           <td><?php printf('S/.%6.2f',$TOTAL); ?></td>
-                        </tr>
-                        <tr>
-                          <td><span style="font-weight:bold;">Monto Total (IGV <?php printf('%3.0f',$IGV*100); ?>%):</span></td><td>   <span style="font-weight:normal;"><?php printf('S/.%6.2f',$TOTAL2); ?> (incluye IGV)</span></td>
                         </tr>
                         <tr><td><span style="font-weight:bold;">Banco a Depositar:</span></td><td><span style="font-weight:normal;"><?php print($row['banco']); ?></span></td></tr>
                         <tr><td><span style="font-weight:bold;">Cuenta a Depositar:</span></td><td><span style="font-weight:normal;"><?php print($row['cuenta']); ?></span></td></tr>

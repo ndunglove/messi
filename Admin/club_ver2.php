@@ -11,7 +11,7 @@
 					}
 					$valor = $_GET['id']; 
 					
-					$query="SELECT ID_Club, N_Nombre, ID_Distrito, T_Direccion, C_Telefono FROM club WHERE ID_Club=".$valor;
+					$query="SELECT ID_Club, N_Nombre, ID_Distrito, T_Direccion, C_Telefono, ID_Estacionamiento, ID_Kiosko, ID_Ducha, F_Estado, T_Descripcion FROM club WHERE ID_Club=".$valor;
 					$result = mysql_query($query);
 					$row = mysql_fetch_row($result);
 				?>    
@@ -99,6 +99,87 @@
 		    <td>:</td>
 		    <td><span id="sprytextfield4"><input type="text" name="text4"  class="edit" disabled="disabled" value="<?php print($row[4]); ?>" /><span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
+           <tr valign="top">
+             <td>Detalles adicionales</td>
+             <td>:</td>
+             <td><textarea name="detalles" cols="36" rows="8" disabled="disabled" class="edit"><?php print($row[9]);?></textarea></td>
+           </tr>
+          <tr valign="top">
+             <td>Estacionamiento</td>
+             <td>:</td>
+             <td>
+             	<?php 
+				$row2[1]=0;
+				$row2[2]=0;
+				$row2[3]=0;
+				if ($row[5]!=NULL)					
+				{
+					$query="SELECT * FROM estacionamiento WHERE ID_Estacionamiento=".$row[5];
+					$result = mysql_query($query);
+					$row2 = mysql_fetch_row($result);				
+				}
+				?>
+             
+               <input type="checkbox" name="estacionamiento[]" value="1" <?php if ($row2[1]==1) print('checked="checked"')?> disabled="disabled"/>Pagado<br/>
+               <input name="estacionamiento[]" type="checkbox" value="2" <?php if ($row2[2]==1) print('checked="checked"')?> disabled="disabled"/>Gratis<br/>
+               <input type="checkbox" name="estacionamiento[]" value="3" <?php if ($row2[3]==1) print('checked="checked"')?> disabled="disabled"/>Vigilado</td>
+           </tr>
+           <tr>
+             <td>Kiosko</td>
+             <td>:</td>
+             <td>
+                <?php 
+				$row2[1]=-1;
+				if ($row[6]!=NULL)					
+				{
+					$query="SELECT * FROM kiosko WHERE ID_Kiosko=".$row[6];
+					$result = mysql_query($query);
+					$row2 = mysql_fetch_row($result);				
+				}
+				?>
+               <input type="checkbox" name="kiosko[]" value="1" <?php if ($row2[1]==0) print('checked="checked"')?> disabled="disabled"/>Kiosko<br/>
+               <input type="checkbox" name="kiosko[]" value="2" <?php if ($row2[1]==1) print('checked="checked"')?> disabled="disabled"/>Kiosko con chelas</td>
+           </tr>
+           <tr>
+             <td>Ducha</td>
+             <td>:</td>
+             <td>
+               <?php 
+				$row2[1]=-1;
+				if ($row[7]!=NULL)					
+				{
+					$query="SELECT * FROM ducha WHERE ID_Ducha=".$row[7];
+					$result = mysql_query($query);
+					$row2 = mysql_fetch_row($result);				
+				}
+				?>  
+               
+               <input type="checkbox" name="ducha[]" value="1" <?php if ($row2[1]==0) print('checked="checked"')?> disabled="disabled"/>Duchas<br/>
+               <input type="checkbox" name="ducha[]" value="2" <?php if ($row2[1]==1) print('checked="checked"')?> disabled="disabled"/>Duchas con agua caliente</td>
+           </tr>
+           <tr>
+        <td>Estado</td>
+		    <td>:</td>
+
+		    <td><span id="spryselect2">
+		      <?php 
+			  
+				  $sel1="";
+				  $sel2="";
+                  if ($row[8]==1)
+					  $sel1='selected="selected"';
+                  elseif ($row[8]==2)
+					  $sel2='selected="selected"';
+				  
+                  ?>
+             
+	           <select name="estado" class="edit" disabled="disabled">
+                    <option>Seleccione un estado</option>
+                    <option value="1" <?php echo $sel1; ?> >Habilitado</option>
+                    <option value="2" <?php echo $sel2; ?> >Deshabilitado</option>
+	              </select>
+		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
+           </tr>
 	      <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
@@ -115,7 +196,7 @@
 		<table width="700" border="0" class="cuerpo" >
         <thead>              
 		  <tr>
-		    <th colspan="5" >Ver canchas del Club</th>
+		    <th colspan="5" >Ver canchas del club</th>
           </tr>
           <tr>
 		    <th colspan="5" align="right"><a href="cancha_nuevo.php?club=<?php echo $valor; ?>" target="_blank" style="text-decoration:underline">Nueva cancha</a></th>

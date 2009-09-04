@@ -100,6 +100,29 @@
 		    <td><span id="sprytextfield4"><input type="text" name="text4" id="text4" class="edit" disabled="disabled" value="<?php print($row[4]); ?>" />
 	          <span class="textfieldRequiredMsg">Valor requerido.</span></span></td>
 		    </tr>
+            <tr>
+	         <td>Estado</td>
+	         <td>&nbsp;</td>
+	         <td><span id="spryselect2">
+	           <?php 
+				  $sel1="";
+				  $sel2="";
+                  if ($row[5]==1)
+					  $sel1='selected="selected"';
+                  elseif ($row[5]==2)
+					  $sel2='selected="selected"';
+				  
+                  ?>
+             
+	           <select name="estado" class="edit" disabled="disabled">
+                    <option>Seleccione un estado</option>
+                    <option value="1" <?php echo $sel1; ?> >Habilitado</option>
+                    <option value="2" <?php echo $sel2; ?> >Deshabilitado</option>
+	              </select>
+	           <span class="selectRequiredMsg">Seleccione una opci&oacute;n.</span></span>
+            	 
+	          </td>
+	         </tr>
 	      <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>

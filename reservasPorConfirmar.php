@@ -100,7 +100,9 @@
           		
           	<div class="wrap" align='center'>
             <div align='left' style="padding-left:150px; font-size:14px;">
-             Aqu&iacute; podr&aacute;s ver las reservas realizadas pendientes de pago y aprobaci&oacute;n.
+             Aqu&iacute; podr&aacute;s ver las reservas realizadas pendientes de pago y aprobaci&oacute;n.<br/>
+             Si ya has realizado el pago, por favor espera la aprobaci&oacute;n del club. <br/>
+             (Una vez aprobada la reserva, ver la opci&oacute;n "Reservas confirmadas") 
             </div>
            <?php 
 		  $idUsuario=$_SESSION["ID"];
@@ -110,59 +112,50 @@
 				
 <table id="horario2">
 				<tr>
-					<th colspan='7'> RESERVAS ACTUALES POR CONFIRMAR</th>
+					<th colspan='6'> RESERVAS ACTUALES POR CONFIRMAR</th>
 				</tr>
 				<tr>
-					<td>Club</td>
-					<td>Cancha</td>
-					<td>Fecha</td>
-					<td>Detalles</td>
-					<td>Pagado</td>
-					<td>Estado</td>
-					<td>&nbsp;</td>
+					<th>Nro Reserva</th>
+                    <th>Club</th>
+					<th>Cancha</th>
+					<th>Fecha</th>
+					<th>Pagado</th>
+					
+					<th width="80">Opciones</th>
 				</tr>				
 				<?php 
 				require('funciones.php');
 				$fecha_aux=split('/',$fecha);
 				$fecha_aux=$fecha_aux[0].'-'.$fecha_aux[1].'-'.$fecha_aux[2];
 	
-				$sql="SELECT club.N_Nombre, cancha.N_Nombre, reserva.D_FechaReserva, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado, reserva.ID_Reserva FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.T_Estado=0 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."' GROUP BY reserva.ID_Reserva";
+				$sql="SELECT reserva.ID_Reserva, club.N_Nombre, cancha.N_Nombre, reserva.D_FechaReserva, reserva.T_DetallesAdicionales, reserva.ID_Pago, reserva.T_Estado FROM horario, reserva, club, cancha, pago WHERE reserva.ID_Usuario=".$idUsuario." AND  horario.ID_Reserva=reserva.ID_Reserva AND horario.ID_Club=club.ID_Club AND cancha.ID_Cancha = horario.ID_Cancha AND reserva.T_Estado=0 AND horario.D_Fecha >= '".cambiaf_a_mysql($fecha_aux)."' GROUP BY reserva.ID_Reserva";
 					
 				$result = mysql_query($sql);
 				
 				while($row = mysql_fetch_array($result)) { ?>
 				<tr>
-					<td> <?php echo $row[0]; ?>
+	                <td> <?php printf("%05d",$row[0]); ?>
 					</td>
 					<td> <?php echo $row[1]; ?>
 					</td>
-					<td> <?php echo cambiaf_a_normal($row[2]); ?>
+					<td> <?php echo $row[2]; ?>
 					</td>
-					<td> <?php echo $row[3]; ?>
-					</td>
+					<td> <?php echo cambiaf_a_normal($row[3]); ?>
+					</td>					
 					<td> <?php 
-						if($row[4]==null || $row[4]=="0") 
-							echo "<a href='IngresarVoucher.php?id=".$row["6"]."'>pagar aquí</a>";
-						else
+						if($row[5]==NULL || $row[5]=="0") 
+							echo "<a href='IngresarVoucher.php?id=".$row[0]."'>pagar aquí</a>";
+						else							
 							echo "si";
-						?>
-					</td>
-						<td> <?php 
-						if($row[5]==0) 
-							echo "en espera";
-						elseif($row[5]==1) 
-							echo "aprobado";
-						elseif($row[5]==1) 
-							echo "rechazado";
-						?>
-					</td>
+						?></td>
+						
 				
-					<td><a href='DetalleHistorial.php?id=<?php echo $row[6]?>' target='_new'> Ver</a> 
-					</td>
+					<td><a href='DetalleHistorial.php?id=<?php echo $row[0]?>' target='_new'><img src="images/ver.png" alt="ver" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 				</tr>
 				<?php	
 				}	//while	
 				?>	
+                <td colspan="6"> </td>
 				</table></div>
           
               

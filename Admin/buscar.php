@@ -103,7 +103,8 @@
 	          <option value="1" >Administradores</option>
 	          <option value="2" >Usuarios</option>
 	          <option value="3" >Clubs</option>
-	          <option value="4" >Canchas</option>                                                       
+	          <option value="4" >Canchas</option>
+              <option value="5" >Reservas</option>                                                       
 		        </select>
 		      <span class="selectRequiredMsg">Valor requerido.</span></span></td>
 	      </tr>

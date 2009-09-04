@@ -10,8 +10,8 @@
 						$_GET['id'] = "0"; 
 					}
 					$valor = $_GET['id']; 
+					$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, reserva.ID_reserva idreserva, reserva.D_FechaReserva rfecha, horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, canchaxclub.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta, reserva.C_MontoAdi adi, reserva.T_Estado estado FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$valor." ORDER BY horario.D_Fecha ASC";
 					
-					$query="SELECT club.N_Nombre nclub,cancha.N_Nombre ncancha, reserva.D_FechaReserva rfecha,  horario.D_Fecha nfecha, hora.D_HoraInicio nhora, distrito.N_Nombre ndistrito, reserva.T_DetallesAdicionales nadicionales, canchaxclub.C_Precio nprecio, servicioxclub.F_Recargo recargo, club.T_Banco banco, club.T_CuentaBanco cuenta, reserva.C_MontoTotal total, reserva.T_Estado estado FROM reserva, horario, canchaxclub, club, cancha, distrito, hora, servicioxclub, servicio WHERE reserva.ID_Reserva=horario.ID_Reserva AND horario.ID_Club=canchaxclub.ID_Club AND horario.ID_Cancha=canchaxclub.ID_Cancha AND canchaxclub.ID_Club=club.ID_Club AND club.ID_Club=servicioxclub.ID_Club AND servicioxclub.ID_Servicio=servicio.ID_Servicio AND servicio.N_Nombre='luz' AND club.ID_Distrito=distrito.ID_Distrito AND canchaxclub.ID_Cancha=cancha.ID_Cancha AND horario.ID_Hora=hora.ID_Hora AND reserva.ID_Reserva=".$valor." ORDER BY horario.D_Fecha ASC";
 				$result=mysql_query($query);
 				
 				$row=mysql_fetch_array($result);
@@ -64,6 +64,11 @@
          </thead>
 
          <tbody>
+         <tr>
+	        <td><span style="font-weight:bold;">Nro. de reserva</span></td>
+	        <td>:</td>
+	        <td><span style="font-weight:bold;"><?php printf("%05d",$row['idreserva']);?></span></td>
+	        </tr>
 	      <tr>
 	        <td width="216"><span style="font-weight:bold;">Club</span></td>
 	        <td width="38">:</td>
@@ -93,13 +98,10 @@
 									print('<br/>'.$row2['nhora'].':00 ('.cambiaf_a_normal($row2['nfecha']).')');
 									if ($row2['nhora']>=18)
 										$horasluz=$horasluz + 1;
-									
-									} 
+							} 
 							$tot2=$horasluz*$row['recargo'];	
-							$TOTAL=$tot+$tot2;
-						
-						
-									?>
+							$TOTAL=$tot+$tot2+$row['adi'];
+				?>
 	        </span></td>
 	        </tr>
 	      <tr>
@@ -110,7 +112,20 @@
 	      <tr>
 	        <td><span style="font-weight:bold;">Servicios Adicionales</span></td>
 	        <td>:</td>
-	        <td><span style="font-weight:normal;"><?php print($row['nadicionales']); ?></span></td>
+	        <td><span style="font-weight:normal;">
+			<?php if ($row['nadicionales']!="")
+				  {
+					  $na=explode(';',$row['nadicionales']);
+					  $j=0;
+			   		  while($na[$j]!="")
+					  {
+						 print($na[$j]);
+						 $j++;
+						 if ($j>0)
+						 	 print("<br/>");
+					   }
+				    }
+					else print("Ninguno"); ?></span></td>
 	        </tr>
 	      <tr>
 	        <td><span style="font-weight:bold;">Sub Total</span></td>
@@ -118,16 +133,21 @@
 	        <td><span style="font-weight:normal;"><?php print('S/.'.$row['nprecio'].' x '.$cant.' = S/.'.$tot); ?></span></td>
 	        </tr>
 	      <tr>
-	        <td><span style="font-weight:bold;">Recargo por hora de luz</span></td>
-	        <td>:</td>
-	        <td><span style="font-weight:normal;"><?php print('S/.'.$row['recargo'].' x '.$horasluz.' = S/.'.$tot2); ?></span></td>
-	        </tr>
-	      <tr>
-	        <td><span style="font-weight:bold;">Monto Total</span></td>
-	        <td>:</td>
-	        <td><span style="font-weight:normal;"><?php print('S/.'.$row['total']); ?></span></td>
-	        </tr>
-	      <tr>
+	        <td><span style="font-weight:bold;">Recargo por servicios adicionales: </span></td>
+             <td>:</td>
+                          <td>S/.<?php print($row['adi']); ?></td>
+                        </tr>
+                        
+                        <tr>
+                          <td><span style="font-weight:bold;">Recargo por hora de luz:  </span></td> <td>:</td><td><span style="font-weight:normal;"> <?php print('S/.'.$row['recargo'].' x '.$horasluz.' = S/.'.$tot2); ?></span></td>
+                        </tr>
+                        <tr>
+                          <td><span style="font-weight:bold;">Monto total (incluye IGV):</span></td>
+                           <td>:</td>
+                          <td><?php printf('S/.%6.2f',$TOTAL); ?></td>
+                        </tr>
+                        
+	      <tr class="especial">
 	        <td><span style="font-weight:bold;">Estado</span></td>
 	        <td>:</td>
 	        <td><?php 

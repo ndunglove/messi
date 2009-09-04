@@ -27,7 +27,7 @@
 	$redir=0;
 	if ($_POST['action']=="registrar")
 	{
-		$fecha_aux=split('/',$fecha);
+		$fecha_aux=explode('/',$fecha);
 		$fecha_aux=$fecha_aux[0].'-'.$fecha_aux[1].'-'.$fecha_aux[2];
 		
 		$query="INSERT INTO pago (D_FechaPago,C_Voucher,D_FechaVoucher,D_HoraVoucher) 
@@ -160,13 +160,14 @@ setTimeout ("redireccionar()", 0);
           </tr>
           <tr>
           	<td width="102">
-	Nro. Voucher</td><td width="10">:</td><td width="232" align="left"> <span id="sprytextfield1"><input type="text" name="voucher" onkeyup="validaVoucher(this.value);"  class="edit"/>
+	Nro. Voucher</td><td width="10">:</td><td width="232" align="left"> <span id="sprytextfield1"><input type="text" name="voucher" class="edit"/>
 	    <span class="textfieldRequiredMsg">Valor requerido</span></span></td>
     	</tr>
         <tr>
         	<td>Fecha</td>
             <td>:</td>
-            <td><span id="sprytextfield2"><input type="text" name="fecha" class="edit" /><span style="font-size:10px;">(DD-MM-AAAA)</span>
+            <td><span id="sprytextfield2"><input type="text" name="fecha" class="edit" />
+            <span style="font-size:10px;">(DD/MM/AAAA)</span>
                 <span class="textfieldRequiredMsg">Valor requerido</span></span></td>
         <tr>
         	<td>Hora</td>

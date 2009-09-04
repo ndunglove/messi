@@ -60,7 +60,7 @@ $sql="";
 $select="SELECT club.ID_Club, club.N_Nombre NombreClub, cancha.ID_Cancha, cancha.N_Nombre NombreCancha, cancha.T_Imagen  Img, canchaxclub.C_Reputacion rep, canchaxclub.C_Precio precio ";
 $from="FROM club, canchaxclub, cancha  ";
 $where=" WHERE club.ID_Club=canchaxclub.ID_Club 
-AND canchaxclub.ID_cancha=cancha.ID_Cancha AND cancha.ID_Deporte=".$_SESSION["deporte"]." ";
+AND canchaxclub.ID_cancha=cancha.ID_Cancha AND cancha.F_Estado=1 AND club.F_Estado=1 AND cancha.ID_Deporte=".$_SESSION["deporte"]." ";
 
 
 		/**** DISTRITO ******/
@@ -83,10 +83,12 @@ for($i=1;$i<=$cantDistritos;$i++){
 	
 		/**** RANKING CANCHA *****	*/
 	$rep="";
-	/*$idRep=getPageParameter("rank");
-	if($idRep!="")
-	  {$rep=" ORDER BY canchaxclub.C_Reputacion DESC";};
-	*/
+	$repCH=getPageParameter("rank","");
+ 	if($repCH!=""){
+		$rep=" ORDER BY canchaxclub.C_Reputacion DESC";
+	}
+  	 
+
 	
 		/**** TIPO CANCHA ******/	
 $result = mysql_query("SELECT * FROM tipocancha WHERE ID_Deporte=".$dep);
@@ -246,8 +248,9 @@ for($i=1;$i<=2;$i++){
 $_SESSION["query"]=$select.$from.$where;
 
 $where.=" GROUP BY club.ID_Club, cancha.ID_cancha";
+$relevancia =" ORDER BY club.C_Relevancia, canchaxclub.C_Relevancia DESC";
+//$sql=$select.$from.$where.$rep;
 $sql=$select.$from.$where.$rep;
-
 
 //echo "<br/><b>CONSULTA: </b><br/>".$sql;	
 //$paging->agregarConsulta($sql); 
@@ -263,7 +266,12 @@ if($result!=false)
 	//$links = $paging->fetchNavegacion();
 //	if ($paging->numTotalPaginas()>1)
 //		print('<div class="navi">'.$links.'</div><br/>');
-	
+		$cont=mysql_num_rows($result);
+		if ($cont==0)
+		{
+			print("<b>No se encontraron resultados con el criterio especificado.</b>");	
+		}
+		
 		while ($row = mysql_fetch_array($result)){	
 		?>
 		 
@@ -287,7 +295,7 @@ if($result!=false)
                 <div class="search_gridView_containerBottom">
                    <ul>
             <li>
-            <a ><img src="images/rating_<?php 
+            <a >Puntuaci&oacute;n: <img src="images/rating_<?php 
 				$tempor=$row['rep'];
 				$rank="";
 				switch ($tempor) {

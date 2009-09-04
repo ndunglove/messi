@@ -30,10 +30,10 @@
         $usuario=$_POST['user'];
         $clave=$_POST['pass'];
         
-        $result = mysql_query("SELECT ID_Usuario, T_Pass FROM usuario WHERE T_Email='".$usuario."'");
+        $result = mysql_query("SELECT ID_Usuario, T_Pass, F_Estado FROM usuario WHERE T_Email='".$usuario."'");
         $row = mysql_fetch_row($result);
         
-        if ($row!=false)
+        if ($row!=false && $row[2]==1)
         {
             if ($row[1]==$clave)
                 {
@@ -138,7 +138,7 @@
 <script language="Javascript">
 	function abrir(texto) 
 	{ 
-		window.open(texto, 'window','dependent=1,location=0,menubar=0,resizable=0,toolbar=0,status=1,scrollbars=0,width=568,height=414'); 
+		window.open(texto, 'window','dependent=1,location=0,menubar=0,resizable=0,toolbar=0,status=1,scrollbars=1,width=568,height=414'); 
 	}
 </script>
 <div id="todo">
@@ -146,8 +146,8 @@
 
 <div id="todoIndex">
 <div id="bienve">
-<img src="images/bienvenidos.gif" border="0" usemap="#Map" /> <map name="Map" id="Map">
-<area shape="rect" coords="244,62,305,82" href="#" target="_blank" />
+<img src="images/bienvenidos.gif" height="85" border="0" usemap="#Map" /> <map name="Map" id="Map">
+<area shape="rect" coords="245,60,303,80" href="nosotros.php" target="_blank" onClick="abrir(this.href); return false"/>
 </map> </div>
 
 <div class="logo">
@@ -209,7 +209,7 @@
                                                                     
                                                                     if ($ver==2)
                                                                     {
-                                                                        $msg="usuario incorrecto o no existe.";
+                                                                        $msg="usuario incorrecto o deshabilitado.";
                                                                     }
                                                                     else if ($ver==3)
                                                                     {
@@ -386,7 +386,7 @@ return false;
             <td></td>
             <td></td>
             <td><span id="sprycheckbox1" style="font-weight:normal; color:#2B2700"> <input type="checkbox" name="checkbox1" id="checkbox1" />
-              Acepto los <a href="#" title="Garantizamos que tu información privada no será compartida." >términos y condiciones de uso.</a> <br/>
+              Acepto los <a href="terminos.php" title="Garantizamos que tu información privada no será compartida." onClick="abrir(this.href); return false" >términos y condiciones de uso.</a> <br/>
               <span class="checkboxRequiredMsg">Por favor, acepte los términos y condiciones.</span></span></td>
           </tr>
           <tr>

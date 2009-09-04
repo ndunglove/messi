@@ -106,7 +106,64 @@
 		        </select>
 		      <span class="selectRequiredMsg">Please select an item.</span></span></td>
 		    </tr>
-           
+           <tr valign="top">
+             <td>Detalles adicionales</td>
+             <td>:</td>
+             <td><textarea name="detalles" cols="37" rows="8" class="edit"><?php print($row[13]);?></textarea></td>
+           </tr>
+           <tr valign="top">
+             <td>Estacionamiento</td>
+             <td>:</td>
+             <td>
+             	<?php 
+				$row2[1]=0;
+				$row2[2]=0;
+				$row2[3]=0;
+				if ($row[5]!=NULL)					
+				{
+					$query="SELECT * FROM estacionamiento WHERE ID_Estacionamiento=".$row[5];
+					$result = mysql_query($query);
+					$row2 = mysql_fetch_row($result);				
+				}
+				?>
+             
+               <input type="checkbox" name="estacionamiento[]" value="1" <?php if ($row2[1]==1) print('checked="checked"')?>/>Pagado<br/>
+               <input name="estacionamiento[]" type="checkbox" value="2" <?php if ($row2[2]==1) print('checked="checked"')?>/>Gratis<br/>
+               <input type="checkbox" name="estacionamiento[]" value="3" <?php if ($row2[3]==1) print('checked="checked"')?>/>Vigilado</td>
+           </tr>
+           <tr>
+             <td>Kiosko</td>
+             <td>:</td>
+             <td>
+                <?php 
+				$row2[1]=-1;
+				if ($row[6]!=NULL)					
+				{
+					$query="SELECT * FROM kiosko WHERE ID_Kiosko=".$row[6];
+					$result = mysql_query($query);
+					$row2 = mysql_fetch_row($result);				
+				}
+				?>
+               <input type="checkbox" name="kiosko[]" value="1" <?php if ($row2[1]==0) print('checked="checked"')?>/>Kiosko<br/>
+               <input type="checkbox" name="kiosko[]" value="2" <?php if ($row2[1]==1) print('checked="checked"')?>/>Kiosko con chelas</td>
+           </tr>
+           <tr>
+             <td>Ducha</td>
+             <td>:</td>
+             <td>
+               <?php 
+				$row2[1]=-1;
+				if ($row[7]!=NULL)					
+				{
+					$query="SELECT * FROM ducha WHERE ID_Ducha=".$row[7];
+					$result = mysql_query($query);
+					$row2 = mysql_fetch_row($result);				
+				}
+				?>  
+               
+               <input type="checkbox" name="ducha[]" value="1" <?php if ($row2[1]==0) print('checked="checked"')?>/>Duchas<br/>
+               <input type="checkbox" name="ducha[]" value="2" <?php if ($row2[1]==1) print('checked="checked"')?>/>Duchas con agua caliente</td>
+           </tr>
            <tr>
         <td>Estado</td>
 		    <td>:</td>
