@@ -62,7 +62,8 @@ elseif ($_POST["action"] == "administradores_editar") {
 			
 		$query= "UPDATE administrador SET N_Nombre='".$_POST['nombre']."',
 									  	  ID_privilegio=".$_POST['privilegio'].",
-									  	  T_Pass='".$_POST['pass']."' 
+									  	  T_Pass='".$_POST['pass']."',
+										  F_Estado=".$_POST['estado']." 
 							        WHERE ID_Administrador=".$_POST['id'];
 							 
 		$chek = mysql_query($query);
@@ -126,11 +127,100 @@ elseif ($_POST["action"] == "club_nuevo") {//falta
 	}
 elseif ($_POST["action"] == "club_editar") {
 	$tipo=2;
+	
+	//estacionamiento
+	$estac="";
+	if (isset($_POST["estacionamiento"]))
+		$estac=$_POST["estacionamiento"];
+	$pagado=0;
+	$gratis=0;
+	$vigilado=0;
+	if($estac!="")
+	{
+		foreach ($estac as $r)
+		{
+			switch ($r)
+			{
+				case 1: $pagado=1; break;
+				case 2: $gratis=1; break;
+				case 3: $vigilado=1; break;
+				default: break;
+			}
+		}
+	}
+	
+	$query="SELECT ID_Estacionamiento FROM estacionamiento WHERE F_Pagado=".$pagado." AND F_Gratis=".$gratis." AND F_Vigilado=".$vigilado;
+	$res= mysql_query($query);
+	$row= mysql_fetch_row($res);
+	$id_estac= $row[0];
+	
+	//kiosko
+	$kiosko="";
+	if (isset($_POST["kiosko"]))
+		$kiosko=$_POST["kiosko"];
+	$kioskochela=-1;
+	if($kiosko!="")
+	{
+		foreach ($kiosko as $r)
+		{
+			switch ($r)
+			{
+				case 1: $kioskochela=0; break;
+				case 2: $kioskochela=1; break;
+				default: break;
+			}
+		}
+	}
+	if ($kioskochela!=-1)
+	{
+		$query="SELECT ID_Kiosko FROM kiosko WHERE F_Chela=".$kioskochela;
+		$res= mysql_query($query);
+		$row= mysql_fetch_row($res);
+		$id_kiosko= $row[0];
+	}
+	else $id_kiosko=-1;
+	
+	//duchas
+	$ducha="";
+	if (isset($_POST["ducha"]))
+		$ducha=$_POST["ducha"];
+	$duchacal=-1;
+	if($ducha!="")
+	{
+		foreach ($ducha as $r)
+		{
+			switch ($r)
+			{
+				case 1: $duchacal=0; break;
+				case 2: $duchacal=1; break;
+				default: break;
+			}
+		}
+	}
+	if ($duchacal!=-1)
+	{
+		$query="SELECT ID_Ducha FROM ducha WHERE F_AguaCaliente=".$duchacal;
+		$res= mysql_query($query);
+		$row= mysql_fetch_row($res);
+		$id_ducha= $row[0];
+	}
+	else $id_ducha=-1;
+	
 		$query=   "UPDATE club SET N_Nombre='".$_POST['nombre']."',
 								   T_Direccion='".$_POST['direccion']."',
 								   C_Telefono='".$_POST['telefono']."',
 								   C_Relevancia=".$_POST['relevancia'].",
 								   ID_Distrito=".$_POST['distrito'].",
+								   ID_Estacionamiento=".$id_estac.",";
+		if ($id_kiosko!=-1)
+ 			 $query.=			  "ID_Kiosko=".$id_kiosko.",";
+		else $query.=			  "ID_Kiosko=NULL,";
+		
+		if ($id_ducha!=-1)
+			 $query.=			  "ID_Ducha=".$id_ducha.",";
+		else $query.=			  "ID_Ducha=NULL,";	
+								  
+		$query.=				  "T_Descripcion='".$_POST['detalles']."',
 								   F_Estado=".$_POST['estado']." 
   						     WHERE ID_Club=".$_POST['id'];
 							
@@ -147,17 +237,107 @@ elseif ($_POST["action"] == "club_editar") {
 	}
 elseif ($_POST["action"] == "club_editar2") {
 	$tipo=2;
+	
+	//estacionamiento
+	$estac="";
+	if (isset($_POST['estacionamiento']))
+		$estac=$_POST['estacionamiento'];
+	$pagado=0;
+	$gratis=0;
+	$vigilado=0;
+	if($estac!="")
+	{
+		foreach ($estac as $r)
+		{
+			switch ($r)
+			{
+				case 1: $pagado=1; break;
+				case 2: $gratis=1; break;
+				case 3: $vigilado=1; break;
+				default: break;
+			}
+		}
+	}
+	
+	$query="SELECT ID_Estacionamiento FROM estacionamiento WHERE F_Pagado=".$pagado." AND F_Gratis=".$gratis." AND F_Vigilado=".$vigilado;
+	$res= mysql_query($query);
+	$row= mysql_fetch_row($res);
+	$id_estac= $row[0];
+	
+	//kiosko
+	$kiosko="";
+	if (isset($_POST['kiosko']))
+		$kiosko=$_POST['kiosko'];
+	$kioskochela=-1;
+	if($kiosko!="")
+	{
+		foreach ($kiosko as $r)
+		{
+			
+			switch ($r)
+			{
+				case 1: $kioskochela=0; break;
+				case 2: $kioskochela=1; break;
+				default: break;
+			}
+		}
+	}
+	if ($kioskochela!=-1)
+	{
+		$query="SELECT ID_Kiosko FROM kiosko WHERE F_Chela=".$kioskochela;
+		$res= mysql_query($query);
+		$row= mysql_fetch_row($res);
+		$id_kiosko=$row[0];
+	}
+	else $id_kiosko=-1;
+	
+	//duchas
+	$ducha="";
+	if (isset($_POST['ducha']))
+		$ducha=$_POST['ducha'];
+	$duchacal=-1;
+	if($ducha!="")
+	{
+		foreach ($ducha as $r)
+		{
+			switch ($r)
+			{
+				case 1: $duchacal=0; break;
+				case 2: $duchacal=1; break;
+				default: break;
+			}
+		}
+	}
+	if ($duchacal!=-1)
+	{
+		$query="SELECT ID_Ducha FROM ducha WHERE F_AguaCaliente=".$duchacal;
+		$res= mysql_query($query);
+		$row= mysql_fetch_row($res);
+		$id_ducha= $row[0];
+	}
+	else $id_ducha=-1;
+	
 		$query=   "UPDATE club SET N_Nombre='".$_POST['nombre']."',
 								   T_Direccion='".$_POST['direccion']."',
 								   C_Telefono='".$_POST['telefono']."',
 								   ID_Distrito=".$_POST['distrito'].",
+								   ID_Estacionamiento=".$id_estac.",";
+		if ($id_kiosko!=-1)
+ 			 $query.=			  "ID_Kiosko=".$id_kiosko.",";
+		else $query.=			  "ID_Kiosko=NULL,";
+		
+		if ($id_ducha!=-1)
+			 $query.=			  "ID_Ducha=".$id_ducha.",";
+		else $query.=			  "ID_Ducha=NULL,";						  
+		
+		$query.=				  "T_Descripcion='".$_POST['detalles']."',
 								   F_Estado=".$_POST['estado']." 
   						     WHERE ID_Club=".$_POST['id'];
 							
 		$chek = mysql_query($query);
 		
 		$link2="club_editar2.php?id=".$_POST['id'];
-		$link3="club_ver.php?id=".$_POST['id'];
+		$link3="club_ver2.php?id=".$_POST['id'];
 		
 		if ($chek!=false)
 			{
@@ -254,44 +434,59 @@ elseif ($_POST["action"] == "cancha_editar") {
 	}
 elseif ($_POST["action"] == "servicio_nuevo") {
 		
-		$query=    "INSERT INTO video (N_Nombre,
-									   D_Fecha,
-									   T_Detalle,
-									   T_URL)
+		$query=    "INSERT INTO servicio (N_Nombre,
+									      ID_Deporte)
 							   VALUES ('".$_POST['nombre']."',
-									   '".cambiaf_a_mysql($_POST['fecha'])."',
-									   '".$_POST['detalle']."',
-									   '".$_POST['url_video']."'											 
+									   ".$_POST['deporte']."											 
 									  )";
 		$chek = mysql_query($query);
 		
-		$link1="video_nuevo.php";
+		$link1="servicio_nuevo.php";
 
 		if ($chek!=false)
 			{
 				$estado=1;
-				$link2="video_editar.php?id=".mysql_insert_id();
-				$link3="video_ver.php?id=".mysql_insert_id();
+				$link2="servicio_editar.php?id=".mysql_insert_id();
+				$link3="servicio_ver.php?id=".mysql_insert_id();
+				
+				$query=    "INSERT INTO servicioxclub (ID_Servicio,ID_Club,F_Recargo)
+							   VALUES (".mysql_insert_id.",
+									   ".$_POST['club_id'].",
+									   ".$_POST['precio']."
+									  )";
+				mysql_query($query);
 			}
-		else { unlink($_POST['url_video']); }
+	
+	}
+elseif ($_POST["action"] == "servicio_agregar") {
+		
+		$query=    "INSERT INTO servicioxclub (ID_Servicio,ID_Club,F_Recargo)
+							   VALUES (".$_POST['servicio'].",
+									   ".$_POST['club_id'].",
+									   ".$_POST['precio']."
+									  )";
+				
+		$chek = mysql_query($query);
+		
+		$link1="servicio_nuevo.php";
+
+		if ($chek!=false)
+			{
+				$estado=1;
+				$link2="servicios_editar.php?id=".mysql_insert_id();
+				$link3="servicios_ver.php?id=".mysql_insert_id();
+			}
 	
 	}
 elseif ($_POST["action"] == "servicio_editar") {
 	$tipo=2;		
-		$query=    "UPDATE video SET N_Nombre='".$_POST['nombre']."',
-									  N_Apellido='".cambiaf_a_mysql($_POST['fecha'])."',
-									  T_Direccion='".$_POST['detalle']."'
-									  C_Telefono=
-									  D_FechaNacimiento=
-									  ID_Distrito=
-									  T_Pass=		  
-									  
-							    WHERE ID_usuario=".$_POST['id'];
+		$query=    "UPDATE servicioxclub SET F_Recargo=".$_POST['precio']."						  
+							           WHERE ID_Servicio=".$_POST['id']." AND ID_Club=".$_SESSION['ID_club'];
 							 
 		$chek = mysql_query($query);
 		
-		$link2="usuarios_editar.php?id=".$_POST['id'];
-		$link3="usuarios_editar_ver.php?id=".$_POST['id'];
+		$link2="servicios_editar.php?id=".$_POST['id'];
+		$link3="servicios_ver.php?id=".$_POST['id'];
 		
 		if ($chek!=false)
 			{

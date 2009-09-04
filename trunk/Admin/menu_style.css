@@ -278,6 +278,22 @@ a .menu-right {
 	background: #d0dafd;
 }
 
+.cuerpo tbody .especial,.cuerpo2 tbody .especial
+{
+	color: #339;
+	background: #E2E9FE;
+}
+.cuerpo tbody .especial2,.cuerpo2 tbody .especial2
+{
+	color: #339;
+	background: #FFFBB0;
+}
+.cuerpo tbody .especial3,.cuerpo2 tbody .especial3
+{
+	color: #339;
+	background: #FFCACA;
+}
+
 .cuerpo2
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -362,5 +378,4 @@ background: #d0dafd;
 	color:#FFF;
 	padding-left:15px;
 	padding-right: 5px;
-
 	}

@@ -219,7 +219,8 @@ function validate(esto)
 <input type="submit" name="reservar" id="reservar" value="Reservar" class="boton2" />
 <input type="reset" name="reset" id="reset" value="Borrar selecci&oacute;n" class="boton2" />
 </div>
-<div align="right" style="padding-right:60px;"><br/><label style="font-weight:bold;">Aviso: El recargo por luz es automático a partir de las 18:00 horas</label>.<br/><br/></div>
+<div align="right" style="padding-right:60px;"><br/>
+<label style="font-weight:bold;">Aviso: El recargo por luz es de S/. y es automático a partir de las 18:00 horas</label>.<br/><br/></div>
 <table id="horario" align="center">
 	<colgroup>
     	<col class="vzebra-odd" />
@@ -254,7 +255,7 @@ function validate(esto)
 	<tbody>
 	<?php 
 		$k=0;
-		for($i=7;$i<24;$i++)
+		for($i=7;$i<23;$i++)
 		{			
 			$aux=$i+1;
 			?>

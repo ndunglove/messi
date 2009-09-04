@@ -25,14 +25,19 @@
 					$result2 = mysql_query($query);
 					$row2 = mysql_fetch_row($result2);
 					
-					if (!isset($_GET['re'])) 
+					if (!isset($_GET['mod'])) 
 					{
-						$_GET['re'] = 0; 
+						$_GET['mod'] = 0; 
 					}
 					
-					if ($_GET['re']!=0)
+					if ($_GET['mod']==1)
 					{
 						$query="UPDATE reserva SET T_Estado='1' WHERE ID_Reserva=".$_GET['re'];
+						mysql_query($query);	
+					}
+					elseif ($_GET['mod']==2)
+					{
+						$query="UPDATE reserva SET T_Estado='2' WHERE ID_Reserva=".$_GET['re'];
 						mysql_query($query);	
 					}
 ?>
@@ -64,7 +69,7 @@
 				 <li class="active">
 						<a>
 							<span class="menu-left"></span>
-							<span class="menu-mid">Ver Cancha</span>
+							<span class="menu-mid">Ver cancha</span>
 							<span class="menu-right"></span>
 						</a>
 				  </li>
@@ -77,7 +82,7 @@
 		<table width="700" border="0" class="cuerpo2" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Ver Cancha</th>
+		    <th colspan="3" >Ver cancha</th>
           </tr>
          </thead>
 
@@ -219,17 +224,17 @@
 		    <th colspan="5" >Ver reservas de la cancha</th>
           </tr>
 		  <tr>
-          	<th width="80">Fecha</th>
-		    <th width="200">Club</th>
-		    <th width="200">Usuario</th>
-            <th width="100">Estado</th>
-		    <th width="120">Opciones</th>
+          	<th width="100">Nro Reserva</th>
+		    <th width="120">Fecha</th>
+		    <th width="180">Usuario</th>
+            <th width="60">Estado</th>
+		    <th width="160">Opciones</th>
 	      </tr>
          </thead>
          <tbody>
          <?php
 
-		$query="SELECT r.ID_Reserva, r.D_FechaReserva, u.T_Email, cl.N_Nombre, r.T_Estado FROM reserva r JOIN horario h ON (r.ID_Reserva=h.ID_Reserva), canchaxclub ch, usuario u, club cl, cancha c, administrador a WHERE ch.ID_Club=h.ID_Club AND ch.ID_Cancha=h.ID_Cancha AND ch.ID_Club=cl.ID_Club AND ch.ID_Cancha=c.ID_Cancha AND c.ID_Cancha=".$valor." AND cl.ID_Club=".$club." AND cl.ID_Administrador=a.ID_Administrador  ORDER BY r.D_FechaReserva DESC";	
+		$query="SELECT r.ID_Reserva, r.D_FechaReserva, u.T_Email, cl.N_Nombre, r.T_Estado FROM reserva r JOIN horario h ON (r.ID_Reserva=h.ID_Reserva), canchaxclub ch, usuario u, club cl, cancha c, administrador a WHERE ch.ID_Club=h.ID_Club AND ch.ID_Cancha=h.ID_Cancha AND ch.ID_Club=cl.ID_Club AND ch.ID_Cancha=c.ID_Cancha AND c.ID_Cancha=".$valor." AND cl.ID_Club=".$club." AND cl.ID_Administrador=a.ID_Administrador AND r.ID_Usuario=u.ID_Usuario GROUP BY r.ID_Reserva ORDER BY r.D_FechaReserva DESC";	
 		
          	$result = mysql_query($query);
 		 	while ($row = mysql_fetch_array($result)){
@@ -240,18 +245,22 @@
 				elseif ($row[4]==2)
 						$estado="no aprobado";
 
-				$salida = '<tr>
-		    				<td align="center">'.cambiaf_a_normal($row[1]).'</td>
-		    				<td >'.$row[3].'</td>
+				if ($row[4]==1)
+				    $salida='<tr class="especial2">';
+				elseif ($row[4]==2)
+				    $salida='<tr class="especial3">';
+				else $salida='<tr>';
+				$salida .=  '<td align="center">%05d</td>
+		    				<td align="center">'.cambiaf_a_normal($row[1]).'</td>		    				
 		    				<td >'.$row[2].'</td>	
 							<td >'.$estado.'</td>	
 		    				<td align="right">';
 				if ($_SESSION['privi']==2 && $row[4]==0)
-				$salida .=	'<a href="cancha_ver.php?id='.$valor.'&club='.$club.'&re='.$row[0].'" ><img src="images/check.gif" alt="ver" border="0" /></a>';
+				$salida .=	'<a href="cancha_ver.php?mod=1&id='.$valor.'&club='.$club.'&re='.$row[0].'" ><img src="images/aceptar.gif" alt="aceptar" border="0" /></a><a href="cancha_ver.php?mod=2&id='.$valor.'&club='.$club.'&re='.$row[0].'" ><img src="images/cancelar.gif" alt="cancelar" border="0" /></a>';
 				$salida .=	'<a href="reservas_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   </tr>';
 					   
-				printf ($salida);}
+				printf ($salida,$row[0]);}
 				
 		 ?>
 

@@ -119,6 +119,11 @@
 	
 }
 
+#horario2 .especial
+{
+	background: #D9F28A;
+	}
+
 #horario2 #vzebra-adventure, #horario2 #vzebra-children
 {
 	background: #DDF1A0;

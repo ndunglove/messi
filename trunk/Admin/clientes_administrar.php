@@ -17,8 +17,9 @@
 		$result = mysql_query($query);
 		
 		$row=mysql_fetch_row($result);
-		
-		$_SESSION['ID_club']=$row[0];
+		if ($result!=FALSE)
+			$_SESSION['ID_club']=$row[0];
+		else $_SESSION['ID_club']=0;
 	}
 	
 	if (!isset($_POST['action'])) 

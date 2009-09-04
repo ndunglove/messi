@@ -72,14 +72,20 @@
 		<table width="700" border="0" class="cuerpo" >
         <thead>              
 		  <tr>
-		    <th colspan="3" >Servicios registrados</th>
+		    <th colspan="4" >Servicios registrados</th>
            </tr>
            <tr>
-             <th colspan="3" align="right"><a href="servicios_nuevo.php" target="_blank" style="text-decoration:underline;">Nuevo servicio</a></th>
+             <th colspan="4" align="right">
+             <?php 
+			 if ($_SESSION['ID_club']!=0){
+	?>           <a href="servicios_nuevo.php" target="_blank" style="text-decoration:underline;">Nuevo servicio</a><?php } else print('<span style="color:red; padding-right:174px;">Para poder registrar los servicios, primero debe registrar un club.</span>');?>
+
+			 </th>			
           </tr>
 		  <tr>
           	<th width="50">ID</th>
 		    <th >Nombre</th>
+            <th >Deporte</th>
 		    <th width="120">Opciones</th>
 	      </tr>
          </thead>
@@ -87,27 +93,28 @@
          <?php
 	
 
-			$query="SELECT s.ID_Servicio, s.N_Nombre  FROM servicio s JOIN servicioxclub sc ON s.ID_Servicio=sc.ID_Servicio JOIN club c ON sc.ID_Club=c.ID_Club WHERE c.ID_Club=".$_SESSION['ID_club']." AND s.N_Nombre!='luz' GROUP BY s.N_Nombre ORDER BY s.N_Nombre ASC ";
+			$query="SELECT s.ID_Servicio, s.N_Nombre, d.N_Nombre  FROM servicio s JOIN servicioxclub sc ON s.ID_Servicio=sc.ID_Servicio JOIN club c ON sc.ID_Club=c.ID_Club JOIN deporte d ON s.ID_Deporte=d.ID_Deporte WHERE c.ID_Club=".$_SESSION['ID_club']." AND s.N_Nombre!='luz' GROUP BY s.N_Nombre ORDER BY d.N_Nombre, s.N_Nombre ASC ";
 			
          	$result = mysql_query($query);
-		
+			if ($result!=false){
 		 	while ($row = mysql_fetch_array($result)){
 				
 				$salida = '<tr>
 		    				<td align="center">'.$row[0].'</td>
-		    				<td >'.$row[1].'</td>		
+		    				<td >'.$row[1].'</td>
+							<td >'.$row[2].'</td>
 		    				<td align="center"><a href="servicios_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="servicios_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   </tr>';
 					   
 				printf ($salida);}
-				
+			}
 		 ?>
 
 		  <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		  
+		  <td>&nbsp;</td>
 		
 	      </tr>
           </tbody>

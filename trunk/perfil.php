@@ -24,7 +24,7 @@
 	$estado2=0;
 	$status='';
 	
-	if (($_POST["action"] == "cancelar") || ((isset($_GET['eliminar']) && ($_GET['eliminar']==1)) )
+	if ($_POST["action"] == "cancelar")
 	{
 		$query="SELECT ID_Hora FROM horario WHERE ID_Reserva=".$_SESSION["reserva"];
 		$result=mysql_query($query);		
@@ -107,7 +107,12 @@
 	}
 	elseif ($_POST["action"] == "cambios") {
 		
-		$query="UPDATE usuario SET C_Telefono='".$_POST['telefono']."', T_Direccion='".$_POST['direccion']."' WHERE ID_Usuario=".$_SESSION['ID'];
+		$query="UPDATE usuario SET C_Telefono='".$_POST['telefono']."', 
+		                           T_Direccion='".$_POST['direccion']."',
+								   N_Nombre='".$_POST['nombre']."',
+								   N_Apellido='".$_POST['apellido']."',
+								   ID_Distrito=".$_POST['distrito']." 
+					         WHERE ID_Usuario=".$_SESSION['ID'];
 		mysql_query($query);
 	}
 	//-------------------------------------------------------
@@ -139,7 +144,9 @@
 	<link rel="stylesheet" type="text/css" href="Estilos/searchattrib_v2_ie7.css" />
 <![endif]-->
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+<script src="SpryAssets/SpryValidationSelect.js" type="text/javascript"></script>
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
+<link href="SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -189,7 +196,7 @@
                 
                 <li ><em>Perf&iacute;l</em></li>
 	<?php	
-		$query ="SELECT usuario.T_Imagen, usuario.N_Nombre, usuario.T_Email, usuario.C_Puntos, distrito.N_Nombre, usuario.C_Telefono, usuario.T_Direccion FROM usuario, distrito WHERE usuario.ID_Distrito=distrito.ID_Distrito AND usuario.ID_Usuario=".$_SESSION['ID'];
+		$query ="SELECT usuario.T_Imagen, usuario.N_Nombre, usuario.T_Email, usuario.C_Puntos, distrito.N_Nombre, usuario.C_Telefono, usuario.T_Direccion, usuario.N_Apellido, usuario.ID_distrito FROM usuario, distrito WHERE usuario.ID_Distrito=distrito.ID_Distrito AND usuario.ID_Usuario=".$_SESSION['ID'];
 		$result = mysql_query($query);
 
 		$row = mysql_fetch_row($result);
@@ -208,18 +215,24 @@
             
           		<table align="center" id="horario2">
                 	<tr>
-                	  <td width="140" rowspan="5" ><span class="foto"><?php if ($estado==1) print('<img src="'.$row[0].'" width="140" height="185" />'); ?></span></td>
+                	  <td width="140" rowspan="6" ><span class="foto"><?php if ($estado==1) print('<img src="'.$row[0].'" width="140" height="185" />'); ?></span></td>
                 	  <td width="10">&nbsp;</td>
-                	  <td width="320"><h4><?php echo $row[1];?></h4></td>
+                	  <td width="320"><h4><?php printf("%s %s",$row[1],$row[7]); ?></h4></td>
               	  </tr>
                 	<tr>
                 	  <td>&nbsp;</td>
                 	  <td><?php echo $row[2];?></td>
               	  </tr>
+                  <tr>
+                      <td>&nbsp;</td>
+                      <td><?php echo $row[5];?></td>
+
+                    </tr>
                 	<tr>
-                	  <td>&nbsp;</td>
-                	  <td>Puntos acumulados: <?php echo $row[3];?></td>
-              	  </tr>
+                      <td>&nbsp;</td>
+                      <td><?php echo $row[6];?></td>
+
+                    </tr>
                     <tr>
                       <td>&nbsp;</td>
                       <td><?php echo $row[4];?></td>
@@ -234,16 +247,47 @@
                <form action="perfil.php" method="post">
                <table align="center" id="horario2">
                     <tr>
-                      <td width="140">Teléfono</td>
+                      <td width="140">Nombre</td>
                       <td width="10">:</td>
-                      <td width="320"><span id="sprytextfield1"><input type="text" name="telefono" class="edit" value="<?php echo $row['5']; ?>"/>
-                          <span class="textfieldRequiredMsg">valor requerido.</span></span></td>
+                      <td width="320"><span id="sprytextfield4"><input type="text" name="nombre" class="edit" value="<?php echo $row['1']; ?>"/>
+                          <span class="textfieldRequiredMsg">valor requerido</span></span></td>
+                    </tr>
+                    <tr>
+                      <td width="140">Apellido</td>
+                      <td width="10">:</td>
+                      <td width="320"><span id="sprytextfield5"><input type="text" name="apellido"  class="edit" value="<?php echo $row['7']; ?>"/>
+                          <span class="textfieldRequiredMsg">valor requerido</span></span></td>
                     </tr>
                     <tr>
                       <td>Dirección</td>
                       <td>:</td>
                       <td><span id="sprytextfield2"><input type="text" name="direccion" class="edit" value="<?php echo $row['6']; ?>"/>
-                          <span class="textfieldRequiredMsg">valor requerido.</span></span></td>
+                          <span class="textfieldRequiredMsg">valor requerido</span></span></td>
+                    </tr>
+                    <tr>
+                      <td width="140">Distrito</td>
+                      <td width="10">:</td>
+                      <td width="320"><span id="spryselect1">
+                        <select name="distrito" class="edit">
+                        <option>Seleccione un distrito</option>
+                        <?php 
+                                                                    
+                               $result = mysql_query("SELECT * FROM distrito ORDER BY N_Nombre");
+							   $sel="";
+                               while ($row2 = mysql_fetch_array($result)){
+							   if ($row[8]==$row2[0])
+							   		$sel='selected="selected"';
+								else $sel="";;
+                               $salida = ' <option value="'.$row2["ID_Distrito"].'" '.$sel.'>'.$row2["N_Nombre"].'</option> ';                             printf ($salida);}
+                        ?>
+                        </select>
+                        <span class="selectRequiredMsg">valor requerido</span></span></td>
+                    </tr>
+                    <tr>
+                      <td width="140">Tel&eacute;fono</td>
+                      <td width="10">:</td>
+                      <td width="320"><span id="sprytextfield1"><input type="text" name="telefono" class="edit" value="<?php echo $row['5']; ?>"/>
+                          <span class="textfieldRequiredMsg">valor requerido</span></span></td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
@@ -357,6 +401,9 @@
 <!--
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
+var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4");
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
+var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
 //-->
 </script>
 </body>

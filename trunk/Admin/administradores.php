@@ -69,17 +69,17 @@
 		<table width="700" border="0" class="cuerpo" >
         <thead>              
 		  <tr>
-		    <th colspan="5" >Administradores</th>
+		    <th colspan="6" >Administradores</th>
           </tr>
           <tr>
-            <th colspan="5" align="right"><a href="administradores_nuevo.php" target="_blank" style="text-decoration:underline">Nuevo administrador</a></th>
+            <th colspan="6" align="right"><a href="administradores_nuevo.php" target="_blank" style="text-decoration:underline">Nuevo administrador</a></th>
           </tr>
 		  <tr>
           	<th width="50">ID</th>
 		    <th width="230">Nombre</th>
-            <th width="200">Nick</th>
+            <th width="100">Nick</th>
 		    <th width="100">Privilegio</th>
-		  
+		  <th width="100">Estado</th>
 		    <th width="120">Opciones</th>
 	      </tr>
          </thead>
@@ -89,14 +89,19 @@
 		
 
 		
-         	$result = mysql_query("SELECT a.ID_Administrador, a.N_Nombre,a.N_Usuario, p.N_Nombre FROM administrador a JOIN privilegio p on a.ID_privilegio = p.ID_privilegio ORDER BY p.ID_privilegio ASC");
+         	$result = mysql_query("SELECT a.ID_Administrador, a.N_Nombre,a.N_Usuario, p.N_Nombre, a.F_Estado FROM administrador a JOIN privilegio p on a.ID_privilegio = p.ID_privilegio ORDER BY a.ID_Administrador, p.ID_privilegio ASC");
 		 	while ($row = mysql_fetch_array($result)){
+				$est="";
+				if ($row[4]==1)
+					$est="Habilitado";
+				else $est="Deshabilitado";
 				
 				$salida = '<tr>
 		    				<td align="center">'.$row[0].'</td>
 		    				<td >'.$row[1].'</td>
 		    				<td >'.$row[2].'</td>
 							<td >'.$row[3].'</td>
+							<td >'.$est.'</td>
 		    				<td align="center"><a href="administradores_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="administradores_editar.php?id='.$row[0].'" target="_blank"><img src="images/editar.png" alt="editar" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   	   </tr>';
 					   
@@ -107,6 +112,7 @@
 		  <tr>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
+            <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		     <td>&nbsp;</td>
 		    <td>&nbsp;</td>

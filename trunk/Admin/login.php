@@ -21,10 +21,10 @@
         $usuario=$_POST['user'];
         $clave=$_POST['pass'];
         
-        $result = mysql_query("SELECT ID_Administrador, T_Pass, ID_Privilegio, N_Nombre FROM administrador WHERE N_Usuario='".$usuario."'");
+        $result = mysql_query("SELECT ID_Administrador, T_Pass, ID_Privilegio, N_Nombre, F_Estado FROM administrador WHERE N_Usuario='".$usuario."'");
         $row = mysql_fetch_row($result);
         
-        if ($row!=false)
+        if ($row!=false && $row[4]=1)
         {
             if ($row[1]==$clave)
                 {
@@ -148,7 +148,7 @@
                              
                        if ($ver==2)
                        {
-                          $msg="usuario incorrecto o no existe.";
+                          $msg="usuario incorrecto o deshabilitado.";
                        }
                        else if ($ver==3)
                        {

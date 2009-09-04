@@ -161,36 +161,34 @@
 		    <th colspan="5" >Ver reservas del usuario</th>
           </tr>
 		  <tr>
-          	<th width="80">Fecha</th>
-		    <th width="200">Club</th>
-		    <th width="200">Cancha</th>
-            <th width="100">Estado</th>
+          	<th width="110" >Nro Reserva</th>
+            <th width="120">Fecha</th>
+		    <th width="170">Club</th>
+		    <th width="180">Cancha</th>            
 		    <th width="120">Opciones</th>
 	      </tr>
          </thead>
          <tbody>
          <?php
 
-		$query="SELECT r.ID_Reserva, r.D_FechaReserva, c.N_Nombre, cl.N_Nombre, r.T_Estado FROM reserva r JOIN horario h ON (r.ID_Reserva=h.ID_Reserva), canchaxclub ch, cancha c, club cl WHERE ch.ID_Club=h.ID_Club AND ch.ID_Cancha=h.ID_Cancha AND ch.ID_Club=cl.ID_Club AND ch.ID_Cancha=c.ID_Cancha AND r.ID_Usuario=".$valor." ORDER BY r.D_FechaReserva DESC";	
+		$query="SELECT r.ID_Reserva, r.D_FechaReserva, c.N_Nombre, cl.N_Nombre, r.T_Estado FROM reserva r JOIN horario h ON (r.ID_Reserva=h.ID_Reserva), canchaxclub ch, cancha c, club cl WHERE ch.ID_Club=h.ID_Club AND ch.ID_Cancha=h.ID_Cancha AND ch.ID_Club=cl.ID_Club AND ch.ID_Cancha=c.ID_Cancha AND r.ID_Usuario=".$valor." GROUP BY r.ID_Reserva ORDER BY r.ID_Reserva DESC";	
 			
          	$result = mysql_query($query);
 		 	while ($row = mysql_fetch_array($result)){
-				if ($row[4]==0)
-					$estado="en espera";
-				elseif ($row[4]==1)
-						$estado="aprobado";
-				elseif ($row[4]==2)
-						$estado="no aprobado";
-
-				$salida = '<tr>
+				$salida='';
+				if ($row[4]==1)
+					$salida='<tr class="especial">';
+				else $salida='<tr>';
+				$salida .= '
+							<td align="center">%05d</td>
 		    				<td align="center">'.cambiaf_a_normal($row[1]).'</td>
 		    				<td >'.$row[2].'</td>
 		    				<td >'.$row[3].'</td>	
-							<td >'.$estado.'</td>	
+								
 		    				<td align="center"><a href="reservas_ver.php?id='.$row[0].'" target="_blank"><img src="images/ver.png" alt="ver" border="0" /></a><a href="#"><img src="images/eliminar.png" alt="eliminar" border="0" /></a></td>
 	      			   </tr>';
 					   
-				printf ($salida);}
+				printf($salida,$row[0]);}
 				
 		 ?>
 
